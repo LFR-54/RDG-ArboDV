@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AhvF8MlXjvQ=",
+  "dgSpecHash": "e101GF0x+ec=",
   "success": true,
-  "projectFilePath": "D:\\projets_perso\\RDG ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj",
+  "projectFilePath": "D:\\projets_perso\\RDG-ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Shadow\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512"
   ],

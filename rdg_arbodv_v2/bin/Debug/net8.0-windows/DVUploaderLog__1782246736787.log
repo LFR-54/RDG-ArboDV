@@ -1,0 +1,92 @@
+
+----------------------------------------------------------------------------------
+
+TTTTT  DDD   L    Texas
+  T    D  D  L    Digital
+  T    DDD   LLL  Library
+
+DVUploader - a command-line application to upload files to any Dataverse Dataset
+Developed with support from TDL and GDCC for the Dataverse Community
+See the wiki at https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader for information on using DVUploader.
+
+----------------------------------------------------------------------------------
+
+-server=https://demo.recherche.data.gouv.fr -key=<apiKey> -did=doi:10.82233/PHR5Q6 -manifest=C:\Users\Shadow\AppData\Local\Temp\rdg_arbodv_manifest_f69a8f57-526a-4086-87dc-0f71ad597788.json -recurse
+
+***Parsing arguments:***
+
+Using server: https://demo.recherche.data.gouv.fr
+Using apiKey: 24e4c19a-2315-4a39-ae81-9e6f55092bd3
+Adding content to: doi:10.82233/PHR5Q6
+Using manifest file: C:\Users\Shadow\AppData\Local\Temp\rdg_arbodv_manifest_f69a8f57-526a-4086-87dc-0f71ad597788.json
+Will recurse into subdirectories
+
+***Starting to Process Upload Requests:***
+
+Using FixityAlgorithm configured for this Dataverse: MD5
+
+PROCESSING(D): 
+              Does not exist on server.
+Preproc: 
+
+PROCESSING(D): dossier_collection_calibre_im6nbiwm
+              Does not exist on server.
+Preproc: dossier_collection_calibre_im6nbiwm
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\dossier_collection_calibre_im6nbiwm\fichier_biologie_ancien_5fj4ozf5.csv
+               Does not yet exist on server.
+               UPLOADED as: MD5:37ca52e4a7a0637c02b815b47ac20f75
+CURRENT TOTAL: 1 files :2285452 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\dossier_collection_calibre_im6nbiwm\fichier_climat_intermediaire_bohvq81o.mat
+               Does not yet exist on server.
+               UPLOADED as: MD5:4be5373b9365f39b0a86ac6f7f38ed85
+CURRENT TOTAL: 2 files :3707319 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\dossier_collection_calibre_im6nbiwm\fichier_echantillon_derive_ax2i4isk.txt
+               Does not yet exist on server.
+               UPLOADED as: MD5:c113c9d4804346fa29891ca12daa5255
+CURRENT TOTAL: 3 files :6322169 bytes
+3 files successfully added from this folder
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_collection_intermediaire_llo6kbp5
+              Does not exist on server.
+Preproc: dossier_collection_intermediaire_llo6kbp5
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\dossier_collection_intermediaire_llo6kbp5\fichier_biologie_principal_chhoez6w.odt
+               Does not yet exist on server.
+               UPLOADED as: MD5:105ab84de473f81a74baeeeb4f028f94
+CURRENT TOTAL: 4 files :9227138 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\dossier_collection_intermediaire_llo6kbp5\fichier_campagne_complet_t3aljfck.dcm
+               Does not yet exist on server.
+               UPLOADED as: MD5:fd91e9f88adf6ca5b0d1c239a67c7f87
+CURRENT TOTAL: 5 files :10860074 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\dossier_collection_intermediaire_llo6kbp5\fichier_protocole_ancien_sywpkvh5.tar
+               Does not yet exist on server.
+               UPLOADED as: MD5:d55f0fdb3f55d19fddc12df734948402
+CURRENT TOTAL: 6 files :20394512 bytes
+3 files successfully added from this folder
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\fichier_cohorte_central_qhosjd5a.parquet
+               Does not yet exist on server.
+               UPLOADED as: MD5:e1d8752965498792b1e74e468a5b196e
+CURRENT TOTAL: 7 files :25670476 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\fichier_cohorte_regional_py5idzrw.tiff
+               Does not yet exist on server.
+               UPLOADED as: MD5:d36792f02ae1eae7fd72d533503ab4c8
+CURRENT TOTAL: 8 files :29718798 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\fichier_collection_brut_fjfv5u8l.hdf5
+               Does not yet exist on server.
+               UPLOADED as: MD5:ebfcdc427ef81d523c16be746254bea9
+CURRENT TOTAL: 9 files :36431298 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_221749_js3bn\fichier_inventaire_intermediaire_074abv1m.pdf
+               Does not yet exist on server.
+               UPLOADED as: MD5:af659f1ebcfc8a6f0f0692975cb76c42
+CURRENT TOTAL: 10 files :40719992 bytes
+4 files successfully added from this folder

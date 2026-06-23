@@ -1,0 +1,1238 @@
+
+----------------------------------------------------------------------------------
+
+TTTTT  DDD   L    Texas
+  T    D  D  L    Digital
+  T    DDD   LLL  Library
+
+DVUploader - a command-line application to upload files to any Dataverse Dataset
+Developed with support from TDL and GDCC for the Dataverse Community
+See the wiki at https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader for information on using DVUploader.
+
+----------------------------------------------------------------------------------
+
+-server=https://demo.recherche.data.gouv.fr -key=<apiKey> -did=doi:10.82233/PHR5Q6 -manifest=C:\Users\Shadow\AppData\Local\Temp\rdg_arbodv_manifest_519352b6-0aec-4735-a753-442102039c16.json -recurse
+
+***Parsing arguments:***
+
+Using server: https://demo.recherche.data.gouv.fr
+Using apiKey: 24e4c19a-2315-4a39-ae81-9e6f55092bd3
+Adding content to: doi:10.82233/PHR5Q6
+Using manifest file: C:\Users\Shadow\AppData\Local\Temp\rdg_arbodv_manifest_519352b6-0aec-4735-a753-442102039c16.json
+Will recurse into subdirectories
+
+***Starting to Process Upload Requests:***
+
+Using FixityAlgorithm configured for this Dataverse: MD5
+
+PROCESSING(D): 
+              Does not exist on server.
+Preproc: 
+
+PROCESSING(D): datasets_generes
+              Does not exist on server.
+Preproc: datasets_generes
+
+PROCESSING(D): fake_dataset_20260623_185330_0tqtm
+              Does not exist on server.
+Preproc: fake_dataset_20260623_185330_0tqtm
+
+PROCESSING(D): dossier_analyse_principal_cr9ivutc
+              Does not exist on server.
+Preproc: dossier_analyse_principal_cr9ivutc
+
+PROCESSING(D): dossier_cartographie_central_yk5zva6g
+              Does not exist on server.
+Preproc: dossier_cartographie_central_yk5zva6g
+
+PROCESSING(D): dossier_archive_final_notnet3n
+              Does not exist on server.
+Preproc: dossier_archive_final_notnet3n
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\dossier_archive_final_notnet3n\fichier_cellule_complet_tfgixyq1.hdf5
+               Does not yet exist on server.
+               UPLOADED as: MD5:1a2fe9659d20689af7e50995741e43e2
+CURRENT TOTAL: 1 files :10000000 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\dossier_archive_final_notnet3n\fichier_inventaire_calibre_2kk7jicm.tsv
+               Does not yet exist on server.
+               UPLOADED as: MD5:4c68bf937b9673753d218f9f00ecc65c
+CURRENT TOTAL: 2 files :20000000 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\dossier_archive_final_notnet3n\fichier_observation_principal_gnczdzyr.xlsm
+               Does not yet exist on server.
+               UPLOADED as: MD5:f97eabf8a70c9ea6c5cb002a15d5d9d4
+CURRENT TOTAL: 3 files :30005226 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\dossier_archive_final_notnet3n\fichier_protocole_brut_b4ofqymf.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:f00322525c303c11eec1f44b00f2a98b
+CURRENT TOTAL: 4 files :40005226 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\dossier_archive_final_notnet3n\fichier_protocole_central_ab38uum2.rdata
+               Does not yet exist on server.
+               UPLOADED as: MD5:018b7d7fd2259099719e1fd0d196ceef
+CURRENT TOTAL: 5 files :50005226 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\dossier_archive_final_notnet3n\fichier_terrain_central_wmwuabb0.zip
+               Does not yet exist on server.
+               UPLOADED as: MD5:aa426be2242c158ffeb568fbd73c56c5
+CURRENT TOTAL: 6 files :60005226 bytes
+6 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\fichier_observation_intermediaire_4gjuvkin.pdf
+               Does not yet exist on server.
+               UPLOADED as: MD5:28c96f1959eca363c3e331eced1c19c1
+CURRENT TOTAL: 7 files :70005226 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\fichier_protocole_annexe_xigrxr8p.dcm
+               Does not yet exist on server.
+               UPLOADED as: MD5:93cfc929209d5fa688c2191fd06292ce
+CURRENT TOTAL: 8 files :80005226 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\dossier_cartographie_central_yk5zva6g\fichier_terrain_complet_npz88usf.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:683e6dcbb51f84f2365a23dd3ef54ea9
+CURRENT TOTAL: 9 files :90005226 bytes
+3 files successfully added from this folder
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_campagne_calibre_v1gk2g6n.json
+               Does not yet exist on server.
+               UPLOADED as: MD5:67c5a98c1625a805723566e11615bef5
+CURRENT TOTAL: 10 files :102652289 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_campagne_valide_j2mfnz99.jpg
+               Does not yet exist on server.
+               UPLOADED as: MD5:80db6d4043331bd501a4df36d2e961c7
+CURRENT TOTAL: 11 files :112652289 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_cartographie_principal_jf1x1ams.odt
+               Does not yet exist on server.
+               UPLOADED as: MD5:5a75c9cdc71c814d801e12bc655a07f2
+CURRENT TOTAL: 12 files :122652289 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_cellule_central_9vyka1xd.xlsm
+               Does not yet exist on server.
+               UPLOADED as: MD5:f790e582670e0492193d3ef23322db36
+CURRENT TOTAL: 13 files :132652289 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_imagerie_principal_j7unin7v.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:06b1ac9eae5fad7755fdcd0b4b6e4f21
+CURRENT TOTAL: 14 files :143158436 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_protocole_controle_ikfz64wl.xlsb
+               Does not yet exist on server.
+               UPLOADED as: MD5:8ef1161e4c52d7f9d9b9f5f4e55ea0f5
+CURRENT TOTAL: 15 files :153175395 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_protocole_derive_yxqt1y3y.png
+               Does not yet exist on server.
+               UPLOADED as: MD5:119750d710c7589186547a69c2444e0c
+CURRENT TOTAL: 16 files :163175395 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_recherche_brut_glfcce7r.xlsm
+               Does not yet exist on server.
+               UPLOADED as: MD5:fe97d10740182e0b6774f608af268ed7
+CURRENT TOTAL: 17 files :173175395 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_terrain_ancien_tq4jcm3t.tsv
+               Does not yet exist on server.
+               UPLOADED as: MD5:b54c1d7282eea17785fe55b37767d04b
+CURRENT TOTAL: 18 files :183175395 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_principal_cr9ivutc\fichier_terrain_qualite_2sg1np4d.feather
+               Does not yet exist on server.
+               UPLOADED as: MD5:4386e8f07aa9857872238b45df0e4220
+CURRENT TOTAL: 19 files :193200727 bytes
+10 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_analyse_valide_jmfqci5v
+              Does not exist on server.
+Preproc: dossier_analyse_valide_jmfqci5v
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_valide_jmfqci5v\fichier_analyse_local_zpq5ge6y.npy
+               Does not yet exist on server.
+               UPLOADED as: MD5:606aebbeaa5be85f084b4fb7e3e73bb0
+CURRENT TOTAL: 20 files :203200727 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_valide_jmfqci5v\fichier_analyse_reference_fxuvhg12.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:2bdf936e925d3f8590c81b0b2346a71f
+CURRENT TOTAL: 21 files :213200727 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_valide_jmfqci5v\fichier_cartographie_regional_t77apsdy.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:61e9b0d59c603b971a7eba2259b7f35b
+CURRENT TOTAL: 22 files :256331739 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_valide_jmfqci5v\fichier_climat_calibre_izvm6gwc.csv
+               Does not yet exist on server.
+               UPLOADED as: MD5:09bc674fa23b34afde54be122be3c59a
+CURRENT TOTAL: 23 files :266331739 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_valide_jmfqci5v\fichier_echantillon_calibre_hy8zhr9m.csv
+               Does not yet exist on server.
+               UPLOADED as: MD5:844d7259f8cb3adb4fe044c994e3e7b9
+CURRENT TOTAL: 24 files :276331739 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_analyse_valide_jmfqci5v\fichier_resultat_initial_zabv2yi4.jpg
+               Does not yet exist on server.
+               UPLOADED as: MD5:b0e355aa691b7082e626fb8e9498502a
+CURRENT TOTAL: 25 files :286331739 bytes
+6 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_biologie_intermediaire_50z319vd
+              Does not exist on server.
+Preproc: dossier_biologie_intermediaire_50z319vd
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_analyse_temporel_g31jc4nj.tiff
+               Does not yet exist on server.
+               UPLOADED as: MD5:6fee61ce4de0cde77f28f5413163fa46
+CURRENT TOTAL: 26 files :296331739 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_atlas_complet_g9rck5dx.dcm
+               Does not yet exist on server.
+               UPLOADED as: MD5:8acaa32895d21ad6c8cd7939a55d320b
+CURRENT TOTAL: 27 files :306331739 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_collection_annexe_1x790eb5.hdf5
+               Does not yet exist on server.
+               UPLOADED as: MD5:2a7ecea518fb39a7112fe92e05a81578
+CURRENT TOTAL: 28 files :316331739 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_echantillon_controle_luq0pjk9.jpg
+               Does not yet exist on server.
+               UPLOADED as: MD5:123d7db45cad3d6961d6284870b86fcb
+CURRENT TOTAL: 29 files :326331739 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_modele_complet_lsd4o5xn.wav
+               Does not yet exist on server.
+               UPLOADED as: MD5:3e7cc7f96be7828d48433af3f18082aa
+CURRENT TOTAL: 30 files :336331739 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_protocole_regional_wx48s3ay.xml
+               Does not yet exist on server.
+               UPLOADED as: MD5:4f7d5f96c0712623cab6c5783ac8cf56
+CURRENT TOTAL: 31 files :568487855 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_resultat_intermediaire_t8h1wgv8.odt
+               Does not yet exist on server.
+               UPLOADED as: MD5:c70b0574b39ed152addba31416cd5f57
+CURRENT TOTAL: 32 files :578487855 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_serie_central_hx30k3r6.sav
+               Does not yet exist on server.
+               UPLOADED as: MD5:bbb9be7119d270aa2a2e008ba9be0f3f
+CURRENT TOTAL: 33 files :588487855 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_serie_controle_8my00omb.jsonl
+               Does not yet exist on server.
+               UPLOADED as: MD5:6ab9ac4d7764cf9ab36d4b3848275ad2
+CURRENT TOTAL: 34 files :598487855 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_biologie_intermediaire_50z319vd\fichier_terrain_brut_dis06l1h.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:d638d73c7bb2edd051685724cf1c5e85
+CURRENT TOTAL: 35 files :608487855 bytes
+10 files successfully added from this folder
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_climat_final_60sizfjv
+              Does not exist on server.
+Preproc: dossier_climat_final_60sizfjv
+
+PROCESSING(D): dossier_atlas_ancien_cw66xnqe
+              Does not exist on server.
+Preproc: dossier_atlas_ancien_cw66xnqe
+
+PROCESSING(D): dossier_analyse_local_4ddlkjwo
+              Does not exist on server.
+Preproc: dossier_analyse_local_4ddlkjwo
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\dossier_analyse_local_4ddlkjwo\fichier_analyse_temporel_k9g9lyo2.npz
+               Does not yet exist on server.
+               UPLOADED as: MD5:82f73b17a7d3962bb6baa51f199a8b98
+CURRENT TOTAL: 36 files :618487855 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\dossier_analyse_local_4ddlkjwo\fichier_climat_complet_qloyt548.xls
+               Does not yet exist on server.
+               UPLOADED as: MD5:c6dbc23170152b403b9e49cb20589b15
+CURRENT TOTAL: 37 files :628487855 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\dossier_analyse_local_4ddlkjwo\fichier_climat_principal_prbs9m8s.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:7af34de4b98002edcd237895c08526d9
+CURRENT TOTAL: 38 files :638517988 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\dossier_analyse_local_4ddlkjwo\fichier_inventaire_local_zqen0b66.rtf
+               Does not yet exist on server.
+               UPLOADED as: MD5:c6879f37528218df833fe869af445d5b
+CURRENT TOTAL: 39 files :648517988 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\dossier_analyse_local_4ddlkjwo\fichier_mesure_annexe_2sfzol1t.json
+               Does not yet exist on server.
+               UPLOADED as: MD5:b770e51922cd847732ae7a452c33247d
+CURRENT TOTAL: 40 files :672189082 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\dossier_analyse_local_4ddlkjwo\fichier_recherche_local_zqp6cdxy.xlsb
+               Does not yet exist on server.
+               UPLOADED as: MD5:69b79aa22780b238ff22d5d1279cd861
+CURRENT TOTAL: 41 files :682189082 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\dossier_analyse_local_4ddlkjwo\fichier_resultat_ancien_40aurs25.mat
+               Does not yet exist on server.
+               UPLOADED as: MD5:4976e5039588f5c095e9712c8de6fb99
+CURRENT TOTAL: 42 files :692194278 bytes
+7 files successfully added from this folder
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\fichier_campagne_initial_hn3o4fkj.tiff
+               Does not yet exist on server.
+               UPLOADED as: MD5:28990a958482412b7114a14b49abbe14
+CURRENT TOTAL: 43 files :702194278 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\fichier_climat_temporel_6hraf8zj.odt
+               Does not yet exist on server.
+               UPLOADED as: MD5:e58f46dbc8ff94ddbb2b7e698ee3082b
+CURRENT TOTAL: 44 files :712194278 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\fichier_observation_derive_tf2o7lz3.rtf
+               Does not yet exist on server.
+               UPLOADED as: MD5:d6150e20711bb73bfd8e2faffa746b84
+CURRENT TOTAL: 45 files :722212769 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\fichier_recherche_regional_ewib86xt.yaml
+               Does not yet exist on server.
+               UPLOADED as: MD5:47640c5f7f6b1d44ccfda0e0f053ff6c
+CURRENT TOTAL: 46 files :732212769 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_ancien_cw66xnqe\fichier_spectre_controle_xei71r8h.tsv
+               Does not yet exist on server.
+               UPLOADED as: MD5:f31d2dc139a719ded269c60275a42c93
+CURRENT TOTAL: 47 files :919425409 bytes
+5 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_atlas_local_bsm2kopz
+              Does not exist on server.
+Preproc: dossier_atlas_local_bsm2kopz
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_analyse_principal_i383iq3z.zip
+               Does not yet exist on server.
+               UPLOADED as: MD5:7794f142b2433eecf6fae4c922d2b7d7
+CURRENT TOTAL: 48 files :929425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_atlas_derive_jq0a2fot.mat
+               Does not yet exist on server.
+               UPLOADED as: MD5:4cfec8879fddfaf3f919afeefb82113b
+CURRENT TOTAL: 49 files :939425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_campagne_complet_eiuj6vxq.xml
+               Does not yet exist on server.
+               UPLOADED as: MD5:436dceaaed24310716d6f852e3241415
+CURRENT TOTAL: 50 files :949425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_campagne_valide_0ww3y7e4.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:23b2cfe135d30c3dd47678eeb0126bde
+CURRENT TOTAL: 51 files :959425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_collection_central_9ahvl26k.tar
+               Does not yet exist on server.
+               UPLOADED as: MD5:bc452ee82c9560ef32c66e82059e6a40
+CURRENT TOTAL: 52 files :969425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_observation_central_tqrvhr96.rdata
+               Does not yet exist on server.
+               UPLOADED as: MD5:8cd4ab4371afef00e88793a1d1673005
+CURRENT TOTAL: 53 files :979425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_resultat_ancien_jhfsp3rn.feather
+               Does not yet exist on server.
+               UPLOADED as: MD5:b2e85759260b4590cccaba416f6c2a8e
+CURRENT TOTAL: 54 files :989425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_resultat_central_hddaqhn3.pdf
+               Does not yet exist on server.
+               UPLOADED as: MD5:074faf3ae5f06c5949147475cad5f239
+CURRENT TOTAL: 55 files :999425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_atlas_local_bsm2kopz\fichier_serie_annexe_rk4900mi.jpg
+               Does not yet exist on server.
+               UPLOADED as: MD5:05bcaa56a07ff811b9778ce6a21c6bee
+CURRENT TOTAL: 56 files :1009425409 bytes
+9 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_campagne_central_pt2cdstj
+              Does not exist on server.
+Preproc: dossier_campagne_central_pt2cdstj
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_campagne_central_pt2cdstj\fichier_campagne_annexe_lls7r0py.tsv
+               Does not yet exist on server.
+               UPLOADED as: MD5:a5e4d319f70c5836bcb1785b9ad1a1f8
+CURRENT TOTAL: 57 files :1019425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_campagne_central_pt2cdstj\fichier_cohorte_central_psbdo26u.zip
+               Does not yet exist on server.
+               UPLOADED as: MD5:3e3b5b118579419e2a7b1513043f9142
+CURRENT TOTAL: 58 files :1029425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_campagne_central_pt2cdstj\fichier_resultat_temporel_kii0jvyt.svg
+               Does not yet exist on server.
+               UPLOADED as: MD5:812c0ca211ac72d75bd85df09ba2cb3d
+CURRENT TOTAL: 59 files :1039425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_campagne_central_pt2cdstj\fichier_terrain_reference_sdewwawx.xlsm
+               Does not yet exist on server.
+               UPLOADED as: MD5:809f495f8d92cbb2d2099341410ad3de
+CURRENT TOTAL: 60 files :1049425409 bytes
+4 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_serie_valide_ib14onvs
+              Does not exist on server.
+Preproc: dossier_serie_valide_ib14onvs
+
+PROCESSING(D): dossier_spectre_valide_q2h2zwyn
+              Does not exist on server.
+Preproc: dossier_spectre_valide_q2h2zwyn
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\dossier_spectre_valide_q2h2zwyn\fichier_campagne_controle_u7clmsf1.jpg
+               Does not yet exist on server.
+               UPLOADED as: MD5:7da3fa2292ffef5069ee17abbdff713c
+CURRENT TOTAL: 61 files :1059425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\dossier_spectre_valide_q2h2zwyn\fichier_cartographie_qualite_p1v93ylh.xls
+               Does not yet exist on server.
+               UPLOADED as: MD5:38e6ab1d0346ceed7ee2b9552aee0b25
+CURRENT TOTAL: 62 files :1069425409 bytes
+2 files successfully added from this folder
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\fichier_archive_temporel_6y9q7ncc.npy
+               Does not yet exist on server.
+               UPLOADED as: MD5:f17a4b0187b73b514db6359b27873018
+CURRENT TOTAL: 63 files :1079425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\fichier_biologie_derive_yuqimwjh.odt
+               Does not yet exist on server.
+               UPLOADED as: MD5:51e1273ef4abfe73710768b525342ed7
+CURRENT TOTAL: 64 files :1089425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\fichier_biologie_regional_twhzeh0n.xlsb
+               Does not yet exist on server.
+               UPLOADED as: MD5:092d19b3c6beffc837e494ea304157df
+CURRENT TOTAL: 65 files :1099425409 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\fichier_modele_principal_x3wrvlt8.parquet
+               Does not yet exist on server.
+               UPLOADED as: MD5:496e4f0e4ee22a4a4d87be54903d82d1
+CURRENT TOTAL: 66 files :1109447084 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\fichier_observation_annexe_o1fryka9.xls
+               Does not yet exist on server.
+               UPLOADED as: MD5:6f33e7034a4d3a2d13b439e2df5f8d30
+CURRENT TOTAL: 67 files :1119447084 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\fichier_observation_complet_f0lrkap9.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:27adf8b318c46b749de3f2f07a4224f9
+CURRENT TOTAL: 68 files :1129447084 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_serie_valide_ib14onvs\fichier_recherche_intermediaire_rudz2z1a.dicom
+               Does not yet exist on server.
+               UPLOADED as: MD5:bb5533b1fd83fdfa1c3548bf36e0bcd7
+CURRENT TOTAL: 69 files :1139447084 bytes
+7 files successfully added from this folder
+
+PROCESSING(D): dossier_spectre_temporel_d4x00w2s
+              Does not exist on server.
+Preproc: dossier_spectre_temporel_d4x00w2s
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_spectre_temporel_d4x00w2s\fichier_cartographie_principal_k9ck0l71.svg
+               Does not yet exist on server.
+               UPLOADED as: MD5:6955fcfe836bf2eed5a446573a182a3d
+CURRENT TOTAL: 70 files :1149447084 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_spectre_temporel_d4x00w2s\fichier_collection_intermediaire_3tcu7nrt.jpg
+               Does not yet exist on server.
+               UPLOADED as: MD5:2a52c009c55754d0ee1883b59c668975
+CURRENT TOTAL: 71 files :1159447084 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_spectre_temporel_d4x00w2s\fichier_echantillon_derive_bv78croi.tiff
+               Does not yet exist on server.
+               UPLOADED as: MD5:cb8ca4ed5eee6f2c84952686d1b43569
+CURRENT TOTAL: 72 files :1169447084 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_spectre_temporel_d4x00w2s\fichier_mesure_derive_udgamb9h.tiff
+               Does not yet exist on server.
+               UPLOADED as: MD5:71d120a40d60e2618f0b74648ec340dc
+CURRENT TOTAL: 73 files :1179447084 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_spectre_temporel_d4x00w2s\fichier_protocole_ancien_jw4ut386.feather
+               Does not yet exist on server.
+               UPLOADED as: MD5:7fd71ebe400b2ce4e680ad480fef472b
+CURRENT TOTAL: 74 files :1189582638 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_spectre_temporel_d4x00w2s\fichier_serie_local_0ioz06fj.json
+               Does not yet exist on server.
+               UPLOADED as: MD5:62f97433556a1d80dd3a21c286223ea2
+CURRENT TOTAL: 75 files :1199582638 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\dossier_spectre_temporel_d4x00w2s\fichier_spectre_ancien_bnqb310u.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:bc422152ac453ffb9a462c58c1c00f9f
+CURRENT TOTAL: 76 files :1255516440 bytes
+7 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\fichier_analyse_qualite_775dyidw.feather
+               Does not yet exist on server.
+               UPLOADED as: MD5:65c52224221dc59151ebc979c2d84381
+CURRENT TOTAL: 77 files :1433003311 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\fichier_experience_reference_3o2evzty.json
+               Does not yet exist on server.
+               UPLOADED as: MD5:0dd5137d0e7dfc270b8e4b8c4bb6f3e1
+CURRENT TOTAL: 78 files :1443003311 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\fichier_resultat_qualite_sgkij42i.odt
+               Does not yet exist on server.
+               UPLOADED as: MD5:c1b16805e34e61e48ce45e7c117f1235
+CURRENT TOTAL: 79 files :1453003311 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_climat_final_60sizfjv\fichier_spectre_temporel_45mc1bsf.xml
+               Does not yet exist on server.
+               UPLOADED as: MD5:8dc4e77145ea24c96de91c878cc4d81e
+CURRENT TOTAL: 80 files :1463003311 bytes
+4 files successfully added from this folder
+
+PROCESSING(D): dossier_cohorte_central_4qx9342z
+              Does not exist on server.
+Preproc: dossier_cohorte_central_4qx9342z
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_cohorte_central_4qx9342z\fichier_inventaire_complet_eo2yk1lt.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:d13cfbbcdb0938d8e192bfc2c0b13b77
+CURRENT TOTAL: 81 files :1473003311 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_cohorte_central_4qx9342z\fichier_spectre_complet_vlavojsu.npy
+               Does not yet exist on server.
+               UPLOADED as: MD5:41c3952f776e400efce3b3ba209e6161
+CURRENT TOTAL: 82 files :1483003311 bytes
+2 files successfully added from this folder
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_cohorte_central_rzlmzvq3
+              Does not exist on server.
+Preproc: dossier_cohorte_central_rzlmzvq3
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_cohorte_central_rzlmzvq3\fichier_campagne_controle_ejq64jwy.tsv
+               Does not yet exist on server.
+               UPLOADED as: MD5:32502f5c946ea441b7eda78ef3a6189d
+CURRENT TOTAL: 83 files :1764319125 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_cohorte_central_rzlmzvq3\fichier_campagne_final_u2dnw5rw.dicom
+               Does not yet exist on server.
+               UPLOADED as: MD5:46a993c42295f09661f87725ec7dd6ef
+CURRENT TOTAL: 84 files :1774319125 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_cohorte_central_rzlmzvq3\fichier_inventaire_qualite_ebjzg4ll.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:ec795d853d648bec0a8529b75d453359
+CURRENT TOTAL: 85 files :1784319125 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_cohorte_central_rzlmzvq3\fichier_resultat_derive_9ctouss2.feather
+               Does not yet exist on server.
+               UPLOADED as: MD5:06ca45c61759809c747050998d19aaef
+CURRENT TOTAL: 86 files :1794319125 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_cohorte_central_rzlmzvq3\fichier_resultat_initial_1aqgl1go.csv
+               Does not yet exist on server.
+               UPLOADED as: MD5:e20f44e923334b55c59d52a2f7b7db8d
+CURRENT TOTAL: 87 files :2033296785 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_cohorte_central_rzlmzvq3\fichier_spectre_central_jmdzpex3.jsonl
+               Does not yet exist on server.
+               UPLOADED as: MD5:75afa6cfeaff200ec2a6ed003d9ea9b3
+CURRENT TOTAL: 88 files :2043296785 bytes
+6 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_inventaire_reference_kyungzp4
+              Does not exist on server.
+Preproc: dossier_inventaire_reference_kyungzp4
+
+PROCESSING(D): dossier_collection_complet_7sku3t2v
+              Does not exist on server.
+Preproc: dossier_collection_complet_7sku3t2v
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_capteur_complet_pu7ayrie.xlsm
+               Does not yet exist on server.
+               UPLOADED as: MD5:69861c40eeb878bbaa44458aa85d8727
+CURRENT TOTAL: 89 files :2087307775 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_cellule_reference_tct9ccao.dcm
+               Does not yet exist on server.
+               UPLOADED as: MD5:e14eb9a8e0548616baba37e9a6a4d192
+CURRENT TOTAL: 90 files :2097307775 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_climat_controle_64y7kd4n.jpg
+               Does not yet exist on server.
+               UPLOADED as: MD5:51c5246849942d0e366437e1c6138dc2
+CURRENT TOTAL: 91 files :2107307775 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_collection_derive_9hizlsm3.svg
+               Does not yet exist on server.
+               UPLOADED as: MD5:34a7731ce4a4d9a3517f68f918b8e5b9
+CURRENT TOTAL: 92 files :2117314815 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_echantillon_regional_taarvny5.yaml
+               Does not yet exist on server.
+               UPLOADED as: MD5:459570c321fd037bf7e6d0283f0fe7b1
+CURRENT TOTAL: 93 files :2127314815 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_experience_calibre_vqis2dq9.tar
+               Does not yet exist on server.
+               UPLOADED as: MD5:a484a54f5b849616b100503426603b5b
+CURRENT TOTAL: 94 files :2137314815 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_experience_intermediaire_t0nfrsg2.txt
+               Does not yet exist on server.
+               UPLOADED as: MD5:580c56c7c4a49f60b7af51ffbe3ec758
+CURRENT TOTAL: 95 files :2147314827 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_mesure_ancien_gkeq5ddg.txt
+               Does not yet exist on server.
+               UPLOADED as: MD5:8efb6591f1aaada00367cc57387d275b
+CURRENT TOTAL: 96 files :2157314827 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_protocole_ancien_nwbyloh7.dcm
+               Does not yet exist on server.
+               UPLOADED as: MD5:0e6e620dcd14c697c2791478bf28b9c1
+CURRENT TOTAL: 97 files :2167314827 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_simulation_intermediaire_mu06iq5j.csv
+               Does not yet exist on server.
+               UPLOADED as: MD5:1ce581d7c6d248a7ea016c9d3d22f592
+CURRENT TOTAL: 98 files :2177323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_collection_complet_7sku3t2v\fichier_terrain_derive_swxwpfrg.txt
+               Does not yet exist on server.
+               UPLOADED as: MD5:4e737330dc56dd205c8ce844c56ec928
+CURRENT TOTAL: 99 files :2187323876 bytes
+11 files successfully added from this folder
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_serie_calibre_6kdfw1ck
+              Does not exist on server.
+Preproc: dossier_serie_calibre_6kdfw1ck
+
+PROCESSING(D): dossier_cohorte_temporel_q1bfpfvg
+              Does not exist on server.
+Preproc: dossier_cohorte_temporel_q1bfpfvg
+
+PROCESSING(D): dossier_observation_controle_hz1ayw72
+              Does not exist on server.
+Preproc: dossier_observation_controle_hz1ayw72
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_cohorte_temporel_q1bfpfvg\dossier_observation_controle_hz1ayw72\fichier_campagne_annexe_180td6ch.tsv
+               Does not yet exist on server.
+               UPLOADED as: MD5:4606c2a06a212e55f162c4a9fbc7c445
+CURRENT TOTAL: 100 files :2197323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_cohorte_temporel_q1bfpfvg\dossier_observation_controle_hz1ayw72\fichier_echantillon_temporel_shaj39e9.xls
+               Does not yet exist on server.
+               UPLOADED as: MD5:2dae1a1c2459385025fa5b1b2da9ca14
+CURRENT TOTAL: 101 files :2207323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_cohorte_temporel_q1bfpfvg\dossier_observation_controle_hz1ayw72\fichier_inventaire_calibre_6ozb09s4.mat
+               Does not yet exist on server.
+               UPLOADED as: MD5:7247bd75d27ad2378a54ec4aeb397aed
+CURRENT TOTAL: 102 files :2217323876 bytes
+3 files successfully added from this folder
+Dataset locked - waiting...
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_cohorte_temporel_q1bfpfvg\fichier_capteur_valide_h1o5rc8g.npz
+               Does not yet exist on server.
+               UPLOADED as: MD5:3fb43ee161fb7cc264b829ccb944276d
+CURRENT TOTAL: 103 files :2227323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_cohorte_temporel_q1bfpfvg\fichier_echantillon_regional_v3cne87u.xlsm
+               Does not yet exist on server.
+               UPLOADED as: MD5:d901b2aaa8adc9fc076ac269f983a11d
+CURRENT TOTAL: 104 files :2237323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_cohorte_temporel_q1bfpfvg\fichier_modele_central_ec33lkdg.pdf
+               Does not yet exist on server.
+               UPLOADED as: MD5:ab48a3d2d321fee304bf8ad514ac0919
+CURRENT TOTAL: 105 files :2247323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_cohorte_temporel_q1bfpfvg\fichier_protocole_central_neop67dj.hdf5
+               Does not yet exist on server.
+               UPLOADED as: MD5:5848ceed3227e86e381dae16b7e43e58
+CURRENT TOTAL: 106 files :2257323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_cohorte_temporel_q1bfpfvg\fichier_terrain_intermediaire_m4ag2y4d.xml
+               Does not yet exist on server.
+               UPLOADED as: MD5:41bcd1562b30e627c44ca01e6ff4f228
+CURRENT TOTAL: 107 files :2267323876 bytes
+5 files successfully added from this folder
+
+PROCESSING(D): dossier_recherche_initial_tx227km9
+              Does not exist on server.
+Preproc: dossier_recherche_initial_tx227km9
+
+PROCESSING(D): dossier_collection_derive_9qyhndto
+              Does not exist on server.
+Preproc: dossier_collection_derive_9qyhndto
+
+PROCESSING(D): dossier_modele_temporel_njju0gid
+              Does not exist on server.
+Preproc: dossier_modele_temporel_njju0gid
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\dossier_collection_derive_9qyhndto\dossier_modele_temporel_njju0gid\fichier_archive_qualite_5ql28q6f.rtf
+               Does not yet exist on server.
+               UPLOADED as: MD5:88ef9f158dfbe04a05e15a2202936227
+CURRENT TOTAL: 108 files :2277323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\dossier_collection_derive_9qyhndto\dossier_modele_temporel_njju0gid\fichier_atlas_complet_vz3simqg.dicom
+               Does not yet exist on server.
+               UPLOADED as: MD5:bb0a94ef519fd28b22fa01cb3946957c
+CURRENT TOTAL: 109 files :2287323876 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\dossier_collection_derive_9qyhndto\dossier_modele_temporel_njju0gid\fichier_biologie_central_xmt2glf8.xlsb
+               Does not yet exist on server.
+               UPLOADED as: MD5:8243fc9de6eaddcce51cf1f2dbee467f
+CURRENT TOTAL: 110 files :2297323877 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\dossier_collection_derive_9qyhndto\dossier_modele_temporel_njju0gid\fichier_capteur_intermediaire_e5d7o3w4.odt
+               Does not yet exist on server.
+               UPLOADED as: MD5:aaff686eaea9a3b69a7f34b0b6f59170
+CURRENT TOTAL: 111 files :2307323877 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\dossier_collection_derive_9qyhndto\dossier_modele_temporel_njju0gid\fichier_inventaire_intermediaire_2088gqsl.csv
+               Does not yet exist on server.
+               UPLOADED as: MD5:8e1746da3d926db91d38825b6e749382
+CURRENT TOTAL: 112 files :2317323877 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\dossier_collection_derive_9qyhndto\dossier_modele_temporel_njju0gid\fichier_observation_annexe_l8y76gpb.doc
+               Does not yet exist on server.
+               UPLOADED as: MD5:0be2eea24f1cfc377acaf949d8009dc4
+CURRENT TOTAL: 113 files :2327323877 bytes
+6 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\dossier_collection_derive_9qyhndto\fichier_inventaire_qualite_46on49s4.zip
+               Does not yet exist on server.
+               UPLOADED as: MD5:d49c5f55bfdb7987df188d2dc1146d6c
+CURRENT TOTAL: 114 files :2337323877 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\dossier_collection_derive_9qyhndto\fichier_recherche_local_jox2ju6g.pdf
+               Does not yet exist on server.
+               UPLOADED as: MD5:2b5980a786fb2791729ec673e2ff3e73
+CURRENT TOTAL: 115 files :2559840895 bytes
+2 files successfully added from this folder
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\fichier_cartographie_brut_trm491kc.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:42e99d3c7968a8fe08063503578e9a66
+CURRENT TOTAL: 116 files :2569840895 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\fichier_experience_qualite_2ffxk9z5.h5
+               Does not yet exist on server.
+               UPLOADED as: MD5:e5d7492f1e40e3350bead1f8856cd57f
+CURRENT TOTAL: 117 files :2579840895 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\fichier_mesure_final_sppcfml4.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:66166feefbe4416320c00fbc1877377c
+CURRENT TOTAL: 118 files :2589840895 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\fichier_recherche_derive_hmbq54fp.xlsb
+               Does not yet exist on server.
+               UPLOADED as: MD5:b4b4218d9816135a619d20b2c18dfad1
+CURRENT TOTAL: 119 files :2599840895 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\dossier_recherche_initial_tx227km9\fichier_simulation_controle_d21wzkqs.rdata
+               Does not yet exist on server.
+               UPLOADED as: MD5:a1a84a99399b60d9741d504cbd3c7e7d
+CURRENT TOTAL: 120 files :2618539571 bytes
+5 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\fichier_archive_valide_m7f944dj.xml
+               Does not yet exist on server.
+               UPLOADED as: MD5:3bff318d68f1cfa3f08a0d2254d6197c
+CURRENT TOTAL: 121 files :2628539571 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\fichier_atlas_complet_13ifgzni.hdf5
+               Does not yet exist on server.
+               UPLOADED as: MD5:2e80ea504b0cb2f58d24984717cddaa1
+CURRENT TOTAL: 122 files :2638539571 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\fichier_cohorte_brut_mtnupgfv.hdf5
+               Does not yet exist on server.
+               UPLOADED as: MD5:aa39dce77b1935b4a1ca1a863e6657f9
+CURRENT TOTAL: 123 files :2648539571 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\fichier_collection_temporel_ok4n4dtf.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:e7f8509c833d13a6e79ef9fde638ad49
+CURRENT TOTAL: 124 files :2658539571 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\fichier_protocole_valide_4ptmu3fg.dicom
+               Does not yet exist on server.
+               UPLOADED as: MD5:682843cd90da927cdcf8ae7beb2e070a
+CURRENT TOTAL: 125 files :2668539571 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\fichier_recherche_qualite_p250h5x0.mat
+               Does not yet exist on server.
+               UPLOADED as: MD5:6eb9f3a69a1ab89f4c447f353cd0a3ff
+CURRENT TOTAL: 126 files :2678539571 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_serie_calibre_6kdfw1ck\fichier_simulation_annexe_0dcft4my.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:eb8436e89ff59b86d75c3bc4782f42fc
+CURRENT TOTAL: 127 files :2688539618 bytes
+7 files successfully added from this folder
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_terrain_final_61y4cj95
+              Does not exist on server.
+Preproc: dossier_terrain_final_61y4cj95
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_terrain_final_61y4cj95\fichier_cellule_regional_fkhh6cht.tiff
+               Does not yet exist on server.
+               UPLOADED as: MD5:11ccde03bbc2de680a1f81708f443401
+CURRENT TOTAL: 128 files :2698539618 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_terrain_final_61y4cj95\fichier_climat_intermediaire_o9okb7nk.tar
+               Does not yet exist on server.
+               UPLOADED as: MD5:6161c8beffddec494f54b629735e84ad
+CURRENT TOTAL: 129 files :2708539618 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_terrain_final_61y4cj95\fichier_imagerie_principal_455sqkse.dcm
+               Does not yet exist on server.
+               UPLOADED as: MD5:24e51aeeb79c590c566718cf665fa41a
+CURRENT TOTAL: 130 files :2763960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_terrain_final_61y4cj95\fichier_protocole_brut_n5eqojsy.sav
+               Does not yet exist on server.
+               UPLOADED as: MD5:c7472145e0cd61ba56358b0822aad796
+CURRENT TOTAL: 131 files :2773960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_terrain_final_61y4cj95\fichier_simulation_controle_qo48z1e7.npz
+               Does not yet exist on server.
+               UPLOADED as: MD5:c6dfcd4fea899d3b681308e7fb9bcb6e
+CURRENT TOTAL: 132 files :2783960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\dossier_terrain_final_61y4cj95\fichier_simulation_final_gbwtv37s.xlsx
+               Does not yet exist on server.
+               UPLOADED as: MD5:4a27bc9298b9dc2efe2f4ee41ef45ff1
+CURRENT TOTAL: 133 files :2793960293 bytes
+6 files successfully added from this folder
+Dataset locked - waiting...
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\fichier_campagne_brut_fjykzre9.xls
+               Does not yet exist on server.
+               UPLOADED as: MD5:bdade09ad6fea2dd6e6fd6d6d33691cd
+CURRENT TOTAL: 134 files :2803960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\fichier_climat_controle_7vul8t1a.mat
+               Does not yet exist on server.
+               UPLOADED as: MD5:8c475cc5751377c5b666b9a7d87e9d1d
+CURRENT TOTAL: 135 files :2813960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\fichier_cohorte_central_gufbrycb.dcm
+               Does not yet exist on server.
+               UPLOADED as: MD5:b0364e28f6659bec0312c5f91c0a0d42
+CURRENT TOTAL: 136 files :2823960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\fichier_observation_local_22pw3s0i.npy
+               Does not yet exist on server.
+               UPLOADED as: MD5:dba155ed56bac9e48d36943283660164
+CURRENT TOTAL: 137 files :2833960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\fichier_observation_regional_y9b0zkkl.xlsm
+               Does not yet exist on server.
+               UPLOADED as: MD5:e5e5d467a643231f2ad755ef33124eb5
+CURRENT TOTAL: 138 files :2843960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_inventaire_reference_kyungzp4\fichier_terrain_local_161of6tn.hdf5
+               Does not yet exist on server.
+               UPLOADED as: MD5:a67397dac88ca4c8446a84e273c3145b
+CURRENT TOTAL: 139 files :2853960293 bytes
+6 files successfully added from this folder
+
+PROCESSING(D): dossier_mesure_annexe_ebfb033m
+              Does not exist on server.
+Preproc: dossier_mesure_annexe_ebfb033m
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_annexe_ebfb033m\fichier_biologie_reference_ypn0t7y1.h5
+               Does not yet exist on server.
+               UPLOADED as: MD5:82a9019371234fec7626df732d4ca5c9
+CURRENT TOTAL: 140 files :2863960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_annexe_ebfb033m\fichier_climat_temporel_kkvnlkw7.hdf5
+               Does not yet exist on server.
+               UPLOADED as: MD5:64dff52f743896638e521d9bc53bb991
+CURRENT TOTAL: 141 files :2873960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_annexe_ebfb033m\fichier_cohorte_ancien_j68ny0b3.rtf
+               Does not yet exist on server.
+               UPLOADED as: MD5:f109cd5c3905c4f2369dd452d1969a43
+CURRENT TOTAL: 142 files :2883960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_annexe_ebfb033m\fichier_recherche_central_gaj9mzib.jsonl
+               Does not yet exist on server.
+               UPLOADED as: MD5:632e95857de885ef98d1382cd6c1f97f
+CURRENT TOTAL: 143 files :2893960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_annexe_ebfb033m\fichier_recherche_central_n6sfahhs.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:0117eea6a2e3ecccbce571029b03fb90
+CURRENT TOTAL: 144 files :2903960293 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_annexe_ebfb033m\fichier_terrain_calibre_xj28jqwh.npy
+               Does not yet exist on server.
+               UPLOADED as: MD5:60a869af41426fcee77ea0bb412e8c31
+CURRENT TOTAL: 145 files :2913960293 bytes
+6 files successfully added from this folder
+
+PROCESSING(D): dossier_mesure_temporel_qlma8fte
+              Does not exist on server.
+Preproc: dossier_mesure_temporel_qlma8fte
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_temporel_qlma8fte\fichier_archive_calibre_7tf7k4n3.csv
+               Does not yet exist on server.
+               UPLOADED as: MD5:ac12bf642ed3b25a8c6a78473247df2e
+CURRENT TOTAL: 146 files :2923960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_temporel_qlma8fte\fichier_biologie_intermediaire_988kc5xu.sav
+               Does not yet exist on server.
+               UPLOADED as: MD5:1d682e05eec4aa316f1be01206ff2846
+CURRENT TOTAL: 147 files :2933960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_temporel_qlma8fte\fichier_cohorte_regional_agb75phq.mp4
+               Does not yet exist on server.
+               UPLOADED as: MD5:a2753532a3a406ba0a182edf6d170614
+CURRENT TOTAL: 148 files :2943960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_temporel_qlma8fte\fichier_recherche_qualite_t6f1117y.mat
+               Does not yet exist on server.
+               UPLOADED as: MD5:bd366ab09661dacb851e35ad2a3dc884
+CURRENT TOTAL: 149 files :2953960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_mesure_temporel_qlma8fte\fichier_simulation_derive_jylbn5v3.npy
+               Does not yet exist on server.
+               UPLOADED as: MD5:661ba4b77660b80852eb64126a0393a4
+CURRENT TOTAL: 150 files :2963960310 bytes
+5 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_serie_annexe_y3idptmr
+              Does not exist on server.
+Preproc: dossier_serie_annexe_y3idptmr
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_annexe_y3idptmr\fichier_capteur_qualite_w65fm7q9.rdata
+               Does not yet exist on server.
+               UPLOADED as: MD5:91ffe6cee7702e72d1a8c3b0e6797d13
+CURRENT TOTAL: 151 files :2973960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_annexe_y3idptmr\fichier_protocole_annexe_vc7ljxjd.mp4
+               Does not yet exist on server.
+               UPLOADED as: MD5:731d1789706a7977800694404f9cb831
+CURRENT TOTAL: 152 files :2983960310 bytes
+2 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_serie_complet_atf0qoy1
+              Does not exist on server.
+Preproc: dossier_serie_complet_atf0qoy1
+
+PROCESSING(D): dossier_analyse_reference_fcysk05v
+              Does not exist on server.
+Preproc: dossier_analyse_reference_fcysk05v
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_analyse_reference_fcysk05v\fichier_campagne_regional_ym6uebdx.rtf
+               Does not yet exist on server.
+               UPLOADED as: MD5:624cde95ecbfb770f346d0c3c727bc81
+CURRENT TOTAL: 153 files :2993960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_analyse_reference_fcysk05v\fichier_cohorte_local_kfs00769.rdata
+               Does not yet exist on server.
+               UPLOADED as: MD5:0865a10899ecae82bdd374472701503e
+CURRENT TOTAL: 154 files :3003960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_analyse_reference_fcysk05v\fichier_experience_regional_97bh4ecj.mp4
+               Does not yet exist on server.
+               UPLOADED as: MD5:680ff29e049257b086a7378aa00e2e6f
+CURRENT TOTAL: 155 files :3013960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_analyse_reference_fcysk05v\fichier_protocole_valide_7fr1aarz.parquet
+               Does not yet exist on server.
+               UPLOADED as: MD5:f41665a1240cf0a6199265a18ec230db
+CURRENT TOTAL: 156 files :3023960310 bytes
+4 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(D): dossier_serie_derive_yyiuwegd
+              Does not exist on server.
+Preproc: dossier_serie_derive_yyiuwegd
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_serie_derive_yyiuwegd\fichier_biologie_valide_02fvrxwk.xml
+               Does not yet exist on server.
+               UPLOADED as: MD5:e4300b276cd824b4bab268602f5bda86
+CURRENT TOTAL: 157 files :3033960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_serie_derive_yyiuwegd\fichier_campagne_central_qpxgpdvg.xml
+               Does not yet exist on server.
+               UPLOADED as: MD5:dea404d7f640aacadd04e90965d45f18
+CURRENT TOTAL: 158 files :3043960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_serie_derive_yyiuwegd\fichier_capteur_reference_pv3wsa8h.txt
+               Does not yet exist on server.
+               UPLOADED as: MD5:cff5e172c360b6ffa7c5f9ca6bbad3bf
+CURRENT TOTAL: 159 files :3053960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_serie_derive_yyiuwegd\fichier_cartographie_final_u4ameaax.npy
+               Does not yet exist on server.
+               UPLOADED as: MD5:a5442168ff875f55e30535528fe68636
+CURRENT TOTAL: 160 files :3063960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_serie_derive_yyiuwegd\fichier_imagerie_initial_7ty5hfs5.dicom
+               Does not yet exist on server.
+               UPLOADED as: MD5:786034faffff6bcaafafd14e6cd9ab85
+CURRENT TOTAL: 161 files :3073960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_serie_derive_yyiuwegd\fichier_imagerie_intermediaire_lq7xh08t.xls
+               Does not yet exist on server.
+               UPLOADED as: MD5:9301dd86c23fe2e63427063270f4d1eb
+CURRENT TOTAL: 162 files :3083960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_serie_derive_yyiuwegd\fichier_mesure_controle_e6vkwe40.feather
+               Does not yet exist on server.
+               UPLOADED as: MD5:ac6ad3fb377eb3f774a0e9f606945d36
+CURRENT TOTAL: 163 files :3093960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\dossier_serie_derive_yyiuwegd\fichier_serie_principal_biqvdipn.mat
+               Does not yet exist on server.
+               UPLOADED as: MD5:4ac4d80a273b93235b2c868c1826a3b2
+CURRENT TOTAL: 164 files :3103960310 bytes
+8 files successfully added from this folder
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\fichier_biologie_complet_7bw9fhci.gz
+               Does not yet exist on server.
+               UPLOADED as: MD5:e7ccbf924c48547be2f1a6336e446254
+CURRENT TOTAL: 165 files :3113960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\fichier_biologie_regional_h2npv41l.gz
+               Does not yet exist on server.
+               UPLOADED as: MD5:6a11713e0244bd992e4d22c0d90b2172
+CURRENT TOTAL: 166 files :3123960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\fichier_capteur_derive_42d239wk.xlsb
+               Does not yet exist on server.
+               UPLOADED as: MD5:b23f329c87b639e6edeca23943239a98
+CURRENT TOTAL: 167 files :3133960310 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\fichier_cartographie_annexe_jr549u0m.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:50f01f7b883902b6f7c6a2566f88f9d7
+CURRENT TOTAL: 168 files :3143974709 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\fichier_protocole_calibre_rd7h597q.npy
+               Does not yet exist on server.
+               UPLOADED as: MD5:3a971f20771fbb4555d81e7c61a14f92
+CURRENT TOTAL: 169 files :3159101706 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\fichier_recherche_temporel_mg409lma.pdf
+               Does not yet exist on server.
+               UPLOADED as: MD5:d8ccce49c8722772a2136852ed8718a5
+CURRENT TOTAL: 170 files :3169101706 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_serie_complet_atf0qoy1\fichier_resultat_qualite_0gu8v2dd.xls
+               Does not yet exist on server.
+               UPLOADED as: MD5:84dd5d546dad0443f340098e3c3a92ff
+CURRENT TOTAL: 171 files :3179101706 bytes
+7 files successfully added from this folder
+
+PROCESSING(D): dossier_simulation_ancien_u5denziq
+              Does not exist on server.
+Preproc: dossier_simulation_ancien_u5denziq
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_simulation_ancien_u5denziq\fichier_archive_local_dm4tueam.zip
+               Does not yet exist on server.
+               UPLOADED as: MD5:93baaa89c596c51f170371f40d6b986c
+CURRENT TOTAL: 172 files :3189101706 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_simulation_ancien_u5denziq\fichier_capteur_derive_jm2d0tye.h5
+               Does not yet exist on server.
+               UPLOADED as: MD5:eb91a80143424722d7a8676430d3c20b
+CURRENT TOTAL: 173 files :3199101706 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_simulation_ancien_u5denziq\fichier_capteur_local_ghx26zuf.parquet
+               Does not yet exist on server.
+               UPLOADED as: MD5:9bd9bc3b9f291ad5695b661d3df106a2
+CURRENT TOTAL: 174 files :3209101706 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_simulation_ancien_u5denziq\fichier_mesure_brut_tapalxeq.npz
+               Does not yet exist on server.
+               UPLOADED as: MD5:c30d9418617c2b3e52d87c1729d4de37
+CURRENT TOTAL: 175 files :3219101706 bytes
+4 files successfully added from this folder
+
+PROCESSING(D): dossier_terrain_controle_5vx2papv
+              Does not exist on server.
+Preproc: dossier_terrain_controle_5vx2papv
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_terrain_controle_5vx2papv\fichier_analyse_complet_n1vzk8ae.doc
+               Does not yet exist on server.
+               UPLOADED as: MD5:e97a3d139b767cda8d0aa96d84b8a0ec
+CURRENT TOTAL: 176 files :3229101714 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_terrain_controle_5vx2papv\fichier_analyse_final_ucravaso.svg
+               Does not yet exist on server.
+               UPLOADED as: MD5:968a6cb8741906a1d211d502435ef804
+CURRENT TOTAL: 177 files :3239101714 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_terrain_controle_5vx2papv\fichier_cellule_complet_33um8xsw.mp4
+               Does not yet exist on server.
+               UPLOADED as: MD5:fe3caf677f42b8a12bbd5811333dc570
+CURRENT TOTAL: 178 files :3249101714 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_terrain_controle_5vx2papv\fichier_cellule_intermediaire_oxuko2hh.zip
+               Does not yet exist on server.
+               UPLOADED as: MD5:0e1181f64b90624d7c5f794a6d915531
+CURRENT TOTAL: 179 files :3259101714 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_terrain_controle_5vx2papv\fichier_echantillon_temporel_wpn2x5mw.yaml
+               Does not yet exist on server.
+               UPLOADED as: MD5:8c608cc235ec2de7b840ab108bbe3679
+CURRENT TOTAL: 180 files :3269101714 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_terrain_controle_5vx2papv\fichier_protocole_central_ecf2qtst.doc
+               Does not yet exist on server.
+               UPLOADED as: MD5:7b77262df784f9ce5f8dc72a745e0f09
+CURRENT TOTAL: 181 files :3279101714 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\dossier_terrain_controle_5vx2papv\fichier_simulation_initial_zr8khn80.tsv
+               Does not yet exist on server.
+               UPLOADED as: MD5:6c871efcac9d14c3b3f32605eefefe58
+CURRENT TOTAL: 182 files :3289101714 bytes
+7 files successfully added from this folder
+Dataset locked - waiting...
+Dataset locked - waiting...
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_analyse_central_khx6vlez.docx
+               Does not yet exist on server.
+               UPLOADED as: MD5:0124502558b5681498ba3a8d429d797d
+CURRENT TOTAL: 183 files :3299103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_atlas_principal_jltvz0jj.odt
+               Does not yet exist on server.
+               UPLOADED as: MD5:980fd95cd22d3a93a32e32501facf746
+CURRENT TOTAL: 184 files :3309103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_biologie_final_0ic3ph6p.doc
+               Does not yet exist on server.
+               UPLOADED as: MD5:bec69ab89c6e97e6f4466715d2f8ee89
+CURRENT TOTAL: 185 files :3319103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_echantillon_controle_8fe4d3xt.doc
+               Does not yet exist on server.
+               UPLOADED as: MD5:31570575479440d14a6266fb20d00071
+CURRENT TOTAL: 186 files :3329103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_imagerie_controle_nah7a8jd.h5
+               Does not yet exist on server.
+               UPLOADED as: MD5:d700042dec8862f0786fa6ff053a88d6
+CURRENT TOTAL: 187 files :3339103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_imagerie_principal_81sqewql.rtf
+               Does not yet exist on server.
+               UPLOADED as: MD5:c090be33fe882d46a5d8cb7e8a17a64f
+CURRENT TOTAL: 188 files :3349103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_observation_brut_v5w2dvqh.xlsm
+               Does not yet exist on server.
+               UPLOADED as: MD5:0b4d2a9128dbbd1c99347f5a2fe7e2ce
+CURRENT TOTAL: 189 files :3359103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_resultat_initial_ha47iucj.mp4
+               Does not yet exist on server.
+               UPLOADED as: MD5:a919d9c73ba02edd2d9d9e895f9926a5
+CURRENT TOTAL: 190 files :3369103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_simulation_controle_n5x9oeed.gz
+               Does not yet exist on server.
+               UPLOADED as: MD5:c747922184ad23f279fc14cad044b5be
+CURRENT TOTAL: 191 files :3379103389 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_simulation_derive_gpe2o1q5.zip
+               Does not yet exist on server.
+               UPLOADED as: MD5:834802996dad6fef3173f3a0dd176339
+CURRENT TOTAL: 192 files :3389103547 bytes
+
+PROCESSING(F): D:\projets_perso\fakeDataset\datasets_generes\fake_dataset_20260623_185330_0tqtm\fichier_spectre_ancien_ivco01ju.mp4
+               Does not yet exist on server.
+               UPLOADED as: MD5:af9b239adfc89d03a2de9424aa8cebff
+CURRENT TOTAL: 193 files :3399103547 bytes
+11 files successfully added from this folder
+0 files successfully added from this folder
+0 files successfully added from this folder

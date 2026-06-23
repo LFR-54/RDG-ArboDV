@@ -80,6 +80,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private ToolStripMenuItem menuDelete;
         private ToolStripMenuItem menuSetDest;
         private ToolStripMenuItem menuFlattenRemote;
+        private TreeNode _clickedLocalNode;
         private List<DataverseFileItem> _remoteFiles = new List<DataverseFileItem>();
 
         // Constructeur
@@ -527,13 +528,23 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         }
 
 
-        // Thread-safe setter pour un Label
-        private void SafeSetLabel(Label lbl, string text)
+        // Thread-safe setter pour un Label avec couleur optionnelle
+        private void SafeSetLabel(Label lbl, string text, Color? color = null)
         {
+            Color targetColor = color ?? SystemColors.ControlText;
             if (lbl.InvokeRequired)
-                lbl.Invoke((Action)(() => lbl.Text = text));
+            {
+                lbl.Invoke((Action)(() =>
+                {
+                    lbl.Text = text;
+                    lbl.ForeColor = targetColor;
+                }));
+            }
             else
+            {
                 lbl.Text = text;
+                lbl.ForeColor = targetColor;
+            }
         }
 
         // Thread-safe append pour le TextBox de logs
@@ -921,6 +932,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             // Si le nœud cliqué fait partie de la sélection multiple, on affiche le menu
             if (msTree.SelectedNodes.Contains(e.Node))
             {
+                _clickedLocalNode = e.Node;
                 contextMenuTree.Show(treeViewSelected, e.Location);
             }
             // Sinon, on n'affiche rien (cliquer droit en dehors d'une sélection multiple est ignoré)
@@ -929,7 +941,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         // Clic droit => "Aplatir ce dossier"
         private void toolStripMenuItemFlatten_Click(object sender, EventArgs e)
         {
-            TreeNode folderNode = treeViewSelected.SelectedNode;
+            TreeNode folderNode = _clickedLocalNode;
             if (folderNode == null) return;
 
             // 0) Sécurité : on ne fait rien si ce n’est pas un dossier réel
@@ -972,6 +984,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
             /* 3) On enlève le nœud dossier lui-même */
             folderNode.Remove();
+            _clickedLocalNode = null;
 
             UpdateStatus();
         }
@@ -1533,6 +1546,20 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                     RefreshStatLabels();
                 }
             }
+            // 5. Dataset locked
+            else if (line.Contains("Dataset locked"))
+            {
+                string statusMsg = IsFrench
+                    ? "Jeu de données verrouillé - attente de la libération par le serveur..."
+                    : "Dataset locked - waiting for the server to release the lock...";
+                SafeSetLabel(labelStatus, statusMsg, Color.FromArgb(220, 100, 0)); // Orange foncé lisible
+
+                progressBar.Invoke((Action)(() =>
+                {
+                    progressBar.Style = ProgressBarStyle.Marquee;
+                    progressBar.MarqueeAnimationSpeed = 30;
+                }));
+            }
         }
 
         private void ParseStderrLine(string line)
@@ -1937,9 +1964,13 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                         return;
                     }
 
-                    treeViewRemote.Nodes.Clear();
+                    _remoteFiles.Clear();
+                    _remotePaths.Clear();
+                    CompareLocalWithRemote(_remotePaths);
+
                     if (apiResponse.Data.Count == 0)
                     {
+                        treeViewRemote.Nodes.Clear();
                         string noFilesMsg = IsFrench ? "Aucun fichier sur le serveur." : "No files on the server.";
                         treeViewRemote.Nodes.Add(new TreeNode(noFilesMsg) { ForeColor = Color.Gray });
                         return;
@@ -2413,55 +2444,39 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
                     try
                     {
-                        var semaphore = new SemaphoreSlim(1); // Run sequentially to avoid server-side dataset lock conflicts
-                        var tasks = new List<Task>();
-
                         for (int i = 0; i < moves.Count; i++)
                         {
+                            token.ThrowIfCancellationRequested();
                             var move = moves[i];
-                            tasks.Add(Task.Run(async () =>
+                            var item = move.Item1;
+                            string newDir = move.Item2;
+                            long fileId = item.DataFile?.Id ?? 0;
+                            string filename = item.Label;
+
+                            if (i > 0)
                             {
-                                await semaphore.WaitAsync(token);
-                                try
-                                {
-                                    token.ThrowIfCancellationRequested();
-                                    var item = move.Item1;
-                                    string newDir = move.Item2;
-                                    long fileId = item.DataFile?.Id ?? 0;
-                                    string filename = item.Label;
+                                // Petit délai pour éviter les bannissements IP (rate limiting) par le pare-feu du serveur
+                                await Task.Delay(350, token);
+                            }
 
-                                    lock (moves)
-                                    {
-                                        completedCount++;
-                                    }
-                                    int currentCompleted = completedCount;
+                            completedCount++;
+                            int currentCompleted = completedCount;
 
-                                    string statusMsg = IsFrench
-                                        ? $"Déplacement {currentCompleted}/{moves.Count} : {filename}..."
-                                        : $"Moving {currentCompleted}/{moves.Count} : {filename}...";
-                                    SafeSetLabel(labelStatus, statusMsg);
+                            string statusMsg = IsFrench
+                                ? $"Déplacement {currentCompleted}/{moves.Count} : {filename}..."
+                                : $"Moving {currentCompleted}/{moves.Count} : {filename}...";
+                            SafeSetLabel(labelStatus, statusMsg);
 
-                                    bool success = await UpdateRemoteFileMetadataAsync(fileId, filename, newDir, api, srv, silent: true, token: token);
-                                    
-                                    lock (moves)
-                                    {
-                                        if (success) successCount++;
-                                        else errorCount++;
-                                    }
+                            bool success = await UpdateRemoteFileMetadataAsync(fileId, filename, newDir, api, srv, silent: true, token: token);
 
-                                    progressBar.Invoke((Action)(() =>
-                                    {
-                                        progressBar.Value = currentCompleted;
-                                    }));
-                                }
-                                finally
-                                {
-                                    semaphore.Release();
-                                }
+                            if (success) successCount++;
+                            else errorCount++;
+
+                            progressBar.Invoke((Action)(() =>
+                            {
+                                progressBar.Value = currentCompleted;
                             }));
                         }
-
-                        await Task.WhenAll(tasks);
 
                         string completeMsg = IsFrench
                             ? $"Déplacement terminé ! {successCount} réussi(s), {errorCount} échoué(s)."
@@ -2613,58 +2628,42 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             int errorCount = 0;
             int completedCount = 0;
 
-            try
+                        try
             {
-                var semaphore = new SemaphoreSlim(1); // Run sequentially to avoid server-side dataset lock conflicts
-                var tasks = new List<Task>();
-
                 for (int i = 0; i < moves.Count; i++)
                 {
+                    token.ThrowIfCancellationRequested();
                     var move = moves[i];
-                    tasks.Add(Task.Run(async () =>
+                    var item = move.Item1;
+                    long fileId = item.DataFile?.Id ?? 0;
+                    string filename = item.Label;
+                    string newDir = move.Item2;
+
+                    if (i > 0)
                     {
-                        await semaphore.WaitAsync(token);
-                        try
-                        {
-                            token.ThrowIfCancellationRequested();
-                            var item = move.Item1;
-                            long fileId = item.DataFile?.Id ?? 0;
-                            string filename = item.Label;
-                            string newDir = move.Item2;
+                        // Petit délai pour éviter les bannissements IP (rate limiting) par le pare-feu du serveur
+                        await Task.Delay(350, token);
+                    }
 
-                            lock (moves)
-                            {
-                                completedCount++;
-                            }
-                            int currentCompleted = completedCount;
+                    completedCount++;
+                    int currentCompleted = completedCount;
 
-                            // Set label status
-                            string statusMsg = IsFrench
-                                ? $"Aplatissement {currentCompleted}/{moves.Count} : {filename}..."
-                                : $"Flattening {currentCompleted}/{moves.Count} : {filename}...";
-                            SafeSetLabel(labelStatus, statusMsg);
+                    // Set label status
+                    string statusMsg = IsFrench
+                        ? $"Aplatissement {currentCompleted}/{moves.Count} : {filename}..."
+                        : $"Flattening {currentCompleted}/{moves.Count} : {filename}...";
+                    SafeSetLabel(labelStatus, statusMsg);
 
-                            bool success = await UpdateRemoteFileMetadataAsync(fileId, filename, newDir, api, srv, silent: true, token: token);
-                            
-                            lock (moves)
-                            {
-                                if (success) successCount++;
-                                else errorCount++;
-                            }
+                    bool success = await UpdateRemoteFileMetadataAsync(fileId, filename, newDir, api, srv, silent: true, token: token);
 
-                            progressBar.Invoke((Action)(() =>
-                            {
-                                progressBar.Value = currentCompleted;
-                            }));
-                        }
-                        finally
-                        {
-                            semaphore.Release();
-                        }
+                    if (success) successCount++;
+                    else errorCount++;
+
+                    progressBar.Invoke((Action)(() =>
+                    {
+                        progressBar.Value = currentCompleted;
                     }));
                 }
-
-                await Task.WhenAll(tasks);
 
                 string completeMsg = IsFrench
                     ? $"Aplatissement terminé ! {successCount} réussi(s), {errorCount} échoué(s)."
@@ -2769,46 +2768,34 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
             try
             {
-                var semaphore = new SemaphoreSlim(1); // Run sequentially to avoid server-side dataset lock conflicts
-                var tasks = new List<Task>();
-
                 for (int i = 0; i < fileIdsToDelete.Count; i++)
                 {
+                    token.ThrowIfCancellationRequested();
                     long id = fileIdsToDelete[i];
-                    tasks.Add(Task.Run(async () =>
+
+                    if (i > 0)
                     {
-                        await semaphore.WaitAsync(token);
-                        try
-                        {
-                            token.ThrowIfCancellationRequested();
-                            bool success = await DeleteRemoteFileHttpAsync(id, api, srv, silent: true, token: token);
-                            
-                            lock (fileIdsToDelete)
-                            {
-                                if (success) successCount++;
-                                else errorCount++;
-                                completedCount++;
-                            }
+                        // Petit délai pour éviter les bannissements IP (rate limiting) par le pare-feu du serveur
+                        await Task.Delay(350, token);
+                    }
 
-                            int currentCompleted = completedCount;
-                            progressBar.Invoke((Action)(() =>
-                            {
-                                progressBar.Value = currentCompleted;
-                            }));
+                    bool success = await DeleteRemoteFileHttpAsync(id, api, srv, silent: true, token: token);
+                    
+                    if (success) successCount++;
+                    else errorCount++;
+                    completedCount++;
 
-                            string statusMsg = IsFrench
-                                ? $"Suppression {currentCompleted}/{fileIdsToDelete.Count}..."
-                                : $"Deleting {currentCompleted}/{fileIdsToDelete.Count}...";
-                            SafeSetLabel(labelStatus, statusMsg);
-                        }
-                        finally
-                        {
-                            semaphore.Release();
-                        }
+                    int currentCompleted = completedCount;
+                    progressBar.Invoke((Action)(() =>
+                    {
+                        progressBar.Value = currentCompleted;
                     }));
-                }
 
-                await Task.WhenAll(tasks);
+                    string statusMsg = IsFrench
+                        ? $"Suppression {currentCompleted}/{fileIdsToDelete.Count}..."
+                        : $"Deleting {currentCompleted}/{fileIdsToDelete.Count}...";
+                    SafeSetLabel(labelStatus, statusMsg);
+                }
 
                 if (errorCount > 0)
                 {

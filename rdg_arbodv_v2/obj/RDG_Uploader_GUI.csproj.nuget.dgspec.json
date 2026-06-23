@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\projets_perso\\RDG ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj": {}
+    "D:\\projets_perso\\RDG-ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj": {}
   },
   "projects": {
-    "D:\\projets_perso\\RDG ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj": {
+    "D:\\projets_perso\\RDG-ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projets_perso\\RDG ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj",
+        "projectUniqueName": "D:\\projets_perso\\RDG-ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj",
         "projectName": "RDG_Uploader_GUI",
-        "projectPath": "D:\\projets_perso\\RDG ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj",
+        "projectPath": "D:\\projets_perso\\RDG-ArboDV\\rdg_arbodv_v2\\RDG_Uploader_GUI.csproj",
         "packagesPath": "C:\\Users\\Shadow\\.nuget\\packages\\",
-        "outputPath": "D:\\projets_perso\\RDG ArboDV\\rdg_arbodv_v2\\obj\\",
+        "outputPath": "D:\\projets_perso\\RDG-ArboDV\\rdg_arbodv_v2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
