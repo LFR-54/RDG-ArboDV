@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>Client bureautique Windows pour l'ajout et la gestion de fichiers dans un dataset Dataverse</strong><br />
+  <strong>Client bureautique Windows pour le dépôt, l'organisation et la gestion de fichiers dans l'entrepôt national Recherche Data Gouv</strong><br />
   <sub>Version 2.0.0</sub>
 </p>
 
@@ -31,7 +31,7 @@
 <a id="apercu"></a>
 ## Aperçu
 
-**RDG ArboDV** est un logiciel de bureau conçu pour simplifier le dépôt et la gestion de fichiers dans un dataset Dataverse (`https://recherche.data.gouv.fr`), en particulier lorsque le volume de données est important ou que l'arborescence à conserver est complexe.
+**RDG ArboDV** est un client bureautique Windows conçu spécifiquement pour l'entrepôt national **Recherche Data Gouv** (`https://recherche.data.gouv.fr`). Il permet de simplifier, structurer et sécuriser le dépôt et la gestion de fichiers au sein de vos jeux de données (datasets)., en particulier lorsque le volume de données est important ou que l'arborescence à conserver est complexe.
 
 L'application s'adresse aux équipes qui doivent préparer un versement propre, de façon maîtrisée et fiable, sans dépendre de l'interface web classique.
 
@@ -57,7 +57,7 @@ L'onglet **Fichiers sur le serveur** permet d'explorer l'arborescence distante e
 | --- | --- |
 | **Upload de fichiers et dossiers** | Prépare et transfère rapidement des lots de dépôt volumineux. |
 | **Conservation de l'arborescence** | Respecte rigoureusement la hiérarchie logique des données locales. |
-| **Aplatissement ciblé** | Réorganise les fichiers en fusionnant des dossiers avant l'envoi. |
+| **Aplatissement local & distant** | Remonte récursivement tout le contenu d'un dossier dans son répertoire parent (puis supprime le dossier vide), permettant de simplifier et restructurer l'arborescence avant l'upload ou directement sur le serveur. |
 | **Détection en temps réel des doublons** | Identifie les doublons exacts (verts) et les doublons existant ailleurs sur le serveur (chocolat) avec détails des chemins. |
 | **Visualisation de l'arborescence serveur** | Explorez de façon interactive les fichiers déjà déposés sur le serveur. |
 | **Sélection de destination graphique** | Ciblez un dossier d'upload d'un simple clic sur l'arborescence serveur. |
@@ -98,11 +98,13 @@ Si vous collez une URL complète (ex: `https://doi.org/...`), le logiciel la nor
 
 ### Utilisation depuis le code source
 
-- Disposer du SDK **.NET 8.0**.
-- Lancer la compilation de la solution C# :
+- Installer le SDK **.NET 8.0** sur votre machine.
+- Ouvrir une invite de commandes ou PowerShell dans le dossier `rdg_arbodv_v2`.
+- Lancer la compilation de la solution :
   ```powershell
   dotnet build RDG_Uploader_GUI.sln
   ```
+- L'exécutable et ses fichiers de sortie seront générés dans `bin/Debug/net8.0-windows/`. Le moteur Java y est directement intégré en tant que ressource embarquée, l'application est donc immédiatement opérationnelle sans aucune autre action.
 
 ---
 
