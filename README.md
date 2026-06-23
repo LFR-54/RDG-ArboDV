@@ -1,7 +1,7 @@
 # RDG ArboDV
 
 <p align="center">
-  <img src="assets/AppPreviewV1.3.0.png" width="100%">
+  <img src="assets/AppPreviewV2.0.0.png" width="100%">
 </p>
 
 <p align="center">
