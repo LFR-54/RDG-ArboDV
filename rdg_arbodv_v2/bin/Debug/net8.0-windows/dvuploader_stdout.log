@@ -1,0 +1,468 @@
+2026-06-23 15:22:43Z | ----------------------------------------------------------------------------------
+2026-06-23 15:22:43Z | TTTTT  DDD   L    Texas
+2026-06-23 15:22:43Z |   T    D  D  L    Digital
+2026-06-23 15:22:43Z |   T    DDD   LLL  Library
+2026-06-23 15:22:43Z | DVUploader - a command-line application to upload files to any Dataverse Dataset
+2026-06-23 15:22:43Z | Developed with support from TDL and GDCC for the Dataverse Community
+2026-06-23 15:22:43Z | See the wiki at https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader for information on using DVUploader.
+2026-06-23 15:22:43Z | ----------------------------------------------------------------------------------
+2026-06-23 15:22:43Z | -server=https://demo.recherche.data.gouv.fr -key=<apiKey> -did=doi:10.82233/PHR5Q6 -manifest=C:\Users\Shadow\AppData\Local\Temp\rdg_arbodv_manifest_6c3aebb6-1198-45a7-b0fc-bee4dfa1fe14.json -recurse
+2026-06-23 15:22:43Z | ***Parsing arguments:***
+2026-06-23 15:22:43Z | Using server: https://demo.recherche.data.gouv.fr
+2026-06-23 15:22:43Z | Using apiKey: d0c35aa7-8a54-4af5-9f8c-1ac1c1fca2e1
+2026-06-23 15:22:43Z | Adding content to: doi:10.82233/PHR5Q6
+2026-06-23 15:22:43Z | Using manifest file: C:\Users\Shadow\AppData\Local\Temp\rdg_arbodv_manifest_6c3aebb6-1198-45a7-b0fc-bee4dfa1fe14.json
+2026-06-23 15:22:43Z | Will recurse into subdirectories
+2026-06-23 15:22:43Z | ***Starting to Process Upload Requests:***
+2026-06-23 15:22:44Z | Using FixityAlgorithm configured for this Dataverse: MD5
+2026-06-23 15:22:44Z | PROCESSING(D): 
+2026-06-23 15:22:44Z |               Does not exist on server.
+2026-06-23 15:22:44Z | Preproc: 
+2026-06-23 15:22:44Z | PROCESSING(D): maven
+2026-06-23 15:22:44Z |               Does not exist on server.
+2026-06-23 15:22:44Z | Preproc: maven
+2026-06-23 15:22:44Z | PROCESSING(D): apache-maven-3.9.16
+2026-06-23 15:22:44Z |               Does not exist on server.
+2026-06-23 15:22:44Z | Preproc: apache-maven-3.9.16
+2026-06-23 15:22:44Z | PROCESSING(D): bin
+2026-06-23 15:22:44Z |               Does not exist on server.
+2026-06-23 15:22:44Z | Preproc: bin
+2026-06-23 15:22:44Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\bin\m2.conf
+2026-06-23 15:22:44Z |                Does not yet exist on server.
+2026-06-23 15:22:44Z |                UPLOADED as: MD5:f5ae65e002b9e7ea0e961db6282bb41a
+2026-06-23 15:22:45Z | CURRENT TOTAL: 1 files :327 bytes
+2026-06-23 15:22:45Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\bin\mvn
+2026-06-23 15:22:45Z |                Does not yet exist on server.
+2026-06-23 15:22:45Z |                UPLOADED as: MD5:da76b95c83d3e75ff9ee707eedbb25f9
+2026-06-23 15:22:45Z | CURRENT TOTAL: 2 files :6511 bytes
+2026-06-23 15:22:45Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\bin\mvn.cmd
+2026-06-23 15:22:45Z |                Does not yet exist on server.
+2026-06-23 15:22:45Z |                UPLOADED as: MD5:b18dfd33d23bbbd98dbd6a350423e7fe
+2026-06-23 15:22:45Z | CURRENT TOTAL: 3 files :13506 bytes
+2026-06-23 15:22:45Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\bin\mvnDebug
+2026-06-23 15:22:45Z |                Does not yet exist on server.
+2026-06-23 15:22:45Z |                UPLOADED as: MD5:69cc50e62a2c073167f47e96d173aaad
+2026-06-23 15:22:45Z | CURRENT TOTAL: 4 files :15190 bytes
+2026-06-23 15:22:45Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\bin\mvnDebug.cmd
+2026-06-23 15:22:45Z |                Does not yet exist on server.
+2026-06-23 15:22:45Z |                UPLOADED as: MD5:c80c3609a33550f2bfd53ada7b62f476
+2026-06-23 15:22:45Z | CURRENT TOTAL: 5 files :17359 bytes
+2026-06-23 15:22:45Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\bin\mvnyjp
+2026-06-23 15:22:45Z |                Does not yet exist on server.
+2026-06-23 15:22:45Z |                UPLOADED as: MD5:ce52c322ba1cc0e7d8f879f07af57a03
+2026-06-23 15:22:45Z | CURRENT TOTAL: 6 files :18970 bytes
+2026-06-23 15:22:46Z | 6 files successfully added from this folder
+2026-06-23 15:22:46Z | PROCESSING(D): boot
+2026-06-23 15:22:46Z |               Does not exist on server.
+2026-06-23 15:22:46Z | Preproc: boot
+2026-06-23 15:22:46Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\boot\plexus-classworlds-2.11.0.jar
+2026-06-23 15:22:46Z |                Does not yet exist on server.
+2026-06-23 15:22:46Z |                UPLOADED as: MD5:54d5f4e0835c5e53f08a494f08d2a75d
+2026-06-23 15:22:46Z | CURRENT TOTAL: 7 files :73122 bytes
+2026-06-23 15:22:46Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\boot\plexus-classworlds.license
+2026-06-23 15:22:46Z |                Does not yet exist on server.
+2026-06-23 15:22:46Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:46Z | CURRENT TOTAL: 8 files :84480 bytes
+2026-06-23 15:22:47Z | 2 files successfully added from this folder
+2026-06-23 15:22:47Z | PROCESSING(D): conf
+2026-06-23 15:22:47Z |               Does not exist on server.
+2026-06-23 15:22:47Z | Preproc: conf
+2026-06-23 15:22:47Z | PROCESSING(D): logging
+2026-06-23 15:22:47Z |               Does not exist on server.
+2026-06-23 15:22:47Z | Preproc: logging
+2026-06-23 15:22:47Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\conf\logging\simplelogger.properties
+2026-06-23 15:22:47Z |                Does not yet exist on server.
+2026-06-23 15:22:47Z |                UPLOADED as: MD5:dfe308a6e7dca08301b12cb7f1b8cf4c
+2026-06-23 15:22:47Z | CURRENT TOTAL: 9 files :85818 bytes
+2026-06-23 15:22:48Z | 1 files successfully added from this folder
+2026-06-23 15:22:48Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\conf\settings.xml
+2026-06-23 15:22:48Z |                Does not yet exist on server.
+2026-06-23 15:22:48Z |                UPLOADED as: MD5:9c4af002b1f050e1a090d1d4d7962be1
+2026-06-23 15:22:48Z | CURRENT TOTAL: 10 files :96346 bytes
+2026-06-23 15:22:48Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\conf\toolchains.xml
+2026-06-23 15:22:48Z |                Does not yet exist on server.
+2026-06-23 15:22:48Z |                UPLOADED as: MD5:035e967b9cacde868ca8db18780e61d2
+2026-06-23 15:22:48Z | CURRENT TOTAL: 11 files :99991 bytes
+2026-06-23 15:22:48Z | 2 files successfully added from this folder
+2026-06-23 15:22:48Z | PROCESSING(D): lib
+2026-06-23 15:22:48Z |               Does not exist on server.
+2026-06-23 15:22:48Z | Preproc: lib
+2026-06-23 15:22:48Z | PROCESSING(D): ext
+2026-06-23 15:22:48Z |               Does not exist on server.
+2026-06-23 15:22:48Z | Preproc: ext
+2026-06-23 15:22:48Z | PROCESSING(D): hazelcast
+2026-06-23 15:22:48Z |               Does not exist on server.
+2026-06-23 15:22:48Z | Preproc: hazelcast
+2026-06-23 15:22:48Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\ext\hazelcast\README.txt
+2026-06-23 15:22:48Z |                Does not yet exist on server.
+2026-06-23 15:22:49Z |                UPLOADED as: MD5:68b291328747c3e9619dcb30099d07f1
+2026-06-23 15:22:49Z | CURRENT TOTAL: 12 files :100291 bytes
+2026-06-23 15:22:49Z | 1 files successfully added from this folder
+2026-06-23 15:22:50Z | PROCESSING(D): redisson
+2026-06-23 15:22:50Z |               Does not exist on server.
+2026-06-23 15:22:50Z | Preproc: redisson
+2026-06-23 15:22:50Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\ext\redisson\README.txt
+2026-06-23 15:22:50Z |                Does not yet exist on server.
+2026-06-23 15:22:50Z |                UPLOADED as: MD5:25d16b6329f9efd437154f67365cca59
+2026-06-23 15:22:50Z | CURRENT TOTAL: 13 files :100586 bytes
+2026-06-23 15:22:50Z | 1 files successfully added from this folder
+2026-06-23 15:22:50Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\ext\README.txt
+2026-06-23 15:22:50Z |                Does not yet exist on server.
+2026-06-23 15:22:50Z |                UPLOADED as: MD5:0182ce445fc8a6c791947c664363c203
+2026-06-23 15:22:50Z | CURRENT TOTAL: 14 files :100729 bytes
+2026-06-23 15:22:50Z | 1 files successfully added from this folder
+2026-06-23 15:22:50Z | PROCESSING(D): jansi-native
+2026-06-23 15:22:50Z |               Does not exist on server.
+2026-06-23 15:22:50Z | Preproc: jansi-native
+2026-06-23 15:22:50Z | PROCESSING(D): Windows
+2026-06-23 15:22:50Z |               Does not exist on server.
+2026-06-23 15:22:50Z | Preproc: Windows
+2026-06-23 15:22:50Z | PROCESSING(D): arm64
+2026-06-23 15:22:50Z |               Does not exist on server.
+2026-06-23 15:22:50Z | Preproc: arm64
+2026-06-23 15:22:50Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jansi-native\Windows\arm64\jansi.dll
+2026-06-23 15:22:51Z |                Does not yet exist on server.
+2026-06-23 15:22:51Z |                UPLOADED as: MD5:547bb111f700e0c0ac08a4cb70300758
+2026-06-23 15:22:51Z | CURRENT TOTAL: 15 files :182137 bytes
+2026-06-23 15:22:52Z | 1 files successfully added from this folder
+2026-06-23 15:22:52Z | PROCESSING(D): x86
+2026-06-23 15:22:52Z |               Does not exist on server.
+2026-06-23 15:22:52Z | Preproc: x86
+2026-06-23 15:22:52Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jansi-native\Windows\x86\jansi.dll
+2026-06-23 15:22:52Z |                Does not yet exist on server.
+2026-06-23 15:22:52Z |                UPLOADED as: MD5:d7413a2dc35abd2bb764c80ad253d637
+2026-06-23 15:22:52Z | CURRENT TOTAL: 16 files :298109 bytes
+2026-06-23 15:22:52Z | 1 files successfully added from this folder
+2026-06-23 15:22:53Z | PROCESSING(D): x86_64
+2026-06-23 15:22:53Z |               Does not exist on server.
+2026-06-23 15:22:53Z | Preproc: x86_64
+2026-06-23 15:22:53Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jansi-native\Windows\x86_64\jansi.dll
+2026-06-23 15:22:53Z |                Does not yet exist on server.
+2026-06-23 15:22:53Z |                UPLOADED as: MD5:6e9446209300a85dd5e39b6ba92abe7f
+2026-06-23 15:22:53Z | CURRENT TOTAL: 17 files :428631 bytes
+2026-06-23 15:22:54Z | 1 files successfully added from this folder
+2026-06-23 15:22:54Z | 0 files successfully added from this folder
+2026-06-23 15:22:54Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jansi-native\README.txt
+2026-06-23 15:22:54Z |                Does not yet exist on server.
+2026-06-23 15:22:54Z |                UPLOADED as: MD5:0acfccc1252e8341880518ad1e4f9ba8
+2026-06-23 15:22:55Z | CURRENT TOTAL: 18 files :429121 bytes
+2026-06-23 15:22:55Z | 1 files successfully added from this folder
+2026-06-23 15:22:55Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\aopalliance-1.0.jar
+2026-06-23 15:22:55Z |                Does not yet exist on server.
+2026-06-23 15:22:56Z |                UPLOADED as: MD5:04177054e180d09e3998808efa0401c7
+2026-06-23 15:22:56Z | CURRENT TOTAL: 19 files :433588 bytes
+2026-06-23 15:22:56Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\aopalliance.license
+2026-06-23 15:22:56Z |                Does not yet exist on server.
+2026-06-23 15:22:56Z |                UPLOADED as: MD5:1282faaaab2ab95c41052afbc71de28e
+2026-06-23 15:22:56Z | CURRENT TOTAL: 20 files :433601 bytes
+2026-06-23 15:22:56Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\asm-9.9.1.jar
+2026-06-23 15:22:56Z |                Does not yet exist on server.
+2026-06-23 15:22:56Z |                UPLOADED as: MD5:1888ad1f49038441bb2d12aa6dffe396
+2026-06-23 15:22:56Z | CURRENT TOTAL: 21 files :559853 bytes
+2026-06-23 15:22:56Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\asm.license
+2026-06-23 15:22:56Z |                Does not yet exist on server.
+2026-06-23 15:22:56Z |                UPLOADED as: MD5:9de3b6da5929ed2fc4379f3a0dee29a2
+2026-06-23 15:22:56Z | CURRENT TOTAL: 22 files :561479 bytes
+2026-06-23 15:22:56Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\commons-cli-1.11.0.jar
+2026-06-23 15:22:56Z |                Does not yet exist on server.
+2026-06-23 15:22:56Z |                UPLOADED as: MD5:e689f5e4947368dd0233fc28f613f561
+2026-06-23 15:22:56Z | CURRENT TOTAL: 23 files :671646 bytes
+2026-06-23 15:22:56Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\commons-cli.license
+2026-06-23 15:22:56Z |                Does not yet exist on server.
+2026-06-23 15:22:56Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:56Z | CURRENT TOTAL: 24 files :683004 bytes
+2026-06-23 15:22:56Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\commons-codec-1.21.0.jar
+2026-06-23 15:22:56Z |                Does not yet exist on server.
+2026-06-23 15:22:56Z |                UPLOADED as: MD5:c49977029838babaf8a71485aa9aaef8
+2026-06-23 15:22:56Z | CURRENT TOTAL: 25 files :1085498 bytes
+2026-06-23 15:22:56Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\commons-codec.license
+2026-06-23 15:22:56Z |                Does not yet exist on server.
+2026-06-23 15:22:57Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:57Z | CURRENT TOTAL: 26 files :1096856 bytes
+2026-06-23 15:22:57Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\error_prone_annotations-2.41.0.jar
+2026-06-23 15:22:57Z |                Does not yet exist on server.
+2026-06-23 15:22:57Z |                UPLOADED as: MD5:75e3b25da8b8a2136463c4674f5e49bf
+2026-06-23 15:22:57Z | CURRENT TOTAL: 27 files :1117245 bytes
+2026-06-23 15:22:57Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\error_prone_annotations.license
+2026-06-23 15:22:57Z |                Does not yet exist on server.
+2026-06-23 15:22:57Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:57Z | CURRENT TOTAL: 28 files :1128603 bytes
+2026-06-23 15:22:57Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\failureaccess-1.0.3.jar
+2026-06-23 15:22:57Z |                Does not yet exist on server.
+2026-06-23 15:22:57Z |                UPLOADED as: MD5:29a782e90f6b37218b18bb880d2a8f4a
+2026-06-23 15:22:57Z | CURRENT TOTAL: 29 files :1139366 bytes
+2026-06-23 15:22:57Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\failureaccess.license
+2026-06-23 15:22:57Z |                Does not yet exist on server.
+2026-06-23 15:22:57Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:57Z | CURRENT TOTAL: 30 files :1150724 bytes
+2026-06-23 15:22:57Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\gson-2.13.2.jar
+2026-06-23 15:22:57Z |                Does not yet exist on server.
+2026-06-23 15:22:57Z |                UPLOADED as: MD5:a2c47e14ce5e956105458fe455f5d542
+2026-06-23 15:22:57Z | CURRENT TOTAL: 31 files :1440625 bytes
+2026-06-23 15:22:57Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\gson.license
+2026-06-23 15:22:57Z |                Does not yet exist on server.
+2026-06-23 15:22:57Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:57Z | CURRENT TOTAL: 32 files :1451983 bytes
+2026-06-23 15:22:57Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\guava-33.6.0-jre.jar
+2026-06-23 15:22:57Z |                Does not yet exist on server.
+2026-06-23 15:22:58Z |                UPLOADED as: MD5:34a4f258ed23d2e876a6e4666bb3b1c5
+2026-06-23 15:22:58Z | CURRENT TOTAL: 33 files :4516776 bytes
+2026-06-23 15:22:58Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\guava.license
+2026-06-23 15:22:58Z |                Does not yet exist on server.
+2026-06-23 15:22:58Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:58Z | CURRENT TOTAL: 34 files :4528134 bytes
+2026-06-23 15:22:58Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\guice-5.1.0-classes.jar
+2026-06-23 15:22:58Z |                Does not yet exist on server.
+2026-06-23 15:22:58Z |                UPLOADED as: MD5:d4d4d9bf878b98862116e8ccc0a5c34e
+2026-06-23 15:22:58Z | CURRENT TOTAL: 35 files :5185053 bytes
+2026-06-23 15:22:58Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\guice.license
+2026-06-23 15:22:58Z |                Does not yet exist on server.
+2026-06-23 15:22:58Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:58Z | CURRENT TOTAL: 36 files :5196411 bytes
+2026-06-23 15:22:58Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\httpclient-4.5.14.jar
+2026-06-23 15:22:58Z |                Does not yet exist on server.
+2026-06-23 15:22:58Z |                UPLOADED as: MD5:2cb357c4b763f47e58af6cad47df6ba3
+2026-06-23 15:22:58Z | CURRENT TOTAL: 37 files :5982050 bytes
+2026-06-23 15:22:58Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\httpclient.license
+2026-06-23 15:22:58Z |                Does not yet exist on server.
+2026-06-23 15:22:59Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:59Z | CURRENT TOTAL: 38 files :5993408 bytes
+2026-06-23 15:22:59Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\httpcore-4.4.16.jar
+2026-06-23 15:22:59Z |                Does not yet exist on server.
+2026-06-23 15:22:59Z |                UPLOADED as: MD5:28d2cd9bf8789fd2ec774fb88436ebd1
+2026-06-23 15:22:59Z | CURRENT TOTAL: 39 files :6321299 bytes
+2026-06-23 15:22:59Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\httpcore.license
+2026-06-23 15:22:59Z |                Does not yet exist on server.
+2026-06-23 15:22:59Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:59Z | CURRENT TOTAL: 40 files :6332657 bytes
+2026-06-23 15:22:59Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jansi-2.4.3.jar
+2026-06-23 15:22:59Z |                Does not yet exist on server.
+2026-06-23 15:22:59Z |                UPLOADED as: MD5:332d56754e427d119dc3ebcda6c5807e
+2026-06-23 15:22:59Z | CURRENT TOTAL: 41 files :6590978 bytes
+2026-06-23 15:22:59Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jansi.license
+2026-06-23 15:22:59Z |                Does not yet exist on server.
+2026-06-23 15:22:59Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:22:59Z | CURRENT TOTAL: 42 files :6602336 bytes
+2026-06-23 15:22:59Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\javax.annotation-api-1.3.2.jar
+2026-06-23 15:22:59Z |                Does not yet exist on server.
+2026-06-23 15:22:59Z |                UPLOADED as: MD5:2ab1973eefffaa2aeec47d50b9e40b9d
+2026-06-23 15:22:59Z | CURRENT TOTAL: 43 files :6628922 bytes
+2026-06-23 15:22:59Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\javax.annotation-api.license
+2026-06-23 15:22:59Z |                Does not yet exist on server.
+2026-06-23 15:22:59Z |                UPLOADED as: MD5:99cdafaab163cdb682768453e195eada
+2026-06-23 15:22:59Z | CURRENT TOTAL: 44 files :6668317 bytes
+2026-06-23 15:22:59Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\javax.inject-1.jar
+2026-06-23 15:22:59Z |                Does not yet exist on server.
+2026-06-23 15:23:00Z |                UPLOADED as: MD5:289075e48b909e9e74e6c915b3631d2e
+2026-06-23 15:23:00Z | CURRENT TOTAL: 45 files :6670814 bytes
+2026-06-23 15:23:00Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\javax.inject.license
+2026-06-23 15:23:00Z |                Does not yet exist on server.
+2026-06-23 15:23:00Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:23:00Z | CURRENT TOTAL: 46 files :6682172 bytes
+2026-06-23 15:23:00Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jcl-over-slf4j-1.7.36.jar
+2026-06-23 15:23:00Z |                Does not yet exist on server.
+2026-06-23 15:23:00Z |                UPLOADED as: MD5:8065610cde33ed9fd5d34367912c1938
+2026-06-23 15:23:00Z | CURRENT TOTAL: 47 files :6698727 bytes
+2026-06-23 15:23:00Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jcl-over-slf4j.license
+2026-06-23 15:23:00Z |                Does not yet exist on server.
+2026-06-23 15:23:00Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:23:00Z | CURRENT TOTAL: 48 files :6710085 bytes
+2026-06-23 15:23:00Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jspecify-1.0.0.jar
+2026-06-23 15:23:00Z |                Does not yet exist on server.
+2026-06-23 15:23:00Z |                UPLOADED as: MD5:9133aba420d0ca3b001dbb6ae9992cf6
+2026-06-23 15:23:00Z | CURRENT TOTAL: 49 files :6713904 bytes
+2026-06-23 15:23:00Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\jspecify.license
+2026-06-23 15:23:00Z |                Does not yet exist on server.
+2026-06-23 15:23:00Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:23:00Z | CURRENT TOTAL: 50 files :6725262 bytes
+2026-06-23 15:23:00Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-artifact-3.9.16.jar
+2026-06-23 15:23:00Z |                Does not yet exist on server.
+2026-06-23 15:23:00Z |                UPLOADED as: MD5:6005ab2198a19a41cd3cf59618f9abc1
+2026-06-23 15:23:00Z | CURRENT TOTAL: 51 files :6784119 bytes
+2026-06-23 15:23:00Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-builder-support-3.9.16.jar
+2026-06-23 15:23:00Z |                Does not yet exist on server.
+2026-06-23 15:23:01Z |                UPLOADED as: MD5:63d5dfe8e9a09ac68ad382ee8af116ab
+2026-06-23 15:23:01Z | CURRENT TOTAL: 52 files :6798540 bytes
+2026-06-23 15:23:01Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-compat-3.9.16.jar
+2026-06-23 15:23:01Z |                Does not yet exist on server.
+2026-06-23 15:23:01Z |                UPLOADED as: MD5:450adeca8497f90becedf6864ce262a5
+2026-06-23 15:23:01Z | CURRENT TOTAL: 53 files :7085201 bytes
+2026-06-23 15:23:01Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-core-3.9.16.jar
+2026-06-23 15:23:01Z |                Does not yet exist on server.
+2026-06-23 15:23:01Z |                UPLOADED as: MD5:045855e32be6ef1727118a7dcb9af9fe
+2026-06-23 15:23:01Z | CURRENT TOTAL: 54 files :7807167 bytes
+2026-06-23 15:23:01Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-embedder-3.9.16.jar
+2026-06-23 15:23:01Z |                Does not yet exist on server.
+2026-06-23 15:23:01Z |                UPLOADED as: MD5:f6b06f5ead01dfd27e3c975a0152343c
+2026-06-23 15:23:01Z | CURRENT TOTAL: 55 files :7924613 bytes
+2026-06-23 15:23:01Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-model-3.9.16.jar
+2026-06-23 15:23:01Z |                Does not yet exist on server.
+2026-06-23 15:23:01Z |                UPLOADED as: MD5:15ea34610d5c8d1944fc4ba317c6b4cd
+2026-06-23 15:23:01Z | CURRENT TOTAL: 56 files :8142585 bytes
+2026-06-23 15:23:01Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-model-builder-3.9.16.jar
+2026-06-23 15:23:01Z |                Does not yet exist on server.
+2026-06-23 15:23:01Z |                UPLOADED as: MD5:114db488c69246d1b371b4c203801b3a
+2026-06-23 15:23:01Z | CURRENT TOTAL: 57 files :8351272 bytes
+2026-06-23 15:23:01Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-plugin-api-3.9.16.jar
+2026-06-23 15:23:01Z |                Does not yet exist on server.
+2026-06-23 15:23:01Z |                UPLOADED as: MD5:bcb853f9daa463ff30dcf96d96bcbb06
+2026-06-23 15:23:01Z | CURRENT TOTAL: 58 files :8398903 bytes
+2026-06-23 15:23:01Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-repository-metadata-3.9.16.jar
+2026-06-23 15:23:02Z |                Does not yet exist on server.
+2026-06-23 15:23:02Z |                UPLOADED as: MD5:df9e6c18b95541ac7585f7d213d459af
+2026-06-23 15:23:02Z | CURRENT TOTAL: 59 files :8427455 bytes
+2026-06-23 15:23:02Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-api-1.9.27.jar
+2026-06-23 15:23:02Z |                Does not yet exist on server.
+2026-06-23 15:23:02Z |                UPLOADED as: MD5:c7bd6f04c52f098ba934742bb204cb5e
+2026-06-23 15:23:02Z | CURRENT TOTAL: 60 files :8585659 bytes
+2026-06-23 15:23:02Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-connector-basic-1.9.27.jar
+2026-06-23 15:23:02Z |                Does not yet exist on server.
+2026-06-23 15:23:02Z |                UPLOADED as: MD5:9363ae6cf82b0880754c2022b625ad3b
+2026-06-23 15:23:02Z | CURRENT TOTAL: 61 files :8626022 bytes
+2026-06-23 15:23:02Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-impl-1.9.27.jar
+2026-06-23 15:23:02Z |                Does not yet exist on server.
+2026-06-23 15:23:02Z |                UPLOADED as: MD5:37de3b6f62504d03fb281c533de98d4a
+2026-06-23 15:23:02Z | CURRENT TOTAL: 62 files :8953436 bytes
+2026-06-23 15:23:02Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-named-locks-1.9.27.jar
+2026-06-23 15:23:02Z |                Does not yet exist on server.
+2026-06-23 15:23:02Z |                UPLOADED as: MD5:7bbb9ba859aa1ac04280422f0520b9eb
+2026-06-23 15:23:02Z | CURRENT TOTAL: 63 files :8991380 bytes
+2026-06-23 15:23:02Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-provider-3.9.16.jar
+2026-06-23 15:23:02Z |                Does not yet exist on server.
+2026-06-23 15:23:02Z |                UPLOADED as: MD5:476c028745a99d6492386f7e6d7d4471
+2026-06-23 15:23:02Z | CURRENT TOTAL: 64 files :9070418 bytes
+2026-06-23 15:23:02Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-spi-1.9.27.jar
+2026-06-23 15:23:02Z |                Does not yet exist on server.
+2026-06-23 15:23:02Z |                UPLOADED as: MD5:ef88eaf44762342c8322924955e3c333
+2026-06-23 15:23:02Z | CURRENT TOTAL: 65 files :9122078 bytes
+2026-06-23 15:23:02Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-transport-file-1.9.27.jar
+2026-06-23 15:23:02Z |                Does not yet exist on server.
+2026-06-23 15:23:03Z |                UPLOADED as: MD5:95f26a870b052f382723298c146cda1d
+2026-06-23 15:23:03Z | CURRENT TOTAL: 66 files :9138300 bytes
+2026-06-23 15:23:03Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-transport-http-1.9.27.jar
+2026-06-23 15:23:03Z |                Does not yet exist on server.
+2026-06-23 15:23:03Z |                UPLOADED as: MD5:718e7a3af9697fa0a6303d2989fde190
+2026-06-23 15:23:03Z | CURRENT TOTAL: 67 files :9198515 bytes
+2026-06-23 15:23:03Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-transport-wagon-1.9.27.jar
+2026-06-23 15:23:03Z |                Does not yet exist on server.
+2026-06-23 15:23:03Z |                UPLOADED as: MD5:ac3dffa6725a5f127f1697249c0b7e15
+2026-06-23 15:23:03Z | CURRENT TOTAL: 68 files :9230979 bytes
+2026-06-23 15:23:03Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-resolver-util-1.9.27.jar
+2026-06-23 15:23:03Z |                Does not yet exist on server.
+2026-06-23 15:23:03Z |                UPLOADED as: MD5:0d792ab540b382fc240c3529d5b6e88e
+2026-06-23 15:23:03Z | CURRENT TOTAL: 69 files :9428344 bytes
+2026-06-23 15:23:03Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-settings-3.9.16.jar
+2026-06-23 15:23:03Z |                Does not yet exist on server.
+2026-06-23 15:23:03Z |                UPLOADED as: MD5:46ffb3627f87c3b798829a41960f9fe9
+2026-06-23 15:23:03Z | CURRENT TOTAL: 70 files :9473017 bytes
+2026-06-23 15:23:03Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-settings-builder-3.9.16.jar
+2026-06-23 15:23:03Z |                Does not yet exist on server.
+2026-06-23 15:23:03Z |                UPLOADED as: MD5:bd711f14681dc719b1ca8c883912014b
+2026-06-23 15:23:03Z | CURRENT TOTAL: 71 files :9515412 bytes
+2026-06-23 15:23:03Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-shared-utils-3.4.2.jar
+2026-06-23 15:23:03Z |                Does not yet exist on server.
+2026-06-23 15:23:03Z |                UPLOADED as: MD5:53a038f77a81cb5816ad2b1c7daa8711
+2026-06-23 15:23:03Z | CURRENT TOTAL: 72 files :9666515 bytes
+2026-06-23 15:23:03Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\maven-slf4j-provider-3.9.16.jar
+2026-06-23 15:23:04Z |                Does not yet exist on server.
+2026-06-23 15:23:04Z |                UPLOADED as: MD5:e81547cec2c59f2ce0f36c5672c488c8
+2026-06-23 15:23:04Z | CURRENT TOTAL: 73 files :9690244 bytes
+2026-06-23 15:23:04Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\org.eclipse.sisu.inject-1.0.0.jar
+2026-06-23 15:23:04Z |                Does not yet exist on server.
+2026-06-23 15:23:04Z |                UPLOADED as: MD5:9d66e7450d82f2070a1422de1ebd4c81
+2026-06-23 15:23:04Z | CURRENT TOTAL: 74 files :9994473 bytes
+2026-06-23 15:23:04Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\org.eclipse.sisu.inject.license
+2026-06-23 15:23:04Z |                Does not yet exist on server.
+2026-06-23 15:23:04Z |                UPLOADED as: MD5:0a41ba798cc1e1772a98a4888f1d8709
+2026-06-23 15:23:04Z | CURRENT TOTAL: 75 files :10008669 bytes
+2026-06-23 15:23:04Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\org.eclipse.sisu.plexus-1.0.0.jar
+2026-06-23 15:23:04Z |                Does not yet exist on server.
+2026-06-23 15:23:04Z |                UPLOADED as: MD5:fb07aece41f034fea46b022e2756cd7c
+2026-06-23 15:23:04Z | CURRENT TOTAL: 76 files :10224402 bytes
+2026-06-23 15:23:04Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\org.eclipse.sisu.plexus.license
+2026-06-23 15:23:04Z |                Does not yet exist on server.
+2026-06-23 15:23:04Z |                UPLOADED as: MD5:0a41ba798cc1e1772a98a4888f1d8709
+2026-06-23 15:23:04Z | CURRENT TOTAL: 77 files :10238598 bytes
+2026-06-23 15:23:04Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-cipher-2.0.jar
+2026-06-23 15:23:04Z |                Does not yet exist on server.
+2026-06-23 15:23:05Z |                UPLOADED as: MD5:55d612839faf248cbe3e273969c002c2
+2026-06-23 15:23:05Z | CURRENT TOTAL: 78 files :10251601 bytes
+2026-06-23 15:23:05Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-cipher.license
+2026-06-23 15:23:05Z |                Does not yet exist on server.
+2026-06-23 15:23:05Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:23:05Z | CURRENT TOTAL: 79 files :10262959 bytes
+2026-06-23 15:23:05Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-component-annotations-2.2.0.jar
+2026-06-23 15:23:05Z |                Does not yet exist on server.
+2026-06-23 15:23:05Z |                UPLOADED as: MD5:a2397189a5ce25e7d2d44effa9f5176c
+2026-06-23 15:23:05Z | CURRENT TOTAL: 80 files :10267110 bytes
+2026-06-23 15:23:05Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-component-annotations.license
+2026-06-23 15:23:05Z |                Does not yet exist on server.
+2026-06-23 15:23:05Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:23:05Z | CURRENT TOTAL: 81 files :10278468 bytes
+2026-06-23 15:23:05Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-interpolation-1.29.jar
+2026-06-23 15:23:05Z |                Does not yet exist on server.
+2026-06-23 15:23:05Z |                UPLOADED as: MD5:b1489e6968b874cecfe24cadb62b77db
+2026-06-23 15:23:05Z | CURRENT TOTAL: 82 files :10366586 bytes
+2026-06-23 15:23:05Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-interpolation.license
+2026-06-23 15:23:05Z |                Does not yet exist on server.
+2026-06-23 15:23:05Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:23:05Z | CURRENT TOTAL: 83 files :10377944 bytes
+2026-06-23 15:23:05Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-sec-dispatcher-2.0.jar
+2026-06-23 15:23:05Z |                Does not yet exist on server.
+2026-06-23 15:23:05Z |                UPLOADED as: MD5:e68635a721630177ac70173e441336b6
+2026-06-23 15:23:05Z | CURRENT TOTAL: 84 files :10401548 bytes
+2026-06-23 15:23:05Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-sec-dispatcher.license
+2026-06-23 15:23:06Z |                Does not yet exist on server.
+2026-06-23 15:23:06Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:23:06Z | CURRENT TOTAL: 85 files :10412906 bytes
+2026-06-23 15:23:06Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-utils-3.6.1.jar
+2026-06-23 15:23:06Z |                Does not yet exist on server.
+2026-06-23 15:23:06Z |                UPLOADED as: MD5:bf77c7ef462342bd42ce245be9648540
+2026-06-23 15:23:06Z | CURRENT TOTAL: 86 files :10685007 bytes
+2026-06-23 15:23:06Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\plexus-utils.license
+2026-06-23 15:23:06Z |                Does not yet exist on server.
+2026-06-23 15:23:06Z |                UPLOADED as: MD5:3b83ef96387f14655fc854ddc3c6bd57
+2026-06-23 15:23:06Z | CURRENT TOTAL: 87 files :10696365 bytes
+2026-06-23 15:23:06Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\slf4j-api-1.7.36.jar
+2026-06-23 15:23:06Z |                Does not yet exist on server.
+2026-06-23 15:23:06Z |                UPLOADED as: MD5:872da51f5de7f3923da4de871d57fd85
+2026-06-23 15:23:06Z | CURRENT TOTAL: 88 files :10737490 bytes
+2026-06-23 15:23:06Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\slf4j-api.license
+2026-06-23 15:23:06Z |                Does not yet exist on server.
+2026-06-23 15:23:06Z |                UPLOADED as: MD5:91cf470930de587e31989fcee4fb5ab2
+2026-06-23 15:23:06Z | CURRENT TOTAL: 89 files :10738644 bytes
+2026-06-23 15:23:06Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\wagon-file-3.5.3.jar
+2026-06-23 15:23:06Z |                Does not yet exist on server.
+2026-06-23 15:23:06Z |                UPLOADED as: MD5:49ed6c95eb28e434ea5c3c9b0ea0fde4
+2026-06-23 15:23:06Z | CURRENT TOTAL: 90 files :10749994 bytes
+2026-06-23 15:23:06Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\wagon-http-3.5.3.jar
+2026-06-23 15:23:07Z |                Does not yet exist on server.
+2026-06-23 15:23:07Z |                UPLOADED as: MD5:1b072be9b74336ec923d533c4370e1f4
+2026-06-23 15:23:07Z | CURRENT TOTAL: 91 files :10759399 bytes
+2026-06-23 15:23:07Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\wagon-http-shared-3.5.3.jar
+2026-06-23 15:23:07Z |                Does not yet exist on server.
+2026-06-23 15:23:07Z |                UPLOADED as: MD5:68b5b8fd16b284b9c7001fc151025c80
+2026-06-23 15:23:07Z | CURRENT TOTAL: 92 files :10800231 bytes
+2026-06-23 15:23:07Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\lib\wagon-provider-api-3.5.3.jar
+2026-06-23 15:23:07Z |                Does not yet exist on server.
+2026-06-23 15:23:07Z |                UPLOADED as: MD5:55a4be47ca51799ae3c18ed521f296df
+2026-06-23 15:23:07Z | CURRENT TOTAL: 93 files :10855332 bytes
+2026-06-23 15:23:10Z | 75 files successfully added from this folder
+2026-06-23 15:23:10Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\LICENSE
+2026-06-23 15:23:10Z |                Does not yet exist on server.
+2026-06-23 15:23:10Z |                UPLOADED as: MD5:fb162148a125602a93c6e342da3cf5b0
+2026-06-23 15:23:10Z | CURRENT TOTAL: 94 files :10863700 bytes
+2026-06-23 15:23:10Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\NOTICE
+2026-06-23 15:23:10Z |                Does not yet exist on server.
+2026-06-23 15:23:10Z |                UPLOADED as: MD5:71000f133e7cbdf2ebe262ae3ab6ab1d
+2026-06-23 15:23:10Z | CURRENT TOTAL: 95 files :10868554 bytes
+2026-06-23 15:23:10Z | PROCESSING(F): D:\maven\apache-maven-3.9.16\README.txt
+2026-06-23 15:23:10Z |                Does not yet exist on server.
+2026-06-23 15:23:11Z |                UPLOADED as: MD5:03c14d7d61d0210c15ec0e87402fb8eb
+2026-06-23 15:23:11Z | CURRENT TOTAL: 96 files :10869833 bytes
+2026-06-23 15:23:11Z | 3 files successfully added from this folder
+2026-06-23 15:23:12Z | 0 files successfully added from this folder
+2026-06-23 15:23:13Z | 0 files successfully added from this folder
+2026-06-23 15:23:13Z | ***Execution Complete.***
+2026-06-23 15:23:13Z | ***If any errors were shown, you may want to rerun DVUploader to assure that all files uploaded. For persistent issues, contact your Dataverse admin.***
+2026-06-23 15:23:13Z | ***Execution Complete.***
