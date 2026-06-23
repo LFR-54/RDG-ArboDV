@@ -1,0 +1,2 @@
+D:\projets_perso\RDG-ArboDV\rdg_arbodv_v2\bin\Release\net8.0-windows\win-x64\publish\RDG_Uploader_GUI.pdb
+D:\projets_perso\RDG-ArboDV\rdg_arbodv_v2\bin\Release\net8.0-windows\win-x64\publish\RDG_Uploader_GUI.exe

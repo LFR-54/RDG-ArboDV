@@ -298,6 +298,9 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 UpdateTargetDirLabel();
                 CompareLocalWithRemote(_remotePaths);
             };
+
+            // Extract the JAR engine from resources on startup
+            ExtractJarFromResources();
         }
 
         private bool IsFrench => _currentLanguage == AppLanguage.French;
@@ -1051,6 +1054,79 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             }
         }
 
+        private string ExtractJarFromResources()
+        {
+            try
+            {
+                string targetDir = AppDomain.CurrentDomain.BaseDirectory;
+                string jarName = "DVUploader-v1.3.0-RDGengine.jar";
+                string jarPath = Path.Combine(targetDir, jarName);
+                string resourceName = "RDG_Uploader_GUI." + jarName;
+
+                var assembly = typeof(Form1).Assembly;
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                {
+                    if (stream == null)
+                    {
+                        return null;
+                    }
+
+                    if (File.Exists(jarPath))
+                    {
+                        FileInfo fi = new FileInfo(jarPath);
+                        if (fi.Length == stream.Length)
+                        {
+                            return jarPath;
+                        }
+                    }
+
+                    using (FileStream fs = new FileStream(jarPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        stream.CopyTo(fs);
+                    }
+                    return jarPath;
+                }
+            }
+            catch
+            {
+                try
+                {
+                    string jarName = "DVUploader-v1.3.0-RDGengine.jar";
+                    string fallbackDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "RDG_ArboDV");
+                    if (!Directory.Exists(fallbackDir))
+                    {
+                        Directory.CreateDirectory(fallbackDir);
+                    }
+                    string jarPath = Path.Combine(fallbackDir, jarName);
+                    string resourceName = "RDG_Uploader_GUI." + jarName;
+                    var assembly = typeof(Form1).Assembly;
+                    using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                    {
+                        if (stream == null) return null;
+
+                        if (File.Exists(jarPath))
+                        {
+                            FileInfo fi = new FileInfo(jarPath);
+                            if (fi.Length == stream.Length)
+                            {
+                                return jarPath;
+                            }
+                        }
+
+                        using (FileStream fs = new FileStream(jarPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            stream.CopyTo(fs);
+                        }
+                        return jarPath;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         // Upload principal
 
         private async void buttonUpload_Click(object sender, EventArgs e)
@@ -1119,35 +1195,39 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             }
 
             // Find DVUploader jar
-            string jarPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DVUploader-v1.3.0-RDGengine.jar");
-            if (!File.Exists(jarPath))
+            string jarPath = ExtractJarFromResources();
+            if (string.IsNullOrEmpty(jarPath) || !File.Exists(jarPath))
             {
-                // check one level up (useful during development)
-                string parentDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.FullName;
-                if (parentDir != null)
+                jarPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DVUploader-v1.3.0-RDGengine.jar");
+                if (!File.Exists(jarPath))
                 {
-                    jarPath = Path.Combine(parentDir, "DVUploader-v1.3.0-RDGengine.jar");
-                }
-            }
-            if (!File.Exists(jarPath))
-            {
-                // Check in rdg_arbodv_v2 folder
-                string rootDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
-                if (rootDir != null)
-                {
-                    jarPath = Path.Combine(rootDir, "DVUploader-v1.3.0-RDGengine.jar");
-                }
-            }
-            if (!File.Exists(jarPath))
-            {
-                // Fallback to searching the whole rdg_arbodv_v2 directory structure
-                string searchDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..");
-                if (Directory.Exists(searchDir))
-                {
-                    var files = Directory.GetFiles(searchDir, "DVUploader-*.jar", SearchOption.AllDirectories);
-                    if (files.Length > 0)
+                    // check one level up (useful during development)
+                    string parentDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.FullName;
+                    if (parentDir != null)
                     {
-                        jarPath = files[0];
+                        jarPath = Path.Combine(parentDir, "DVUploader-v1.3.0-RDGengine.jar");
+                    }
+                }
+                if (!File.Exists(jarPath))
+                {
+                    // Check in rdg_arbodv_v2 folder
+                    string rootDir = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
+                    if (rootDir != null)
+                    {
+                        jarPath = Path.Combine(rootDir, "DVUploader-v1.3.0-RDGengine.jar");
+                    }
+                }
+                if (!File.Exists(jarPath))
+                {
+                    // Fallback to searching the whole rdg_arbodv_v2 directory structure
+                    string searchDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..");
+                    if (Directory.Exists(searchDir))
+                    {
+                        var files = Directory.GetFiles(searchDir, "DVUploader-*.jar", SearchOption.AllDirectories);
+                        if (files.Length > 0)
+                        {
+                            jarPath = files[0];
+                        }
                     }
                 }
             }

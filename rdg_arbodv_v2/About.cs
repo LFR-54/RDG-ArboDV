@@ -69,8 +69,13 @@ namespace RDG_Uploader_GUI
 
         private void UpdateBuildDateLabel()
         {
-            string exePath = Assembly.GetExecutingAssembly().Location;
-            DateTime lastWrite = File.GetLastWriteTime(exePath);
+            string exePath = Environment.ProcessPath;
+            DateTime lastWrite = DateTime.MinValue;
+            
+            if (!string.IsNullOrEmpty(exePath) && File.Exists(exePath))
+            {
+                lastWrite = File.GetLastWriteTime(exePath);
+            }
 
             if (lastWrite == DateTime.MinValue)
             {

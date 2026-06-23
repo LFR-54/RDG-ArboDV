@@ -9,10 +9,15 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SupportedOSPlatform>windows</SupportedOSPlatform>
     <NoWarn>$(NoWarn);CA1416</NoWarn>
+    <ApplicationIcon>Logo_RDG_ArboDV.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="DVUploader-v1.3.0-RDGengine.jar" />
   </ItemGroup>
 
 </Project>
