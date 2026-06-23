@@ -965,25 +965,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             }
 
             /* 2) On met à jour les structures internes */
-            string folderName = Path.GetFileName(folderPath);
             _foldersSelected.Remove(folderPath);
 
-            void AdjustLabels(TreeNode n)
+            foreach (TreeNode moved in children)
             {
-                if (n.Tag is string file && File.Exists(file))
-                {
-                    if (_fileRelativePaths.TryGetValue(file, out string label) &&
-                        !string.IsNullOrEmpty(label))
-                    {
-                        string newLabel = label.StartsWith(folderName + "/")
-                                          ? label.Substring(folderName.Length + 1)
-                                          : (label == folderName ? "" : label);
-                        _fileRelativePaths[file] = newLabel;
-                    }
-                }
-                foreach (TreeNode c in n.Nodes) AdjustLabels(c);
+                UpdateRelativePathsRecursive(moved);
             }
-            foreach (TreeNode moved in children) AdjustLabels(moved);
 
             /* 3) On enlève le nœud dossier lui-même */
             folderNode.Remove();
@@ -1068,6 +1055,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 {
                     if (stream == null)
                     {
+                        File.WriteAllText(Path.Combine(targetDir, "extraction_error.txt"), "Resource stream is null: " + resourceName);
                         return null;
                     }
 
@@ -1087,8 +1075,15 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                     return jarPath;
                 }
             }
-            catch
+            catch (Exception ex1)
             {
+                try
+                {
+                    string targetDir = AppDomain.CurrentDomain.BaseDirectory;
+                    File.WriteAllText(Path.Combine(targetDir, "extraction_error.txt"), "First try failed: " + ex1.ToString());
+                }
+                catch {}
+                
                 try
                 {
                     string jarName = "DVUploader-v1.3.0-RDGengine.jar";
@@ -1120,8 +1115,14 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                         return jarPath;
                     }
                 }
-                catch
+                catch (Exception ex2)
                 {
+                    try
+                    {
+                        string targetDir = AppDomain.CurrentDomain.BaseDirectory;
+                        File.AppendAllText(Path.Combine(targetDir, "extraction_error.txt"), "\nFallback failed: " + ex2.ToString());
+                    }
+                    catch {}
                     return null;
                 }
             }
@@ -1508,6 +1509,9 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 _timerElapsed.Stop();
                 _cts?.Dispose();
                 _cts = null;
+
+                // Reset status label text/color and tree view highlights
+                UpdateStatus();
             }
         }
 
@@ -1799,7 +1803,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private void UpdateStatus()
         {
-            labelStatus.Text = GetSelectionStatusText();
+            SafeSetLabel(labelStatus, GetSelectionStatusText());
 
             // ► nouveau : comptage fiable via HashSet
             labelStatFoldersValue.Text = _foldersSelected.Count.ToString();
