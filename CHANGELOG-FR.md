@@ -1,39 +1,39 @@
 # Changelog
 
-## Version 1.3.0 · 23/06/2026
+## Version 2.0.0 · 23/06/2026
 
-### Nouveautés
+### Refonte Majeure du Moteur de Dépôt
 
-- **Visualisation de l'arborescence serveur** : Ajout d'un nouvel onglet interactif "Fichiers sur le serveur" affichant l'intégralité de la structure distante sous une racine virtuelle commode (supportant la sélection multiple avec Ctrl/Shift).
-- **Sélection graphique de la destination** : Définition simplifiée de l'emplacement cible d'upload par simple clic dans l'arborescence distante, avec bouton rapide de retour à la racine.
-- **Téléchargement récursif distant en lot** : Option au clic droit pour télécharger plusieurs fichiers et dossiers complets du serveur simultanément (sélection multiple), avec reconstruction de la structure locale, débit en Mo/s (ou MB/s) et calcul du temps restant (ETA).
-- **Opérations à distance (sélection multiple au clic droit)** :
-  - *Déplacer* : Déplacement simultané de plusieurs fichiers ou dossiers vers un autre répertoire via le sélecteur `FolderPickerDialog`.
-  - *Aplatir* : Aplatissement en lot de plusieurs dossiers sélectionnés (remontée d'un cran du contenu).
-  - *Supprimer* : Suppression récursive et en lot de répertoires ou fichiers sélectionnés avec confirmation globale.
-  - *Renommer* : Renommage à la volée (réservé à une sélection unique).
-- **Affichage de la taille et de la date des fichiers distants** : L'arborescence serveur affiche la taille (convertie dynamiquement) et la date de dépôt pour chaque fichier dans la langue sélectionnée (ex: `(4.5 Ko — Déposé le...)`), avec un stylisme allégé et discret (gris-ardoise adouci hors sélection, bleu-gris clair sous sélection) pour ne pas encombrer l'affichage.
-- **Auto-détection de la langue** : Détection automatique de la langue Windows au tout premier lancement et initialisation en français ou anglais.
-- **Avertissement de démarrage à affichage unique** : L'avertissement de démarrage n'apparaît plus qu'une seule fois et est mémorisé pour les sessions futures.
+Cette version marque une refonte architecturale majeure de **RDG ArboDV** qui s'affranchit désormais de toute dépendance de fichier sur le disque en intégrant directement son moteur de dépôt au binaire.
 
-### Améliorations
+- **Intégration du moteur Java (JAR embarqué)** : Le moteur Java `DVUploader-v1.3.0-RDGengine.jar` est dorénavant directement inclus dans les ressources de l'exécutable. Il est extrait dynamiquement sur le disque à l'exécution (dans le répertoire applicatif ou dans `%LocalAppData%\RDG_ArboDV` en cas de droits d'écriture limités), rendant l'exécutable C# 100% autonome et distribuable via un fichier unique `.exe`.
+- **Intégration de l'icône de marque** : L'icône de l'application (`Logo_RDG_ArboDV.ico`) est directement intégrée aux métadonnées de l'exécutable pour un rendu professionnel sous l'Explorateur Windows.
+- **Liaison intime avec le moteur de dépôt (DVUploader)** : Alignement avec la version personnalisée du JAR Java pour :
+  - Supporter le paramètre `-manifest` et l'analyse d'arbre virtuel en mémoire pour des dépôts locaux asynchrones.
+  - Uniformiser les sorties de progression avec des retours chariots réels (`
+`) pour une capture et un affichage en temps réel dans l'interface graphique.
 
-- **Traitement séquentiel ordonné et sécurisé** : Les actions en lot à distance (suppression, déplacement, aplatissement) s'exécutent de manière séquentielle ordonnée (`SemaphoreSlim(1)`) pour éviter les conflits de verrous de transactions simultanées sur la base de données du serveur Dataverse.
-- **Préservation de la sélection au clic droit** : Correction d'un bug de sélection ; le clic droit sur un élément faisant déjà partie d'une sélection multiple (Ctrl/Shift) conserve désormais la totalité des éléments sélectionnés au lieu de la réduire à un seul élément, facilitant les actions groupées.
-- **Détection des doublons en temps réel** : Analyse réactive des doublons locaux et distants avec coloration (Vert pour doublon exact ignoré, Chocolat pour doublon existant dans un autre dossier avec détails des chemins).
-- **Chronomètre intelligent** : Arrêt instantané du temps écoulé dès la fin des transferts pour éviter d'incrémenter le temps pendant la lecture des messages de confirmation.
-- **Annulation et sécurité** : Support fluide du bouton ANNULER pour l'interruption des téléchargements et suppression des fichiers temporaires ou incomplets.
-- **Réinitialisation complète** : Remise à zéro de la barre de progression, des statistiques de transfert, du temps écoulé, de l'ETA et du libellé de vitesse dynamique au clic sur "Réinitialiser" (sans effacer l'API Key ni le DOI).
-- **Rafraîchissement automatique intelligent** : Synchronisation automatique en arrière-plan du serveur après transfert, avec sauvegarde et restauration des dossiers dépliés/pliés de l'arbre.
-- **Mise à niveau globale** : Alignement de la version client GUI et du moteur Java (`DVUploader-v1.3.0-RDGengine.jar`).
+### Nouvelles Fonctionnalités Visuelles et Distantes
 
-### Correctifs
+- **Visualisation de l'arborescence serveur** : Nouvel onglet interactif "Fichiers sur le serveur" pour naviguer en temps réel dans la structure du jeu de données distant (supportant la sélection multiple avec Ctrl/Shift).
+- **Sélection graphique de la destination** : Choix simplifié du répertoire cible d'upload par clic direct dans l'arborescence serveur.
+- **Téléchargement récursif distant en lot** : Récupération asynchrone de répertoires ou fichiers distants complets, avec reconstruction de la structure locale et affichage dynamique de la vitesse (Mo/s) et de l'ETA.
+- **Gestion distante des fichiers (Clic droit)** :
+  - *Déplacer* : Déplacement graphique de fichiers/dossiers distants (avec support de création dynamique de dossiers).
+  - *Aplatir* : Aplatissement de dossiers distants à la volée.
+  - *Supprimer* : Nettoyage séquentiel et récursif de fichiers et dossiers du serveur.
+  - *Renommer* : Renommage à chaud sur le serveur.
+- **Enrichissement des métadonnées distantes** : Affichage discret et stylisé de la taille du fichier et de la date de dépôt dans la langue sélectionnée (ex: `(4.5 Ko — Déposé le...)`).
 
-- **Déplacement vers la racine (/)** : Résolution du problème où l'API Dataverse ignorait les valeurs vides pour `directoryLabel` empêchant de replacer les fichiers à la racine (utilisation d'un contournement intelligent avec `"/"` géré et nettoyé par le serveur).
-- **Sécurisation d'accès aux threads (Thread-safety)** : Capture des informations de connexion sur le thread UI pour éviter les exceptions de type `InvalidOperationException` lors des appels réseau asynchrones en lot.
-- Correctifs et optimisations d'affichage généraux (gestion du défilement automatique des logs, correction d'un bug de désérialisation JSON sur l'API Dataverse, détection correcte de clic dans la zone à droite des nœuds).
+### Améliorations Architecturales
 
----
+- **Traitement séquentiel ordonné** : Sécurisation des requêtes asynchrones en lot via sémaphore pour respecter la politique de verrous transactionnels de l'API Dataverse.
+- **Prévention des bannissements IP (Rate Limiting)** : Temporisation automatique de 350 ms entre chaque requête réseau sur les opérations de masse.
+- **Détection des doublons en temps réel** : Marquage coloré immédiat des fichiers locaux (Vert pour doublon exact à la cible, Chocolat pour doublon existant dans un autre dossier).
+- **Indication explicite des verrous (Dataset Lock)** : Interception du statut de verrouillage du serveur pour afficher un message clair et basculer la barre de progression en animation continue, évitant de faire croire à un blocage du logiciel.
+- **Auto-détection de la langue de l'hôte** : Initialisation automatique de l'interface en français ou en anglais selon la culture de l'OS.
+- **Gestion des sessions** : Avertissement de démarrage unique et sauvegarde automatique de la configuration.
+- **Réinitialisation globale** : Remise à zéro complète et thread-safe de la progression et de la vitesse lors d'un Reset.
 
 ## Version 1.2.0 · 15/04/2026
 

@@ -1,39 +1,39 @@
 # Changelog
 
-## Version 1.3.0 · 2026-06-23
+## Version 2.0.0 · 2026-06-23
 
-### New features
+### Major Upload Engine Refactoring
 
-- **Server Tree View**: Added a new interactive "Server Files" tab displaying the entire remote layout under a convenient virtual root folder (supporting multiple selection with Ctrl/Shift).
-- **Visual Destination Selection**: Upload folder path selection by clicking directly in the remote tree view, with a quick button to reset back to the root.
-- **Batch Recursive Remote Download**: Context menu option (right-click) to download multiple files and folders from the server simultaneously (multiple selection), with local structure rebuilding, transfer speed (in Mo/s or MB/s), and estimated time remaining (ETA).
-- **Remote File Management (multiple selection right-click)**:
-  - *Move*: Move multiple files or folders simultaneously to a target directory via `FolderPickerDialog`.
-  - *Flatten*: Flatten multiple remote folders at once (moving all their contents up one level to their respective parents).
-  - *Delete*: Recursive deletion of multiple selected files or folders with global item counting and a single confirmation.
-  - *Rename*: Rename remote files on the fly (limited to single selection).
-- **File Metadata Suffix**: Displays file size (dynamically formatted) and upload date next to the remote filename (e.g. `(4.5 KB — Uploaded on...)`) in a lighter and softer visual style (slate gray when unselected, light blue-gray when selected) to avoid clutter.
-- **Automatic Language Detection**: Detects OS culture settings on the very first start and defaults to English or French.
-- **Single-use Startup Warning**: The file size warning dialog only shows up once and is stored for future launches.
+This version marks a major architectural refactoring of **RDG ArboDV**, eliminating all external dependencies on disk by embedding its upload engine directly inside the binary.
 
-### Improvements
+- **Embedded Java Engine (JAR Resource)**: The Java engine `DVUploader-v1.3.0-RDGengine.jar` is now directly included as an embedded resource inside the C# executable. It is automatically extracted to disk at runtime (in the application's base directory or in `%LocalAppData%\RDG_ArboDV` if write permissions are restricted), making the C# executable 100% self-contained and ready to run from a single `.exe` file.
+- **Embedded Application Logo**: The custom application icon (`Logo_RDG_ArboDV.ico`) is now integrated directly in the executable metadata for a professional look in Windows Explorer.
+- **Unified Java Engine Linkage**: Fully integrated with the customized `DVUploader` Java engine to:
+  - Support the `-manifest` parameter and virtual tree processing in memory for asynchronous local uploads.
+  - Standardize progress stdout with real line breaks (`
+`) for real-time capture and representation in the GUI.
 
-- **Ordered Sequential Remote Operations**: Batch operations on the server (delete, move, flatten) run sequentially using `SemaphoreSlim(1)` to prevent concurrent transaction lock conflicts on the Dataverse database.
-- **Right-click Multi-selection Preservation**: Right-clicking an item that is already part of a multi-selection (Ctrl/Shift) now preserves the entire selection instead of collapsing it to a single item, allowing smooth batch actions.
-- **Real-time Duplicate Scanning**: Analyzes duplicates on the server reactively with color codes (Green for exact duplicates to skip, Chocolate for files existing in other directories with path details).
-- **Smart Timer**: Freezes elapsed time instantly upon completion or failure of transfers, preventing the clock from ticking while reading the final notification message.
-- **Cancellation & Safety**: Full CANCEL button support for downloads, with partial file cleanup to prevent corrupt data.
-- **Full Reset**: Resets progress bar, transfer statistics, elapsed time, ETA, and the dynamic speed label upon clicking "Reset" (retaining API Key and DOI).
-- **Smart Auto-refresh**: Automated background synchronisation of remote files after uploads, with expanded/collapsed folder state preservation.
-- **Global Alignment**: Synchronised C# GUI executable and Java engine version (`DVUploader-v1.3.0-RDGengine.jar`).
+### New Graphical and Remote Features
 
-### Fixes
+- **Server Tree View**: Interactive "Server Files" tab to browse remote directories in real time (supporting multiple selection with Ctrl/Shift).
+- **Visual Destination Selection**: Easily select the target upload directory by clicking directly inside the server tree view.
+- **Batch Recursive Remote Download**: Asynchronous download of entire remote files and folders, with local structure rebuilding, transfer speed (MB/s), and estimated time remaining (ETA).
+- **Remote File Management (Right-click context menu)**:
+  - *Move*: Graphically move remote files and folders (including on-the-fly directory creation).
+  - *Flatten*: Batch flatten remote directories.
+  - *Delete*: Sequential, recursive cleaning of files and folders on the server.
+  - *Rename*: Rename files on the fly on the server.
+- **Remote Metadata Enhancements**: Displays file size and upload date next to the remote filename (e.g. `(4.5 KB — Uploaded on...)`) in a softer, clutter-free visual style.
 
-- **Moving to Root Folder (/)**: Workaround for the Dataverse API ignoring empty values for `directoryLabel` which prevented files from being moved back to the root (utilizes a `"/"` payload that is sanitized by the server).
-- **Thread Safety**: Connection parameters are captured on the UI thread before kicking off background tasks, resolving cross-thread `InvalidOperationException` crashes.
-- UI improvements and general stability fixes (logs auto-scroll, resolved JSON deserialization checksum errors from the Dataverse API, fixed node selection when clicking on the right empty space of a label).
+### Architectural Improvements
 
----
+- **Ordered Sequential execution**: Groups batch operations on the server sequentially using `SemaphoreSlim(1)` to respect the transaction locks of the Dataverse API database.
+- **Anti-Ban IP Regulation (Rate Limiting)**: Automatic 350ms delay between batch network requests to prevent IP banning.
+- **Real-Time Duplicate Checking**: Instant visual color cues on local files (Green for exact duplicates to skip, Chocolate for files existing in other folders).
+- **Lock Interception (Dataset Lock)**: Detects when the server locks the dataset, displaying a clear warning and turning the progress bar to marquee mode to prevent user confusion.
+- **Host Language Auto-detection**: Automatically configures the UI in French or English based on the OS culture settings.
+- **Session Management**: Single-use startup warning and automatic configuration persistence.
+- **Global Reset**: Complete, thread-safe reset of the progress bar, transfer statistics, elapsed time, ETA, and dynamic speed label upon clicking "Reset".
 
 ## Version 1.2.0 · 2026-04-15
 

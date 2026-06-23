@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Client bureautique Windows pour l'ajout et la gestion de fichiers dans un dataset Dataverse</strong><br />
-  <sub>Version 1.3.0</sub>
+  <sub>Version 2.0.0</sub>
 </p>
 
 <p align="center">
@@ -23,7 +23,7 @@
   <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows-0078d4">
   <img alt="GUI" src="https://img.shields.io/badge/GUI-WinForms-0f6cbd">
   <img alt="Dataverse" src="https://img.shields.io/badge/Target-Dataverse-2d7d46">
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.3.0-success">
+  <img alt="Version" src="https://img.shields.io/badge/Version-2.0.0-success">
 </p>
 
 ---
@@ -34,6 +34,15 @@
 **RDG ArboDV** est un logiciel de bureau conçu pour simplifier le dépôt et la gestion de fichiers dans un dataset Dataverse (`https://recherche.data.gouv.fr`), en particulier lorsque le volume de données est important ou que l'arborescence à conserver est complexe.
 
 L'application s'adresse aux équipes qui doivent préparer un versement propre, de façon maîtrisée et fiable, sans dépendre de l'interface web classique.
+
+### Visualisation et gestion du serveur (Clic droit)
+
+L'onglet **Fichiers sur le serveur** permet d'explorer l'arborescence distante en temps réel et d'interagir graphiquement avec elle (sélection simple ou multiple) :
+
+<p align="center">
+  <img src="assets/AppPreview_RightClick_file.png" alt="Menu contextuel sur un fichier" width="48%">
+  <img src="assets/AppPreview_RightClick_folder.png" alt="Menu contextuel sur un dossier" width="48%">
+</p>
 
 > [!WARNING]
 > Ce logiciel est destiné en priorité aux dépôts volumineux comportant de nombreux sous-dossiers.  
@@ -85,7 +94,7 @@ Si vous collez une URL complète (ex: `https://doi.org/...`), le logiciel la nor
 
 - Utiliser un poste Windows.
 - Disposer du runtime **.NET 8.0**.
-- Lancer l'exécutable `RDG_Uploader_GUI.exe` accompagné de son moteur Java `DVUploader-v1.3.0-RDGengine.jar` dans le même répertoire.
+- Lancer l'exécutable autonome **`RDG_Uploader_GUI.exe`** (le moteur Java y est intégré et s'extrait automatiquement au démarrage, aucun autre fichier n'est requis sur le disque).
 
 ### Utilisation depuis le code source
 
@@ -131,10 +140,14 @@ Le projet est conçu sous **.NET 8.0**.
    ```powershell
    dotnet build -c Release
    ```
-3. Assurez-vous que le fichier `DVUploader-v1.3.0-RDGengine.jar` est copié dans le même dossier de sortie que l'exécutable pour assurer le fonctionnement du moteur d'envoi.
+3. Le moteur Java (`DVUploader-v1.3.0-RDGengine.jar`) est embarqué directement dans l'application en tant que ressource. Pour générer un fichier unique (Single File) indépendant qui contient toutes ses dépendances, utilisez la commande :
+   ```powershell
+   dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true RDG_Uploader_GUI.csproj
+   ```
+   L'exécutable autonome sera généré dans `bin\Release\net8.0-windows\win-x64\publish\`.
 
 ---
 
 <p align="center">
-  <sub>RDG ArboDV • Présentation logicielle • Version 1.3.0</sub>
+  <sub>RDG ArboDV • Présentation logicielle • Version 2.0.0</sub>
 </p>
