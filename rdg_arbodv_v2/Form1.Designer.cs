@@ -238,6 +238,7 @@ namespace RDG_Uploader_GUI
             // 
             // labelLanguage
             // 
+            this.labelLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelLanguage.AutoSize = true;
             this.labelLanguage.Location = new System.Drawing.Point(760, 352);
             this.labelLanguage.Name = "labelLanguage";
@@ -247,6 +248,7 @@ namespace RDG_Uploader_GUI
             // 
             // comboBoxLanguage
             // 
+            this.comboBoxLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxLanguage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.comboBoxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxLanguage.FormattingEnabled = true;
@@ -264,6 +266,7 @@ namespace RDG_Uploader_GUI
             // 
             // buttonSelectFiles
             // 
+            this.buttonSelectFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSelectFiles.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonSelectFiles.Location = new System.Drawing.Point(750, 10);
             this.buttonSelectFiles.Name = "buttonSelectFiles";
@@ -274,6 +277,7 @@ namespace RDG_Uploader_GUI
             // 
             // buttonSelectFolder
             // 
+            this.buttonSelectFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSelectFolder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonSelectFolder.Location = new System.Drawing.Point(750, 40);
             this.buttonSelectFolder.Name = "buttonSelectFolder";
@@ -284,6 +288,7 @@ namespace RDG_Uploader_GUI
             // 
             // buttonReset
             // 
+            this.buttonReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonReset.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonReset.Location = new System.Drawing.Point(750, 70);
             this.buttonReset.Name = "buttonReset";
@@ -314,7 +319,8 @@ namespace RDG_Uploader_GUI
             // 
             // labelStatus
             // 
-            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelStatus.Location = new System.Drawing.Point(12, 450);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(500, 20);
@@ -503,6 +509,7 @@ namespace RDG_Uploader_GUI
             // 
             // btnAbout
             // 
+            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAbout.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAbout.Location = new System.Drawing.Point(760, 405);
             this.btnAbout.Name = "btnAbout";
@@ -514,6 +521,7 @@ namespace RDG_Uploader_GUI
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.BackColor = System.Drawing.Color.Firebrick;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -566,7 +574,7 @@ namespace RDG_Uploader_GUI
             this.tabPageFiles.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageFiles.Size = new System.Drawing.Size(732, 319);
             this.tabPageFiles.TabIndex = 0;
-            this.tabPageFiles.Text = "Files";
+            this.tabPageFiles.Text = "Upload preparation";
             this.tabPageFiles.UseVisualStyleBackColor = true;
             // 
             // tabPageRemote
@@ -642,11 +650,12 @@ namespace RDG_Uploader_GUI
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.labelSpeed);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
+            this.MaximizeBox = true;
             this.MinimumSize = new System.Drawing.Size(960, 540);
             this.Name = "Form1";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RDG ArboDV";
             this.contextMenuTree.ResumeLayout(false);

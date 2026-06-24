@@ -154,25 +154,40 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             tabPageRemote.Controls.Add(treeViewRemote);
             tabPageRemote.Controls.Add(panelRemoteHeader);
 
-            // Initialize Target Folder Panel on tabPageFiles
+            // En-tête compact de l'espace de préparation. La grille conserve le bouton
+            // visible et réserve tout l'espace restant au chemin de destination.
             treeViewSelected.Dock = DockStyle.Fill;
-            Panel panelFilesHeader = new Panel { Dock = DockStyle.Top, Height = 40 };
+            TableLayoutPanel panelFilesHeader = new TableLayoutPanel
+            {
+                Dock = DockStyle.Top,
+                Height = 32,
+                ColumnCount = 2,
+                RowCount = 1,
+                Padding = new Padding(5, 3, 5, 3),
+                Margin = Padding.Empty
+            };
+            panelFilesHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            panelFilesHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 176F));
+            panelFilesHeader.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
             labelTargetDir = new Label
             {
-                Location = new Point(5, 12),
-                AutoSize = true,
+                Dock = DockStyle.Fill,
+                AutoSize = false,
+                AutoEllipsis = true,
+                TextAlign = ContentAlignment.MiddleLeft,
                 Font = new Font(treeViewSelected.Font, FontStyle.Bold),
                 ForeColor = Color.DarkSlateGray,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left
+                Margin = new Padding(0, 0, 8, 0),
+                UseMnemonic = false
             };
 
             btnResetTargetDir = new Button
             {
-                Location = new Point(550, 7),
-                Size = new Size(170, 25),
+                Dock = DockStyle.Fill,
+                Text = Localize("Reset to Root", "Déposer à la racine"),
                 Cursor = Cursors.Hand,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
+                Margin = Padding.Empty
             };
             btnResetTargetDir.Click += (s, ev) =>
             {
@@ -181,8 +196,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 CompareLocalWithRemote(_remotePaths);
             };
 
-            panelFilesHeader.Controls.Add(labelTargetDir);
-            panelFilesHeader.Controls.Add(btnResetTargetDir);
+            panelFilesHeader.Controls.Add(labelTargetDir, 0, 0);
+            panelFilesHeader.Controls.Add(btnResetTargetDir, 1, 0);
 
             tabPageFiles.Controls.Clear();
             tabPageFiles.Controls.Add(treeViewSelected);
@@ -383,7 +398,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             btnCancel.Text = Localize("CANCEL", "ANNULER");
 
             groupBoxStats.Text = Localize("Statistics", "Statistiques");
-            tabPageFiles.Text = Localize("Files", "Fichiers");
+            tabPageFiles.Text = Localize("Upload preparation", "Préparation du dépôt");
             tabPageRemote.Text = Localize("Server Files", "Fichiers sur le serveur");
             tabPageLogs.Text = Localize("Java Engine Logs", "Logs du moteur Java");
 
@@ -3125,6 +3140,10 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                     ? $"Dossier de destination sur le serveur : {target}"
                     : $"Destination folder on server: {target}";
             }
+
+            // Le texte est tronqué avec des points de suspension si nécessaire ;
+            // l'infobulle permet toujours de consulter le chemin complet.
+            toolTipFieldHelp?.SetToolTip(labelTargetDir, labelTargetDir.Text);
         }
 
         private async Task<bool> UpdateRemoteFileMetadataAsync(long fileId, string newLabel, string newDirectoryLabel, string api, string srv, bool silent = false, CancellationToken token = default)

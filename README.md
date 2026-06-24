@@ -1,174 +1,339 @@
 # RDG ArboDV
 
 <p align="center">
-  <img src="assets/AppPreviewV2.0.0.png" width="100%">
+  <img src="assets/AppPreviewV2.0.0.png" alt="Interface principale de RDG ArboDV" width="100%">
 </p>
 
 <p align="center">
-  <strong>Client bureautique Windows pour le dépôt, l'organisation et la gestion de fichiers dans l'entrepôt national Recherche Data Gouv</strong><br />
-  <sub>Version 2.0.0</sub>
-</p>
-
-<p align="center">
-  <a href="#fonctionnalites">Fonctionnalités</a> •
-  <a href="#apercu">Aperçu</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#utilisation">Utilisation</a> •
-  <a href="#parametres-requis">Paramètres requis</a> •
-  <a href="#build">Build</a>
+  <strong>Client bureautique Windows pour préparer, téléverser et administrer les fichiers d'un dataset Dataverse</strong><br>
+  <sub>Conçu pour Recherche Data Gouv — Version 2.0.0</sub>
 </p>
 
 <p align="center">
   <img alt="C#" src="https://img.shields.io/badge/C%23-.NET%208.0-512bd4">
-  <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows-0078d4">
-  <img alt="GUI" src="https://img.shields.io/badge/GUI-WinForms-0f6cbd">
-  <img alt="Dataverse" src="https://img.shields.io/badge/Target-Dataverse-2d7d46">
+  <img alt="Plateforme" src="https://img.shields.io/badge/Plateforme-Windows-0078d4">
+  <img alt="Interface" src="https://img.shields.io/badge/Interface-WinForms-0f6cbd">
+  <img alt="Cible" src="https://img.shields.io/badge/Cible-Dataverse-2d7d46">
   <img alt="Version" src="https://img.shields.io/badge/Version-2.0.0-success">
 </p>
 
----
+## Sommaire
 
-<a id="apercu"></a>
-## Aperçu
-
-**RDG ArboDV** est un client bureautique Windows conçu spécifiquement pour l'entrepôt national **Recherche Data Gouv** (`https://recherche.data.gouv.fr`). Il permet de simplifier, structurer et sécuriser le dépôt et la gestion de fichiers au sein de vos jeux de données (datasets)., en particulier lorsque le volume de données est important ou que l'arborescence à conserver est complexe.
-
-L'application s'adresse aux équipes qui doivent préparer un versement propre, de façon maîtrisée et fiable, sans dépendre de l'interface web classique.
-
-### Visualisation et gestion du serveur (Clic droit)
-
-L'onglet **Fichiers sur le serveur** permet d'explorer l'arborescence distante en temps réel et d'interagir graphiquement avec elle (sélection simple ou multiple) :
-
-<p align="center">
-  <img src="assets/AppPreview_RightClick_file.png" alt="Menu contextuel sur un fichier" width="48%">
-  <img src="assets/AppPreview_RightClick_folder.png" alt="Menu contextuel sur un dossier" width="48%">
-</p>
-
-> [!WARNING]
-> Ce logiciel est destiné en priorité aux dépôts volumineux comportant de nombreux sous-dossiers.  
-> Pour de petits jeux de données, il est recommandé d'utiliser l'interface web afin de limiter la charge sur les serveurs.
+- [Présentation](#présentation)
+- [Fonctionnalités](#fonctionnalités)
+- [Comprendre l'interface](#comprendre-linterface)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Utilisation](#utilisation)
+- [Gestion des fichiers sur le serveur](#gestion-des-fichiers-sur-le-serveur)
+- [Comprendre les couleurs et les états](#comprendre-les-couleurs-et-les-états)
+- [Compilation et publication](#compilation-et-publication)
+- [Architecture technique](#architecture-technique)
+- [Dépannage](#dépannage)
 
 ---
 
-<a id="fonctionnalites"></a>
+## Présentation
+
+**RDG ArboDV** simplifie les dépôts volumineux dans un dataset Dataverse, notamment lorsqu'ils comportent de nombreux fichiers ou une arborescence complexe. L'application permet de préparer l'organisation du dépôt localement, de choisir précisément son emplacement sur le serveur, puis de suivre le transfert sans dépendre de l'interface web classique.
+
+Elle est particulièrement adaptée aux équipes de recherche qui souhaitent :
+
+- préparer un dépôt avant toute modification du serveur ;
+- conserver ou réorganiser une arborescence de dossiers ;
+- détecter les fichiers déjà présents ;
+- téléverser de grands volumes avec un suivi détaillé ;
+- administrer les fichiers distants depuis une interface graphique unique.
+
+> [!IMPORTANT]
+> RDG ArboDV est destiné en priorité aux dépôts volumineux comportant de nombreux fichiers ou sous-dossiers. Pour un petit dépôt ponctuel, l'interface web Dataverse reste généralement plus adaptée et sollicite moins les ressources du serveur.
+
+---
+
 ## Fonctionnalités
 
-| Fonction | Bénéfice |
+| Fonction | Description |
 | --- | --- |
-| **Upload de fichiers et dossiers** | Prépare et transfère rapidement des lots de dépôt volumineux. |
-| **Conservation de l'arborescence** | Respecte rigoureusement la hiérarchie logique des données locales. |
-| **Aplatissement local & distant** | Remonte récursivement tout le contenu d'un dossier dans son répertoire parent (puis supprime le dossier vide), permettant de simplifier et restructurer l'arborescence avant l'upload ou directement sur le serveur. |
-| **Détection en temps réel des doublons** | Identifie les doublons exacts (verts) et les doublons existant ailleurs sur le serveur (chocolat) avec détails des chemins. |
-| **Visualisation de l'arborescence serveur** | Explorez de façon interactive les fichiers déjà déposés sur le serveur. |
-| **Sélection de destination graphique** | Ciblez un dossier d'upload d'un simple clic sur l'arborescence serveur. |
-| **Opérations distantes (clic droit)** | Téléchargement récursif, déplacement visuel (création de dossiers), renommage et suppression. |
-| **Auto-détection de la langue** | S'adapte automatiquement à la langue de votre système Windows (Français / Anglais). |
-| **Statistiques intégrées** | Affiche le volume de données, la vitesse (Mo/s), le temps écoulé et le temps restant (ETA). |
-| **Gestion des reprises sur erreur** | Retente automatiquement l'envoi en cas d'échec ponctuel du réseau. |
+| **Préparation locale du dépôt** | Ajoute des fichiers et dossiers dans un espace de travail sans modifier immédiatement le serveur. |
+| **Conservation de l'arborescence** | Reproduit dans Dataverse l'organisation visible dans l'espace de préparation. |
+| **Réorganisation avant transfert** | Permet de déplacer, retirer ou aplatir les éléments de l'arbre local sans modifier les fichiers présents sur le disque. |
+| **Choix graphique de la destination** | Dépose à la racine du dataset ou dans un dossier distant existant. |
+| **Détection des doublons** | Distingue les fichiers déjà présents à la destination de ceux portant le même nom ailleurs dans le dataset. |
+| **Téléversement de grands volumes** | Affiche la progression, la vitesse, le temps écoulé, le temps restant et les éventuelles erreurs. |
+| **Gestion des fichiers distants** | Actualise, télécharge, déplace, renomme, aplatit ou supprime des fichiers et dossiers sur le serveur. |
+| **Sélection multiple** | Autorise les opérations groupées sur plusieurs éléments locaux ou distants. |
+| **Journal technique intégré** | Centralise les messages détaillés du moteur de téléversement afin de faciliter le diagnostic. |
+| **Interface bilingue** | Détecte la langue du système au premier lancement et permet de basculer entre le français et l'anglais. |
+| **Interface redimensionnable** | La fenêtre peut être agrandie ou maximisée ; les arbres et journaux utilisent automatiquement l'espace disponible. |
+| **Gestion des interruptions** | Permet d'annuler une opération et interrompt proprement le transfert en cas de perte du réseau. |
 
 ---
 
-<a id="parametres-requis"></a>
-## Paramètres requis
+## Comprendre l'interface
 
-Le logiciel repose sur trois informations simples :
+L'application est organisée autour de trois onglets complémentaires.
 
-- **API Key** : la clé personnelle qui autorise le dépôt sécurisé sans utiliser le mot de passe du compte.
-- **DOI** : l'identifiant pérenne (PID) du dataset cible.
-- **Serveur** : l'instance Dataverse cible.
+### Préparation du dépôt
 
-Le logiciel peut être utilisé avec les deux environnements proposés par défaut :
+Cet onglet constitue l'**espace de travail local**. Il contient uniquement les fichiers et dossiers qui seront pris en compte lors du prochain téléversement.
 
-- **Entrepôt de production** : `https://entrepot.recherche.data.gouv.fr`
-- **Instance de démo** : `https://demo.recherche.data.gouv.fr`
+À ce stade, aucune donnée n'est encore envoyée au serveur. Vous pouvez donc :
 
-Le DOI attendu par l'application suit le format `doi:10.xxxx/xxxxx`.  
-Si vous collez une URL complète (ex: `https://doi.org/...`), le logiciel la normalise automatiquement dans le bon format.
+- ajouter des fichiers isolés ou des dossiers complets ;
+- vérifier l'arborescence qui sera créée dans Dataverse ;
+- déplacer des éléments par glisser-déposer ;
+- retirer des éléments du dépôt sans les supprimer du disque ;
+- aplatir un ou plusieurs dossiers avant le transfert.
+
+L'organisation affichée dans cet onglet est la **source de vérité du dépôt** : elle détermine les chemins qui seront transmis au serveur.
+
+### Fichiers sur le serveur
+
+Cet onglet affiche le contenu réellement présent dans le dataset indiqué par le DOI. Il sert à la fois à consulter l'arborescence distante, à choisir le dossier de destination du prochain dépôt et à administrer les fichiers existants.
+
+La sélection d'un dossier distant met immédiatement à jour la destination affichée dans l'onglet **Préparation du dépôt**. Si aucun dossier n'est sélectionné, la destination utilisée est la **racine (/)** du dataset.
+
+### Logs du moteur Java
+
+Cet onglet affiche le déroulement technique du transfert. Il n'est pas nécessaire de le consulter lors d'un usage normal, mais il fournit des informations utiles lorsqu'un fichier échoue, qu'une opération est interrompue ou qu'un diagnostic détaillé est nécessaire.
 
 ---
 
-<a id="installation"></a>
+## Prérequis
+
+### Système
+
+- Windows 10 ou Windows 11 ;
+- runtime **.NET 8.0 Desktop** ;
+- environnement Java **8 ou version ultérieure**, avec la commande `java` disponible dans le `PATH` ;
+- accès réseau au serveur Dataverse ciblé.
+
+### Informations nécessaires
+
+- **Clé API** : jeton personnel autorisant l'application à agir sur votre compte Dataverse ;
+- **DOI** : identifiant pérenne du dataset qui recevra les fichiers ;
+- **Serveur** : instance Dataverse hébergeant le dataset.
+
+Les environnements proposés par défaut sont :
+
+- production : `https://entrepot.recherche.data.gouv.fr` ;
+- démonstration : `https://demo.recherche.data.gouv.fr`.
+
+Le DOI attendu suit le format `doi:10.xxxx/xxxxx`. Une URL complète telle que `https://doi.org/10.xxxx/xxxxx` peut également être collée : l'application la convertit automatiquement.
+
+> [!CAUTION]
+> La clé API donne accès à votre compte Dataverse. Ne la publiez jamais dans une capture d'écran, un ticket ou un dépôt Git. Si elle a été exposée, révoquez-la immédiatement depuis votre profil et générez-en une nouvelle.
+
+---
+
 ## Installation
 
-### Utilisation du binaire
+### Utiliser le binaire publié
 
-- Utiliser un poste Windows.
-- Disposer du runtime **.NET 8.0**.
-- Lancer l'exécutable autonome **`RDG_Uploader_GUI.exe`** (le moteur Java y est intégré et s'extrait automatiquement au démarrage, aucun autre fichier n'est requis sur le disque).
+1. Télécharger ou récupérer `RDG_Uploader_GUI.exe`.
+2. Vérifier que .NET 8 Desktop et Java sont installés.
+3. Lancer l'exécutable.
 
-### Utilisation depuis le code source
+Le moteur personnalisé `DVUploader-v1.3.0-RDGengine.jar` est intégré à l'exécutable et extrait automatiquement au démarrage. Il n'est donc pas nécessaire de copier manuellement le fichier JAR à côté de l'application.
 
-- Installer le SDK **.NET 8.0** sur votre machine.
-- Ouvrir une invite de commandes ou PowerShell dans le dossier `rdg_arbodv_v2`.
-- Lancer la compilation de la solution :
-  ```powershell
-  dotnet build RDG_Uploader_GUI.sln
-  ```
-- L'exécutable et ses fichiers de sortie seront générés dans `bin/Debug/net8.0-windows/`. Le moteur Java y est directement intégré en tant que ressource embarquée, l'application est donc immédiatement opérationnelle sans aucune autre action.
+### Utiliser le code source
+
+1. Installer le SDK **.NET 8.0**.
+2. Ouvrir PowerShell ou une invite de commandes dans `rdg_arbodv_v2`.
+3. Compiler la solution :
+
+   ```powershell
+   dotnet build RDG_Uploader_GUI.sln
+   ```
+
+4. Lancer l'exécutable généré dans `bin/Debug/net8.0-windows/`.
 
 ---
 
-<a id="utilisation"></a>
 ## Utilisation
 
-### 🔧 Préparation à son utilisation
+### 1. Récupérer la clé API
 
-1. **Récupération du Jeton API** :
-   Cliquez en haut à droite sur votre profil Recherche Data Gouv, puis sur **Jeton API**.
-   ![Capture d’écran de RDG ArboDV](assets/Step1.png)
+Dans Recherche Data Gouv, ouvrez le menu de votre profil puis la page **Jeton API**.
 
-   Cliquez sur **"Créer le jeton"**, puis copiez-le dans le champ **API Key** du logiciel.
-   ![Capture d’écran de RDG ArboDV](assets/Step2.png)
+![Accès au jeton API dans Recherche Data Gouv](assets/Step1.png)
 
-2. **DOI du Dataset** :
-   Récupérez le DOI (surligné en jaune dans l'interface de votre jeu de données) et copiez-le dans le champ **DOI** du logiciel.
-   ![Capture d’écran de RDG ArboDV](assets/Step3.png)
+Créez le jeton si nécessaire, puis copiez-le dans le champ **API Key** de RDG ArboDV.
 
-### Comprendre les onglets du logiciel
+![Création et copie du jeton API](assets/Step2.png)
 
-- **Fichiers** constitue votre espace de travail local. Les fichiers et dossiers ajoutés dans cet onglet ne sont pas immédiatement envoyés : vous pouvez encore vérifier leur organisation, les déplacer, les retirer ou aplatir des dossiers. L'arborescence affichée est celle qui sera reproduite lors du téléversement.
-- **Fichiers sur le serveur** affiche le contenu déjà présent dans le dataset. Cet onglet permet de choisir un dossier de destination existant et, par clic droit, de gérer les éléments distants (téléchargement, déplacement, renommage, aplatissement ou suppression).
-- **Logs du moteur Java** présente le détail technique du transfert. Il est principalement utile pour suivre une opération ou comprendre une éventuelle erreur.
+### 2. Renseigner le dataset
 
-Par défaut, le contenu préparé dans l'onglet **Fichiers** est téléversé à la **racine (/)** du dataset. Pour l'envoyer dans un dossier existant, sélectionnez ce dossier dans l'onglet **Fichiers sur le serveur**. Le chemin actuellement ciblé est toujours rappelé en haut de l'espace de travail, à côté de **Dossier de destination sur le serveur**.
+Copiez le DOI affiché sur la page du dataset et collez-le dans le champ **DOI**.
 
-> [!NOTE]
-> Dans l'espace de travail, un fichier affiché en **vert** existe déjà sur le serveur au chemin de destination choisi. Un fichier affiché en **orange** porte le même nom qu'un fichier présent ailleurs dans le dataset ; son emplacement distant est alors indiqué dans le message.
+![Emplacement du DOI dans le dataset](assets/Step3.png)
 
-### Préparer et lancer le téléversement
+Sélectionnez ensuite le serveur correspondant au dataset : production ou démonstration.
 
-1. **Choisir la destination** :
-   Utilisez la racine proposée par défaut ou sélectionnez un dossier existant dans l'onglet **Fichiers sur le serveur**.
+### 3. Choisir la destination
 
-2. **Préparer les fichiers** :
-   Ajoutez vos fichiers ou dossiers locaux dans l'onglet **Fichiers**, puis organisez l'arborescence qui devra être créée sur le serveur.
+La destination par défaut est la **racine (/)** du dataset.
 
-3. **Vérifier le dépôt** :
-   Contrôlez le chemin de destination affiché et les éventuels fichiers signalés en vert ou en orange.
+Pour téléverser dans un dossier existant :
 
-4. **Lancer le transfert** :
-   Cliquez sur **Téléverser**. Les fichiers sont alors envoyés en respectant l'organisation visible dans l'espace de travail et le dossier de destination choisi.
+1. ouvrez l'onglet **Fichiers sur le serveur** ;
+2. sélectionnez le dossier souhaité ;
+3. revenez dans **Préparation du dépôt**.
+
+Le chemin actif est rappelé dans l'en-tête **Dossier de destination sur le serveur**. Lorsqu'il est trop long pour être affiché entièrement, il est abrégé par des points de suspension ; placez le pointeur dessus pour consulter le chemin complet.
+
+Utilisez **Déposer à la racine** pour annuler la destination sélectionnée et revenir à `/`.
+
+### 4. Préparer les fichiers
+
+Dans l'onglet **Préparation du dépôt** :
+
+- **Sélectionner des fichiers** ajoute un ou plusieurs fichiers isolés ;
+- **Sélectionner un dossier** ajoute son contenu et ses sous-dossiers ;
+- le glisser-déposer permet d'ajouter ou de réorganiser les éléments ;
+- le clic droit permet de retirer ou d'aplatir la sélection ;
+- **Réinitialiser** vide entièrement l'espace de préparation sans effacer les fichiers du disque.
+
+Avant de continuer, vérifiez que l'arborescence affichée correspond à l'organisation attendue sur le serveur.
+
+### 5. Vérifier les doublons
+
+La comparaison avec le serveur est effectuée à partir du nom du fichier, de son chemin préparé et de la destination choisie. Consultez la [légende des couleurs](#comprendre-les-couleurs-et-les-états) avant de lancer le dépôt.
+
+### 6. Lancer le téléversement
+
+Cliquez sur **Téléverser**. Pendant l'opération :
+
+- les champs et commandes susceptibles de modifier le dépôt sont temporairement désactivés ;
+- la progression et les statistiques sont mises à jour ;
+- le bouton **ANNULER** permet d'interrompre le transfert ;
+- les détails restent disponibles dans **Logs du moteur Java**.
+
+Une fois l'opération terminée, l'arborescence distante est actualisée automatiquement.
 
 ---
 
-<a id="build"></a>
-## Build
+## Gestion des fichiers sur le serveur
 
-Le projet est conçu sous **.NET 8.0**.
+L'onglet **Fichiers sur le serveur** permet d'agir directement sur le contenu du dataset. Sélectionnez un ou plusieurs éléments, puis utilisez le clic droit.
 
-1. Ouvrir la solution `RDG_Uploader_GUI.sln` dans Visual Studio 2022 ou utiliser le CLI .NET.
-2. Compiler la solution en configuration `Release` ou `Debug` :
-   ```powershell
-   dotnet build -c Release
-   ```
-3. Le moteur Java (`DVUploader-v1.3.0-RDGengine.jar`) est embarqué directement dans l'application en tant que ressource. Pour générer un fichier unique (Single File) indépendant qui contient toutes ses dépendances, utilisez la commande :
-   ```powershell
-   dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true RDG_Uploader_GUI.csproj
-   ```
-   L'exécutable autonome sera généré dans `bin\Release\net8.0-windows\win-x64\publish\`.
+<p align="center">
+  <img src="assets/AppPreview_RightClick_file.png" alt="Menu contextuel d'un fichier distant" width="48%">
+  <img src="assets/AppPreview_RightClick_folder.png" alt="Menu contextuel d'un dossier distant" width="48%">
+</p>
+
+Les actions disponibles dépendent du type de sélection :
+
+- **Actualiser** recharge l'état du dataset ;
+- **Téléverser dans ce dossier** définit la destination du prochain dépôt ;
+- **Télécharger** récupère localement un fichier ou une arborescence ;
+- **Déplacer** choisit un autre dossier distant, avec possibilité d'en créer un ;
+- **Renommer** modifie le nom d'un fichier ;
+- **Aplatir** remonte le contenu du ou des dossiers sélectionnés d'un niveau ;
+- **Supprimer** efface les fichiers correspondants après confirmation.
+
+> [!WARNING]
+> Les actions de déplacement, renommage, aplatissement et suppression modifient réellement le dataset distant. Vérifiez toujours le DOI, le serveur et la sélection avant de confirmer.
+
+---
+
+## Comprendre les couleurs et les états
+
+Dans l'onglet **Préparation du dépôt** :
+
+| Affichage | Signification |
+| --- | --- |
+| **Texte normal** | Le fichier n'a pas été trouvé sur le serveur à partir des informations actuellement chargées. |
+| **Vert — Déjà sur le serveur** | Le fichier existe exactement au chemin de destination prévu. Il ne sera pas téléversé une seconde fois. |
+| **Orange — Existe déjà dans…** | Un fichier portant le même nom existe dans un autre dossier du dataset. Le chemin existant est indiqué afin de vous permettre de décider si le nouveau dépôt est volontaire. |
+| **Orange — En cours** | Le fichier est en cours de traitement par le moteur de téléversement. |
+| **Vert — Terminé** | Le fichier a été traité avec succès. |
+| **Rouge — Erreur** | Le fichier n'a pas pu être traité ; consultez le journal technique. |
+
+Lorsque le serveur finalise ou indexe une série de fichiers, le message **Serveur temporairement occupé : finalisation en cours, aucune action requise** peut apparaître. Cet état est normal et temporaire : l'application attend automatiquement que le serveur soit de nouveau disponible.
+
+---
+
+## Compilation et publication
+
+Le projet principal cible **.NET 8.0 pour Windows**.
+
+### Compilation Debug
+
+```powershell
+dotnet build RDG_Uploader_GUI.sln
+```
+
+### Compilation Release
+
+```powershell
+dotnet build -c Release RDG_Uploader_GUI.sln
+```
+
+### Publication en fichier unique
+
+Depuis le dossier `rdg_arbodv_v2` :
+
+```powershell
+dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true RDG_Uploader_GUI.csproj
+```
+
+Le résultat est généré dans :
+
+```text
+bin/Release/net8.0-windows/win-x64/publish/
+```
+
+La publication utilise `--self-contained false` : le runtime .NET 8 Desktop doit donc être installé sur le poste cible.
+
+---
+
+## Architecture technique
+
+RDG ArboDV repose sur deux composants :
+
+1. **Interface C# WinForms** — gestion de l'espace de préparation, appels à l'API Dataverse, arborescences, statistiques et opérations distantes.
+2. **Moteur Java DVUploader personnalisé** — transfert effectif des fichiers vers Dataverse.
+
+Lors du téléversement, l'interface construit un manifeste JSON temporaire. Chaque entrée associe le chemin réel du fichier local à son dossier virtuel de destination. Cette approche permet de réorganiser ou d'aplatir visuellement un dépôt sans déplacer ni dupliquer les fichiers sur le disque.
+
+Le JAR personnalisé est embarqué comme ressource dans l'application. Il est extrait dans le dossier de l'exécutable ou, si celui-ci n'est pas accessible en écriture, dans le profil local de l'utilisateur.
+
+---
+
+## Dépannage
+
+### Les fichiers du serveur ne s'affichent pas
+
+- vérifiez la clé API ;
+- vérifiez que le DOI correspond au serveur sélectionné ;
+- ouvrez **Fichiers sur le serveur** puis cliquez sur **Actualiser** ;
+- contrôlez votre connexion réseau.
+
+### Java n'est pas reconnu
+
+Installez Java 8 ou une version plus récente, puis vérifiez dans PowerShell :
+
+```powershell
+java -version
+```
+
+Si la commande n'est pas reconnue, ajoutez le dossier `bin` de Java à la variable d'environnement `PATH`.
+
+### Un fichier apparaît en orange
+
+Le nom existe déjà ailleurs dans le dataset. Lisez le chemin indiqué, puis vérifiez si vous souhaitez réellement créer une seconde occurrence dans la destination actuellement choisie.
+
+### Le serveur est temporairement occupé
+
+Dataverse peut verrouiller brièvement un dataset pendant son indexation. Laissez l'application ouverte : elle reprend automatiquement dès que le serveur libère l'opération.
+
+### Une opération échoue
+
+Consultez **Logs du moteur Java** et les compteurs d'erreurs. En cas d'interruption réseau, actualisez ensuite l'arborescence distante avant de relancer le dépôt afin de vérifier quels fichiers ont déjà été reçus.
 
 ---
 
 <p align="center">
-  <sub>RDG ArboDV • Présentation logicielle • Version 2.0.0</sub>
+  <sub>RDG ArboDV — Préparation, téléversement et gestion de datasets Dataverse</sub>
 </p>
