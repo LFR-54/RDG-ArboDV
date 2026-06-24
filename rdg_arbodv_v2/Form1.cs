@@ -215,7 +215,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
             menuRename = new ToolStripMenuItem();
             menuRename.Text = Localize("Rename on server", "Renommer sur le serveur");
-            menuRename.Click += async (s, ev) => await RenameRemoteFileAsync();
+            menuRename.Click += async (s, ev) => await RenameRemoteItemAsync();
             contextMenuRemote.Items.Add(menuRename);
 
             menuMove = new ToolStripMenuItem();
@@ -1884,6 +1884,13 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             buttonUpload.Enabled = enabled;
             buttonApiKeyInfo.Enabled = enabled;
             buttonDoiInfo.Enabled = enabled;
+
+            // La destination fait partie intégrante du manifeste créé au lancement.
+            // Elle reste donc figée jusqu'à la fin de l'opération pour que le chemin
+            // affiché corresponde toujours au transfert réellement en cours.
+            treeViewRemote.Enabled = enabled;
+            if (btnResetTargetDir != null) btnResetTargetDir.Enabled = enabled;
+            if (btnRefreshRemote != null) btnRefreshRemote.Enabled = enabled;
         }
 
         private void UpdateStatus()
@@ -2498,12 +2505,20 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             return string.Join("/", parts);
         }
 
-        private async Task RenameRemoteFileAsync()
+        private async Task RenameRemoteItemAsync()
         {
             var selectedNodes = treeViewRemote.SelectedNodes;
             if (selectedNodes == null || selectedNodes.Count != 1) return;
             TreeNode node = selectedNodes[0];
-            if (node == null || !(node.Tag is long fileId)) return;
+            if (node == null || node.Parent == null) return;
+
+            if (node.ImageKey == "folder")
+            {
+                await RenameRemoteFolderAsync(node);
+                return;
+            }
+
+            if (!(node.Tag is long fileId)) return;
 
             var item = _remoteFiles.Find(f => f.DataFile != null && f.DataFile.Id == fileId);
             if (item == null) return;
@@ -2516,7 +2531,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             
             string captionPrompt = IsFrench ? "Renommer sur le serveur" : "Rename on server";
 
-            string userInput = Prompt.ShowDialog(msgPrompt, captionPrompt, currentFilename);
+            string userInput = Prompt.ShowDialog(msgPrompt, captionPrompt, currentFilename)?.Trim();
             if (string.IsNullOrWhiteSpace(userInput) || userInput == currentFilename) return;
 
             userInput = userInput.Replace('\\', '/');
@@ -2534,6 +2549,158 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             bool success = await UpdateRemoteFileMetadataAsync(fileId, userInput, currentDir, api, srv);
             if (success)
             {
+                await LoadRemoteFilesAsync();
+            }
+        }
+
+        private async Task RenameRemoteFolderAsync(TreeNode folderNode)
+        {
+            string currentFolderName = folderNode.Text;
+            string currentFolderPath = GetRemoteFolderNodePath(folderNode);
+
+            string msgPrompt = IsFrench
+                ? "Entrez le nouveau nom du dossier :"
+                : "Enter the new folder name:";
+            string captionPrompt = IsFrench ? "Renommer le dossier" : "Rename folder";
+
+            string newFolderName = Prompt.ShowDialog(msgPrompt, captionPrompt, currentFolderName)?.Trim();
+            if (string.IsNullOrWhiteSpace(newFolderName) || newFolderName == currentFolderName) return;
+
+            newFolderName = newFolderName.Replace('\\', '/');
+            if (newFolderName.Contains("/") || newFolderName == "." || newFolderName == "..")
+            {
+                string errMsg = IsFrench
+                    ? "Le nom du dossier ne doit pas contenir de chemin ni être égal à '.' ou '..'."
+                    : "The folder name must not contain a path or be equal to '.' or '..'.";
+                MessageBox.Show(errMsg, Localize("Error", "Erreur"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            foreach (TreeNode sibling in folderNode.Parent.Nodes)
+            {
+                if (sibling != folderNode && sibling.ImageKey == "folder" &&
+                    string.Equals(sibling.Text, newFolderName, StringComparison.OrdinalIgnoreCase))
+                {
+                    string duplicateMsg = IsFrench
+                        ? $"Un dossier nommé '{newFolderName}' existe déjà à cet emplacement."
+                        : $"A folder named '{newFolderName}' already exists in this location.";
+                    MessageBox.Show(duplicateMsg, Localize("Error", "Erreur"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            string parentPath = folderNode.Parent.Parent == null
+                ? ""
+                : GetRemoteFolderNodePath(folderNode.Parent);
+            string newFolderPath = string.IsNullOrEmpty(parentPath)
+                ? newFolderName
+                : $"{parentPath}/{newFolderName}";
+
+            var moves = new List<Tuple<DataverseFileItem, string>>();
+            foreach (var item in _remoteFiles)
+            {
+                if (item.DataFile == null) continue;
+
+                string currentDir = (item.DirectoryLabel ?? "").Replace('\\', '/').Trim('/');
+                if (string.Equals(currentDir, currentFolderPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    moves.Add(Tuple.Create(item, newFolderPath));
+                }
+                else if (currentDir.StartsWith(currentFolderPath + "/", StringComparison.OrdinalIgnoreCase))
+                {
+                    string suffix = currentDir.Substring(currentFolderPath.Length + 1);
+                    moves.Add(Tuple.Create(item, $"{newFolderPath}/{suffix}"));
+                }
+            }
+
+            if (moves.Count == 0)
+            {
+                MessageBox.Show(
+                    IsFrench ? "Ce dossier ne contient aucun fichier à renommer." : "This folder contains no files to rename.",
+                    Localize("Information", "Information"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            string confirmMsg = IsFrench
+                ? $"Renommer '{currentFolderName}' en '{newFolderName}' nécessite de mettre à jour le chemin de {moves.Count} fichier(s).\n\nContinuer ?"
+                : $"Renaming '{currentFolderName}' to '{newFolderName}' requires updating the path of {moves.Count} file(s).\n\nContinue?";
+            if (MessageBox.Show(confirmMsg, captionPrompt, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            string api = textBoxApiKey.Text.Trim();
+            string srv = comboBoxServer.SelectedItem?.ToString().Trim().TrimEnd('/');
+
+            ToggleControls(false);
+            _cts = new CancellationTokenSource();
+            var token = _cts.Token;
+
+            progressBar.Value = 0;
+            progressBar.Maximum = moves.Count;
+            progressBar.Style = ProgressBarStyle.Continuous;
+            SendMessage(progressBar.Handle, PBM_SETSTATE, (IntPtr)PBST_NORMAL, IntPtr.Zero);
+
+            int successCount = 0;
+            int errorCount = 0;
+
+            try
+            {
+                for (int i = 0; i < moves.Count; i++)
+                {
+                    token.ThrowIfCancellationRequested();
+                    if (i > 0) await Task.Delay(350, token);
+
+                    var item = moves[i].Item1;
+                    string newDirectoryLabel = moves[i].Item2;
+                    long fileId = item.DataFile.Id;
+                    string filename = item.Label;
+
+                    SafeSetLabel(
+                        labelStatus,
+                        IsFrench
+                            ? $"Renommage du dossier {i + 1}/{moves.Count} : {filename}..."
+                            : $"Renaming folder {i + 1}/{moves.Count}: {filename}...");
+
+                    bool success = await UpdateRemoteFileMetadataAsync(
+                        fileId,
+                        filename,
+                        newDirectoryLabel,
+                        api,
+                        srv,
+                        silent: true,
+                        token: token);
+
+                    if (success) successCount++;
+                    else errorCount++;
+
+                    progressBar.Value = i + 1;
+                }
+
+                string completeMsg = IsFrench
+                    ? $"Renommage du dossier terminé : {successCount} fichier(s) mis à jour, {errorCount} échec(s)."
+                    : $"Folder rename complete: {successCount} file(s) updated, {errorCount} failed.";
+                MessageBox.Show(
+                    completeMsg,
+                    Localize("Completed", "Terminé"),
+                    MessageBoxButtons.OK,
+                    errorCount > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+            }
+            catch (OperationCanceledException)
+            {
+                MessageBox.Show(
+                    IsFrench ? "Renommage annulé." : "Rename cancelled.",
+                    Localize("Cancelled", "Annulé"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            finally
+            {
+                ToggleControls(true);
+                _cts?.Dispose();
+                _cts = null;
+                SafeSetLabel(labelStatus, IsFrench ? "Prêt" : "Ready");
+                progressBar.Value = 0;
                 await LoadRemoteFilesAsync();
             }
         }
@@ -2868,7 +3035,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             }
         }
 
-        private void CollectRemoteFileIds(TreeNode node, List<long> fileIds)
+        private void CollectRemoteFileIds(TreeNode node, ISet<long> fileIds)
         {
             if (node == null) return;
             if (node.Tag is long fileId && fileId > 0)
@@ -2883,16 +3050,21 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private async Task DeleteRemoteFileAsync()
         {
+            _networkDisconnected = false;
             var selectedNodes = treeViewRemote.SelectedNodes;
             if (selectedNodes == null || selectedNodes.Count == 0) return;
 
             // Collect all file IDs recursively from all selected nodes
-            var fileIdsToDelete = new List<long>();
+            // Un HashSet évite d'envoyer plusieurs DELETE pour le même fichier lorsque
+            // un dossier parent et l'un de ses descendants sont sélectionnés ensemble.
+            var uniqueFileIdsToDelete = new HashSet<long>();
 
             foreach (var node in selectedNodes)
             {
-                CollectRemoteFileIds(node, fileIdsToDelete);
+                CollectRemoteFileIds(node, uniqueFileIdsToDelete);
             }
+
+            var fileIdsToDelete = new List<long>(uniqueFileIdsToDelete);
 
             if (fileIdsToDelete.Count == 0)
             {
@@ -2932,6 +3104,9 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
             // Prepare UI
             ToggleControls(false);
+            btnCancel.Visible = btnCancel.Enabled = true;
+            treeViewRemote.Enabled = false;
+            if (btnRefreshRemote != null) btnRefreshRemote.Enabled = false;
             _cts = new CancellationTokenSource();
             var token = _cts.Token;
 
@@ -2943,48 +3118,111 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             int successCount = 0;
             int errorCount = 0;
             int completedCount = 0;
+            bool deletionSuspended = false;
+            bool shouldRefreshRemoteTree = true;
+            string suspensionReason = null;
 
             try
             {
-                for (int i = 0; i < fileIdsToDelete.Count; i++)
+                SafeSetLabel(
+                    labelStatus,
+                    IsFrench
+                        ? $"Suppression groupée de {fileIdsToDelete.Count} fichier(s)..."
+                        : $"Bulk deletion of {fileIdsToDelete.Count} file(s)...");
+
+                string doi = NormalizeDoiInput(textBoxDoi.Text);
+                var bulkResult = await DeleteRemoteFilesBulkAsync(fileIdsToDelete, doi, api, srv, token);
+
+                if (bulkResult.Success)
                 {
-                    token.ThrowIfCancellationRequested();
-                    long id = fileIdsToDelete[i];
+                    successCount = fileIdsToDelete.Count;
+                    completedCount = fileIdsToDelete.Count;
+                    progressBar.Value = progressBar.Maximum;
+                }
+                else if (bulkResult.FallbackAllowed)
+                {
+                    SafeSetLabel(
+                        labelStatus,
+                        IsFrench
+                            ? "API groupée indisponible : requêtes espacées pour protéger l'accès au serveur..."
+                            : "Bulk API unavailable: spacing requests to protect server access...");
 
-                    if (i > 0)
+                    int consecutiveFailures = 0;
+                    for (int i = 0; i < fileIdsToDelete.Count; i++)
                     {
-                        // Petit délai pour éviter les bannissements IP (rate limiting) par le pare-feu du serveur
-                        await Task.Delay(350, token);
+                        token.ThrowIfCancellationRequested();
+                        long id = fileIdsToDelete[i];
+
+                        if (i > 0)
+                        {
+                            // Repli très conservateur pour les anciennes versions de Dataverse.
+                            await Task.Delay(TimeSpan.FromSeconds(3), token);
+                        }
+
+                        SafeSetLabel(
+                            labelStatus,
+                            IsFrench
+                                ? $"Suppression sécurisée {i + 1}/{fileIdsToDelete.Count} — requêtes espacées pour éviter un blocage..."
+                                : $"Safe deletion {i + 1}/{fileIdsToDelete.Count} — requests spaced to avoid access blocking...");
+
+                        var deleteResult = await DeleteRemoteFileHttpAsync(id, api, srv, silent: true, token: token);
+
+                        completedCount++;
+                        if (deleteResult.Success)
+                        {
+                            successCount++;
+                            consecutiveFailures = 0;
+                        }
+                        else
+                        {
+                            errorCount++;
+                            consecutiveFailures++;
+                        }
+
+                        progressBar.Value = completedCount;
+
+                        if (deleteResult.StopBatch || consecutiveFailures >= 2)
+                        {
+                            deletionSuspended = true;
+                            shouldRefreshRemoteTree = false;
+                            suspensionReason = deleteResult.ErrorMessage;
+                            break;
+                        }
                     }
-
-                    bool success = await DeleteRemoteFileHttpAsync(id, api, srv, silent: true, token: token);
-                    
-                    if (success) successCount++;
-                    else errorCount++;
-                    completedCount++;
-
-                    int currentCompleted = completedCount;
-                    progressBar.Invoke((Action)(() =>
-                    {
-                        progressBar.Value = currentCompleted;
-                    }));
-
-                    string statusMsg = IsFrench
-                        ? $"Suppression {currentCompleted}/{fileIdsToDelete.Count}..."
-                        : $"Deleting {currentCompleted}/{fileIdsToDelete.Count}...";
-                    SafeSetLabel(labelStatus, statusMsg);
+                }
+                else
+                {
+                    deletionSuspended = true;
+                    shouldRefreshRemoteTree = false;
+                    suspensionReason = bulkResult.ErrorMessage;
                 }
 
-                if (errorCount > 0)
+                int remainingCount = fileIdsToDelete.Count - completedCount;
+                if (deletionSuspended)
+                {
+                    string resultMsg = IsFrench
+                        ? $"Suppression interrompue pour protéger votre accès au serveur.\n\nFichiers supprimés : {successCount}\nÉchecs détectés : {errorCount}\nNon traités : {remainingCount}\n\n{suspensionReason}\n\nN'utilisez pas de VPN pour relancer immédiatement. Attendez la levée du blocage puis actualisez manuellement."
+                        : $"Deletion stopped to protect your server access.\n\nFiles deleted: {successCount}\nDetected failures: {errorCount}\nNot processed: {remainingCount}\n\n{suspensionReason}\n\nDo not use a VPN to retry immediately. Wait for the block to be lifted, then refresh manually.";
+                    MessageBox.Show(resultMsg, Localize("Deletion suspended", "Suppression interrompue"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (errorCount > 0)
                 {
                     string resultMsg = IsFrench
                         ? $"Suppression terminée avec des erreurs.\nFichiers supprimés : {successCount}\nÉchecs : {errorCount}"
                         : $"Deletion completed with errors.\nFiles deleted: {successCount}\nFailures: {errorCount}";
                     MessageBox.Show(resultMsg, Localize("Warning", "Avertissement"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+                else
+                {
+                    string resultMsg = IsFrench
+                        ? $"Suppression terminée : {successCount} fichier(s) supprimé(s)."
+                        : $"Deletion complete: {successCount} file(s) deleted.";
+                    MessageBox.Show(resultMsg, Localize("Completed", "Terminé"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (OperationCanceledException)
             {
+                shouldRefreshRemoteTree = !_networkDisconnected;
                 MessageBox.Show(
                     IsFrench ? "Opération annulée." : "Operation cancelled.",
                     Localize("Cancelled", "Annulé"),
@@ -2993,48 +3231,202 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             }
             finally
             {
+                btnCancel.Visible = false;
+                treeViewRemote.Enabled = true;
+                if (btnRefreshRemote != null) btnRefreshRemote.Enabled = true;
                 ToggleControls(true);
                 _cts?.Dispose();
                 _cts = null;
                 SafeSetLabel(labelStatus, IsFrench ? "Prêt" : "Ready");
                 progressBar.Value = 0;
-                await LoadRemoteFilesAsync();
+                if (shouldRefreshRemoteTree)
+                {
+                    await Task.Delay(1000);
+                    await LoadRemoteFilesAsync();
+                }
             }
         }
 
-        private async Task<bool> DeleteRemoteFileHttpAsync(long fileId, string api, string srv, bool silent = false, CancellationToken token = default)
+        private async Task<(bool Success, bool FallbackAllowed, string ErrorMessage)> DeleteRemoteFilesBulkAsync(
+            IReadOnlyCollection<long> fileIds,
+            string doi,
+            string api,
+            string srv,
+            CancellationToken token)
+        {
+            string encodedDoi = Uri.EscapeDataString(doi ?? "");
+            string url = $"{srv}/api/datasets/:persistentId/deleteFiles?persistentId={encodedDoi}";
+            string json = JsonConvert.SerializeObject(fileIds);
+
+            for (int attempt = 0; attempt < 2; attempt++)
+            {
+                using (var request = new HttpRequestMessage(HttpMethod.Put, url))
+                using (var requestTimeout = CancellationTokenSource.CreateLinkedTokenSource(token))
+                {
+                    request.Headers.Add("X-Dataverse-key", api);
+                    request.Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                    requestTimeout.CancelAfter(TimeSpan.FromSeconds(45));
+
+                    try
+                    {
+                        using (var response = await _httpClient.SendAsync(request, requestTimeout.Token))
+                        {
+                            if (response.IsSuccessStatusCode)
+                                return (true, false, null);
+
+                            string responseBody = await response.Content.ReadAsStringAsync();
+                            string excerpt = GetResponseExcerpt(responseBody);
+                            try
+                            {
+                                File.AppendAllText(
+                                    "remote_errors.log",
+                                    $"{DateTime.Now:u} | BULK DELETE {fileIds.Count} files failed: {(int)response.StatusCode} {response.StatusCode} - {excerpt}\n");
+                            }
+                            catch { }
+
+                            if (response.StatusCode == HttpStatusCode.NotFound ||
+                                response.StatusCode == HttpStatusCode.MethodNotAllowed ||
+                                response.StatusCode == HttpStatusCode.NotImplemented)
+                            {
+                                return (
+                                    false,
+                                    true,
+                                    IsFrench
+                                        ? "Cette version du serveur ne propose pas l'API de suppression groupée."
+                                        : "This server version does not provide the bulk deletion API.");
+                            }
+
+                            if (response.StatusCode == HttpStatusCode.TooManyRequests ||
+                                (int)response.StatusCode >= 500)
+                            {
+                                TimeSpan retryDelay = GetServerRetryDelay(response, TimeSpan.FromSeconds(30));
+                                if (attempt == 0 && retryDelay <= TimeSpan.FromMinutes(2))
+                                {
+                                    SafeSetLabel(
+                                        labelStatus,
+                                        IsFrench
+                                            ? $"Serveur temporairement indisponible : nouvelle tentative dans {Math.Ceiling(retryDelay.TotalSeconds)} s..."
+                                            : $"Server temporarily unavailable: retrying in {Math.Ceiling(retryDelay.TotalSeconds)} s...");
+                                    await Task.Delay(retryDelay, token);
+                                    continue;
+                                }
+
+                                return (
+                                    false,
+                                    false,
+                                    IsFrench
+                                        ? $"Le serveur demande de suspendre les requêtes ({(int)response.StatusCode} {response.StatusCode}). Réessayez plus tard."
+                                        : $"The server requested that requests be suspended ({(int)response.StatusCode} {response.StatusCode}). Try again later.");
+                            }
+
+                            if (response.StatusCode == HttpStatusCode.Forbidden ||
+                                response.StatusCode == HttpStatusCode.Unauthorized)
+                            {
+                                return (
+                                    false,
+                                    false,
+                                    IsFrench
+                                        ? $"Accès refusé par le serveur ({(int)response.StatusCode}). Il peut s'agir d'un blocage temporaire, d'une clé API invalide ou de droits insuffisants."
+                                        : $"Access was denied by the server ({(int)response.StatusCode}). This may be a temporary block, an invalid API key, or insufficient permissions.");
+                            }
+
+                            if (response.StatusCode == HttpStatusCode.BadRequest)
+                            {
+                                return (
+                                    false,
+                                    false,
+                                    IsFrench
+                                        ? "Le serveur a refusé la liste groupée. Certains fichiers ont probablement déjà été supprimés ou ne figurent plus dans la dernière version du dataset. Actualisez avant de recommencer."
+                                        : "The server rejected the bulk list. Some files may already have been deleted or may no longer be part of the latest dataset version. Refresh before trying again.");
+                            }
+
+                            return (
+                                false,
+                                false,
+                                IsFrench
+                                    ? $"Échec de la suppression groupée : {(int)response.StatusCode} {response.StatusCode}. {excerpt}"
+                                    : $"Bulk deletion failed: {(int)response.StatusCode} {response.StatusCode}. {excerpt}");
+                        }
+                    }
+                    catch (OperationCanceledException) when (!token.IsCancellationRequested)
+                    {
+                        return (
+                            false,
+                            false,
+                            IsFrench
+                                ? "Le serveur n'a pas répondu dans le délai prévu. La suppression a été arrêtée sans envoyer d'autres requêtes."
+                                : "The server did not respond within the expected time. Deletion was stopped without sending more requests.");
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        try { File.AppendAllText("remote_errors.log", $"{DateTime.Now:u} | BULK DELETE exception: {ex.Message}\n"); } catch { }
+                        return (
+                            false,
+                            false,
+                            IsFrench
+                                ? "La connexion au serveur a été interrompue. La suppression a été arrêtée immédiatement pour ne pas aggraver un éventuel blocage."
+                                : "The server connection was interrupted. Deletion was stopped immediately to avoid worsening a possible block.");
+                    }
+                }
+            }
+
+            return (false, false, IsFrench ? "Suppression groupée interrompue." : "Bulk deletion stopped.");
+        }
+
+        private async Task<(bool Success, bool StopBatch, string ErrorMessage)> DeleteRemoteFileHttpAsync(long fileId, string api, string srv, bool silent = false, CancellationToken token = default)
         {
             string url = $"{srv}/api/files/{fileId}";
 
             try
             {
                 using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
+                using (var requestTimeout = CancellationTokenSource.CreateLinkedTokenSource(token))
                 {
                     request.Headers.Add("X-Dataverse-key", api);
+                    requestTimeout.CancelAfter(TimeSpan.FromSeconds(30));
 
-                    var response = await _httpClient.SendAsync(request, token);
-                    if (response.IsSuccessStatusCode)
+                    using (var response = await _httpClient.SendAsync(request, requestTimeout.Token))
                     {
-                        return true;
-                    }
-                    else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    {
-                        try { File.AppendAllText("remote_errors.log", $"{DateTime.Now:u} | DELETE file {fileId} already deleted (returned NotFound, treated as success).\n"); } catch {}
-                        return true;
-                    }
-                    else
-                    {
+                        if (response.IsSuccessStatusCode)
+                            return (true, false, null);
+
+                        if (response.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            try { File.AppendAllText("remote_errors.log", $"{DateTime.Now:u} | DELETE file {fileId} already deleted (returned NotFound, treated as success).\n"); } catch { }
+                            return (true, false, null);
+                        }
+
                         string err = await response.Content.ReadAsStringAsync();
-                        try { File.AppendAllText("remote_errors.log", $"{DateTime.Now:u} | DELETE file {fileId} failed: {response.StatusCode} - {err}\n"); } catch {}
+                        string excerpt = GetResponseExcerpt(err);
+                        try { File.AppendAllText("remote_errors.log", $"{DateTime.Now:u} | DELETE file {fileId} failed: {(int)response.StatusCode} {response.StatusCode} - {excerpt}\n"); } catch { }
+
+                        bool stopBatch = response.StatusCode == HttpStatusCode.TooManyRequests ||
+                                         response.StatusCode == HttpStatusCode.Forbidden ||
+                                         response.StatusCode == HttpStatusCode.Unauthorized;
+                        string errorMessage = IsFrench
+                            ? $"Le serveur a refusé la suppression ({(int)response.StatusCode} {response.StatusCode})."
+                            : $"The server rejected the deletion ({(int)response.StatusCode} {response.StatusCode}).";
+
                         if (!silent)
                         {
-                            MessageBox.Show(IsFrench 
-                                ? $"Erreur serveur lors de la suppression : {response.StatusCode}\n{err}" 
-                                : $"Server error during deletion: {response.StatusCode}\n{err}",
-                                Localize("Error", "Erreur"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(errorMessage, Localize("Error", "Erreur"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+
+                        return (false, stopBatch, errorMessage);
                     }
                 }
+            }
+            catch (OperationCanceledException) when (!token.IsCancellationRequested)
+            {
+                string timeoutMessage = IsFrench
+                    ? "Le serveur n'a pas répondu dans le délai prévu."
+                    : "The server did not respond within the expected time.";
+                try { File.AppendAllText("remote_errors.log", $"{DateTime.Now:u} | DELETE file {fileId} timed out.\n"); } catch { }
+                return (false, true, timeoutMessage);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -3046,8 +3438,34 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                         : $"Error during deletion: {ex.Message}",
                         Localize("Error", "Erreur"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                return (
+                    false,
+                    true,
+                    IsFrench
+                        ? "La connexion au serveur a échoué. Le lot a été interrompu."
+                        : "The server connection failed. The batch was stopped.");
             }
-            return false;
+        }
+
+        private TimeSpan GetServerRetryDelay(HttpResponseMessage response, TimeSpan fallback)
+        {
+            if (response?.Headers?.RetryAfter?.Delta is TimeSpan delta && delta > TimeSpan.Zero)
+                return delta;
+
+            if (response?.Headers?.RetryAfter?.Date is DateTimeOffset retryDate)
+            {
+                TimeSpan dateDelay = retryDate - DateTimeOffset.UtcNow;
+                if (dateDelay > TimeSpan.Zero) return dateDelay;
+            }
+
+            return fallback;
+        }
+
+        private string GetResponseExcerpt(string responseBody)
+        {
+            if (string.IsNullOrWhiteSpace(responseBody)) return "";
+            string normalized = responseBody.Replace('\r', ' ').Replace('\n', ' ').Trim();
+            return normalized.Length <= 500 ? normalized : normalized.Substring(0, 500) + "...";
         }
 
         private void SetTargetFolderFromRemote()

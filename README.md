@@ -252,9 +252,9 @@ Les actions disponibles dépendent du type de sélection :
 - **Téléverser dans ce dossier** définit la destination du prochain dépôt
 - **Télécharger** récupère localement un fichier ou une arborescence
 - **Déplacer** choisit un autre dossier distant, avec possibilité d'en créer un
-- **Renommer** modifie le nom d'un fichier
+- **Renommer** modifie le nom d'un fichier ou d'un dossier. Le renommage d'un dossier met à jour le chemin de tous les fichiers qu'il contient, sous-dossiers compris
 - **Aplatir** remonte le contenu du ou des dossiers sélectionnés d'un niveau
-- **Supprimer** efface les fichiers correspondants après confirmation
+- **Supprimer** efface les fichiers correspondants après confirmation. Les identifiants sont dédupliqués et envoyés en priorité à l'API de suppression groupée afin de limiter le nombre de requêtes
 
 > [!WARNING]
 > Les actions de déplacement, renommage, aplatissement et suppression modifient réellement le dataset distant. Vérifiez toujours le DOI, le serveur et la sélection avant de confirmer.
@@ -351,6 +351,12 @@ Le nom existe déjà ailleurs dans le dataset. Lisez le chemin indiqué, puis v�
 ### Le serveur est temporairement occupé
 
 Dataverse peut verrouiller brièvement un dataset pendant son indexation. Laissez l'application ouverte : elle reprend automatiquement dès que le serveur libère l'opération.
+
+### L'accès semble bloqué après une opération distante
+
+N'insistez pas et ne changez pas d'adresse IP pour relancer immédiatement le même lot. Des tentatives répétées peuvent prolonger le blocage. Attendez que l'accès soit rétabli, puis actualisez manuellement l'arborescence afin de vérifier ce qui a réellement été traité.
+
+Si le blocage persiste, utilisez [l'aide en ligne Recherche Data Gouv](https://recherche.data.gouv.fr/fr/aide-en-ligne) ou le [formulaire de contact officiel](https://recherche.data.gouv.fr/fr/contact) en indiquant l'heure de l'incident, le serveur concerné et le type d'opération effectué. Ne transmettez jamais votre clé API.
 
 ### Une opération échoue
 

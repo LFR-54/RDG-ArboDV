@@ -421,3 +421,90 @@
 2026-06-23 22:32:45Z | DELETE file 9146 already deleted (returned NotFound, treated as success).
 2026-06-23 22:32:45Z | DELETE file 9148 already deleted (returned NotFound, treated as success).
 2026-06-23 22:32:46Z | DELETE file 9147 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:04Z | DELETE file 9523 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:04Z | DELETE file 9512 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:05Z | DELETE file 9518 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:05Z | DELETE file 9510 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:05Z | DELETE file 9515 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:06Z | DELETE file 9517 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:06Z | DELETE file 9514 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:07Z | DELETE file 9516 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:07Z | DELETE file 9513 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:07Z | DELETE file 9509 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:08Z | DELETE file 9508 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:08Z | DELETE file 9511 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:08Z | DELETE file 9512 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:09Z | DELETE file 9518 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:09Z | DELETE file 9510 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:10Z | DELETE file 9515 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:10Z | DELETE file 9517 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:10Z | DELETE file 9514 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:11Z | DELETE file 9516 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:11Z | DELETE file 9513 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:12Z | DELETE file 9509 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:12Z | DELETE file 9508 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:12Z | DELETE file 9511 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:13Z | DELETE file 9528 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:13Z | DELETE file 9524 already deleted (returned NotFound, treated as success).
+2026-06-24 14:39:35Z | DELETE file 9526 exception: An error occurred while sending the request.
+2026-06-24 14:39:56Z | DELETE file 9503 exception: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu. (demo.recherche.data.gouv.fr:443)
+2026-06-24 14:40:18Z | DELETE file 9506 exception: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu. (demo.recherche.data.gouv.fr:443)
+2026-06-24 14:40:39Z | DELETE file 9500 exception: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu. (demo.recherche.data.gouv.fr:443)
+2026-06-24 14:41:01Z | DELETE file 9507 exception: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu. (demo.recherche.data.gouv.fr:443)
+2026-06-24 14:41:22Z | DELETE file 9504 exception: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu. (demo.recherche.data.gouv.fr:443)
+2026-06-24 14:41:43Z | DELETE file 9502 exception: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu. (demo.recherche.data.gouv.fr:443)
+2026-06-24 14:44:03Z | DELETE file 9385 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:03Z | DELETE file 9379 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:03Z | DELETE file 9366 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:04Z | DELETE file 9372 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:04Z | DELETE file 9368 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:05Z | DELETE file 9362 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:05Z | DELETE file 9373 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:05Z | DELETE file 9365 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:06Z | DELETE file 9364 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:06Z | DELETE file 9369 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:07Z | DELETE file 9367 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:07Z | DELETE file 9363 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:07Z | DELETE file 9370 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:08Z | DELETE file 9371 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:08Z | DELETE file 9360 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:09Z | DELETE file 9361 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:09Z | DELETE file 9366 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:09Z | DELETE file 9372 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:10Z | DELETE file 9368 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:10Z | DELETE file 9362 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:11Z | DELETE file 9373 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:11Z | DELETE file 9365 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:11Z | DELETE file 9364 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:12Z | DELETE file 9369 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:12Z | DELETE file 9367 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:13Z | DELETE file 9363 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:13Z | DELETE file 9370 already deleted (returned NotFound, treated as success).
+2026-06-24 14:44:13Z | DELETE file 9371 already deleted (returned NotFound, treated as success).
+2026-06-24 14:45:44Z | DELETE file 9360 exception: An error occurred while sending the request.
+2026-06-24 14:45:51Z | DELETE file 9361 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:45:59Z | DELETE file 9383 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:46:06Z | DELETE file 9388 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:46:14Z | DELETE file 9382 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:46:22Z | DELETE file 9376 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:46:29Z | DELETE file 9377 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:46:37Z | DELETE file 9389 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:46:44Z | DELETE file 9381 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:46:52Z | DELETE file 9380 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:46:59Z | DELETE file 9378 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:47:07Z | DELETE file 9387 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:47:14Z | DELETE file 9386 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:47:22Z | DELETE file 9374 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:47:30Z | DELETE file 9384 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:47:37Z | DELETE file 9498 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:47:45Z | DELETE file 9495 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:47:52Z | DELETE file 9490 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:48:00Z | DELETE file 9493 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:48:07Z | DELETE file 9497 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:48:15Z | DELETE file 9491 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:48:22Z | DELETE file 9492 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:48:30Z | DELETE file 9499 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:48:38Z | DELETE file 9494 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 14:48:45Z | DELETE file 9496 exception: The SSL connection could not be established, see inner exception.
+2026-06-24 15:03:37Z | BULK DELETE 110 files failed: 404 NotFound - {"status":"ERROR","code":404,"message":"API endpoint does not exist on this server. Please check your code for typos, or consult our API guide at http://guides.dataverse.org.","requestUrl":"https://demo.recherche.data.gouv.fr/api/v1/datasets/:persistentId/deleteFiles?persistentId=doi%3A10.82233%2FPHR5Q6","requestMethod":"PUT"}
+2026-06-24 15:11:41Z | BULK DELETE 10 files failed: 404 NotFound - {"status":"ERROR","code":404,"message":"API endpoint does not exist on this server. Please check your code for typos, or consult our API guide at http://guides.dataverse.org.","requestUrl":"https://demo.recherche.data.gouv.fr/api/v1/datasets/:persistentId/deleteFiles?persistentId=doi%3A10.82233%2FPHR5Q6","requestMethod":"PUT"}

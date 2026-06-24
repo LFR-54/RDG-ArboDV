@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased changes · 2026-06-24
+## Version 2.0.0 · 2026-06-24
 
 ### Fixes
 
@@ -9,6 +9,11 @@
 - **Complete visual reset**: the Reset button also clears the tree's custom selection and correctly restores the status text and color
 - **Multiple local-folder flattening**: all selected folders are now processed from the deepest level up to the root. Selecting an entire tree can therefore produce a fully flattened upload
 - **Manifest aligned with the preview**: virtual paths are rebuilt from the visible tree immediately before duplicate detection and manifest creation, ensuring that the uploaded structure matches the preparation workspace
+- **Remote folder renaming**: the “Rename on server” action now works on folders. It sequentially updates the `directoryLabel` of every file contained in the folder and its subfolders after validating the new name and asking for confirmation
+- **Safe bulk deletion**: deduplicates file IDs and prioritizes the Dataverse `deleteFiles` API so the complete batch can be removed with a single request. A compatibility mode spaced by three seconds remains available for older servers
+- **Network block protection**: honors `Retry-After`, applies a per-request timeout, and stops immediately on 401, 403, or 429 responses and connection failures. No additional automatic refresh request is sent after a suspected block
+- **Reliable deletion report**: distinguishes deleted files, actual failures, and files left unprocessed after an interruption. The Cancel button remains available during long deletion operations
+- **Destination locked during operations**: the “Reset to Root” button, remote tree, and refresh action are temporarily disabled during an upload or remote operation, keeping the displayed path consistent with the destination actually in use
 
 ### Interface
 
@@ -22,8 +27,6 @@
 - **Restructured README**: added a complete usage flow, detailed tab descriptions, a color legend, prerequisites, official download links, architecture notes, and troubleshooting guidance
 - **Documented project history**: added the history of the initial project created by LFR54 during a BTS internship, the limitations that prevented the first architecture from being deployed to production, and the later move to the DVUploader engine
 - **Documented AI assistance**: transparently described the use of AI during the post-internship refactoring, particularly for the Java component and advanced integration work
-
-## Version 2.0.0 · 2026-06-23
 
 ### Major Upload Engine Refactoring
 

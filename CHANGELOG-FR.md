@@ -1,6 +1,6 @@
 # Changelog
 
-## Modifications non publiées · 24/06/2026
+## Version 2.0.0 · 24/06/2026
 
 ### Correctifs
 
@@ -9,6 +9,11 @@
 - **Réinitialisation visuelle complète** : le bouton Réinitialiser supprime également la sélection personnalisée de l'arbre et restaure correctement le texte ainsi que la couleur du statut
 - **Aplatissement local multiple** : tous les dossiers sélectionnés sont maintenant traités, du niveau le plus profond vers la racine. La sélection de toute une arborescence permet donc de produire un dépôt entièrement aplati
 - **Manifeste aligné sur l'aperçu** : les chemins virtuels sont reconstruits depuis l'arbre visible juste avant la détection des doublons et la création du manifeste. L'organisation téléversée correspond ainsi à l'organisation affichée dans l'espace de préparation
+- **Renommage des dossiers distants** : l'action « Renommer sur le serveur » fonctionne désormais sur les dossiers. Elle met à jour de manière séquentielle le `directoryLabel` de tous les fichiers contenus dans le dossier et ses sous-dossiers, après validation du nouveau nom et confirmation de l'utilisateur
+- **Suppression massive sécurisée** : déduplication des identifiants puis utilisation prioritaire de l'API Dataverse `deleteFiles` afin de supprimer tout le lot en une seule requête. Un mode de compatibilité espacé de trois secondes reste disponible pour les anciens serveurs
+- **Protection contre le blocage réseau** : prise en charge de `Retry-After`, délai maximal par requête, arrêt immédiat sur les réponses 401, 403 ou 429 et sur les erreurs de connexion. Aucune actualisation automatique supplémentaire n'est envoyée après un blocage présumé
+- **Compte rendu de suppression fiable** : distinction entre les fichiers supprimés, les échecs réellement rencontrés et les fichiers non traités après une interruption. Le bouton Annuler est disponible pendant les suppressions longues
+- **Destination verrouillée pendant les opérations** : le bouton « Déposer à la racine », l'arbre distant et son actualisation sont temporairement désactivés pendant un téléversement ou une opération distante. Le chemin affiché reste ainsi cohérent avec la destination réellement utilisée
 
 ### Interface
 
@@ -22,8 +27,6 @@
 - **README restructuré** : ajout d'un parcours d'utilisation complet, d'une présentation détaillée des onglets, d'une légende des couleurs, des prérequis, de liens de téléchargement officiels, de l'architecture et d'une section de dépannage
 - **Origine du projet documentée** : ajout de l'historique de la création initiale par LFR54 pendant son stage de BTS, des limites ayant empêché la première architecture d'être mise en production et de l'évolution vers le moteur DVUploader
 - **Assistance par intelligence artificielle explicitée** : documentation transparente de l'utilisation de l'IA lors de la refonte hors stage, notamment pour la partie Java et les problématiques d'intégration avancées
-
-## Version 2.0.0 · 23/06/2026
 
 ### Refonte Majeure du Moteur de Dépôt
 
