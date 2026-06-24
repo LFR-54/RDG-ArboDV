@@ -40,7 +40,9 @@
 
 RDG ArboDV a été initialement créé par **LFR54** dans le cadre de son stage de BTS. La première version a été imaginée, conçue et développée de A à Z par lui-même.
 
-Les contraintes techniques liées à cette première architecture, notamment au mécanisme utilisé pour envoyer les données, ne permettaient toutefois pas d'atteindre le niveau de fiabilité attendu pour des dépôts volumineux. L'idée est alors venue de reprendre [DVUploader, l'outil de téléversement de la communauté Dataverse](https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader), puis de le relier à l'interface graphique de RDG ArboDV.
+Les contraintes techniques liées à cette première architecture, notamment au mécanisme utilisé pour envoyer les données, ne permettaient toutefois pas d'atteindre le niveau de fiabilité attendu pour des dépôts volumineux. Ces limites empêchaient une mise en production responsable et ne permettaient donc pas à RDG ArboDV de remplacer DVUploader, ce qui constituait, en quelque sorte, l'objectif initial du projet.
+
+L'idée est alors venue de reprendre [DVUploader, l'outil de téléversement de la communauté Dataverse](https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader), puis de le relier à l'interface graphique de RDG ArboDV.
 
 Cette évolution a été réalisée après le stage, en dehors de tout contrat. N'ayant encore jamais développé en Java et l'intégration étant devenue particulièrement technique, LFR54 a choisi d'utiliser l'intelligence artificielle de manière consciente, assumée et transparente comme outil d'assistance au développement. Cette assistance a permis d'aborder plus sereinement la partie Java et les problématiques d'intégration avancées, sans retirer à LFR54 l'origine du projet, sa direction et la responsabilité de ses choix.
 
