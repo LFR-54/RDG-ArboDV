@@ -123,7 +123,7 @@ Cet onglet affiche le déroulement technique du transfert. Il n'est pas nécessa
 
 Utilisez uniquement les sites officiels des éditeurs pour installer les composants requis :
 
-- [.NET 8.0 — téléchargement officiel Microsoft](https://dotnet.microsoft.com/fr-fr/download/dotnet/8.0) — choisissez le **Desktop Runtime** pour Windows
+- [.NET 8.0 — téléchargement officiel Microsoft](https://dotnet.microsoft.com/fr-fr/download/dotnet/8.0) — choisissez le **Desktop Runtime** (Exécution de bureau .NET) pour Windows
 - [Eclipse Temurin — téléchargement officiel Adoptium](https://adoptium.net/temurin/releases/) — distribution OpenJDK gratuite et reconnue
 - [Microsoft Build of OpenJDK — téléchargement officiel Microsoft](https://learn.microsoft.com/fr-fr/java/openjdk/download)
 - [Oracle Java — téléchargement officiel Oracle](https://www.oracle.com/fr/java/technologies/downloads/)
