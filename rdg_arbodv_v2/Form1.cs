@@ -66,6 +66,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private readonly WinFormsTimer _timerElapsed = new WinFormsTimer { Interval = 1000 };
 
         private bool _networkDisconnected = false;
+        private int _uploadSessionCounter = 0;
+        private int _activeUploadSessionId = 0;
         private AppLanguage _currentLanguage = AppLanguage.English;
         private bool _isApplyingLanguageSelection = false;
 
@@ -798,9 +800,13 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private void buttonReset_Click(object sender, EventArgs e) // Handler du clic sur Réinitialiser
         {
+            // Ignore toute ligne de sortie retardataire d'un moteur Java déjà terminé.
+            Interlocked.Exchange(ref _activeUploadSessionId, 0);
             _filesToUpload.Clear();                                // Vide la liste de fichiers
             _fileRelativePaths.Clear();                            // Vide le mapping relatifs
             _foldersSelected.Clear();                              // Vide la liste de dossiers
+            treeViewSelected.ClearAllSelections();                 // Supprime aussi la sélection visuelle personnalisée
+            treeViewSelected.SelectedNode = null;
             treeViewSelected.Nodes.Clear();                        // Vide l'arborescence affichée
             
             // Réinitialisation des statistiques et de la barre de progression
@@ -923,14 +929,22 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             if (e.Button != MouseButtons.Right)
                 return;
 
-            // Vérifie si le nœud est un dossier (Tag = chemin existant ET Directory.Exists)
-            bool isFolder = (e.Node.Tag is string p) && Directory.Exists(p);
-            toolStripMenuItemFlatten.Visible = isFolder;   // Affiche / cache l’option
-
             // Si on n'a rien de sélectionné, on n'affiche rien
             var msTree = treeViewSelected as MultiSelectTreeView;
             if (msTree == null || msTree.SelectedNodes.Count == 0)
                 return;
+
+            int selectedFolderCount = 0;
+            foreach (TreeNode selectedNode in msTree.SelectedNodes)
+            {
+                if (selectedNode.Tag is string selectedPath && Directory.Exists(selectedPath))
+                    selectedFolderCount++;
+            }
+
+            toolStripMenuItemFlatten.Visible = selectedFolderCount > 0;
+            toolStripMenuItemFlatten.Text = selectedFolderCount > 1
+                ? Localize("Flatten selected folders", "Aplatir les dossiers sélectionnés")
+                : Localize("Flatten this folder", "Aplatir ce dossier");
 
             // Si le nœud cliqué fait partie de la sélection multiple, on affiche le menu
             if (msTree.SelectedNodes.Contains(e.Node))
@@ -944,39 +958,66 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         // Clic droit => "Aplatir ce dossier"
         private void toolStripMenuItemFlatten_Click(object sender, EventArgs e)
         {
-            TreeNode folderNode = _clickedLocalNode;
-            if (folderNode == null) return;
-
-            // 0) Sécurité : on ne fait rien si ce n’est pas un dossier réel
-            if (!(folderNode.Tag is string folderPath) || !Directory.Exists(folderPath))
-                return;
-
-            TreeNode parent = folderNode.Parent;   // Peut être null  → racine
-
-            /* 1) On remonte tous les enfants d’un cran */
-            var children = new List<TreeNode>();
-            foreach (TreeNode n in folderNode.Nodes) children.Add(n);
-
-            foreach (TreeNode child in children)
+            var foldersToFlatten = new List<TreeNode>();
+            foreach (TreeNode selectedNode in treeViewSelected.SelectedNodes)
             {
-                child.Remove();
-                if (parent != null) parent.Nodes.Add(child);
-                else treeViewSelected.Nodes.Add(child);
+                if (selectedNode.Tag is string selectedPath && Directory.Exists(selectedPath))
+                    foldersToFlatten.Add(selectedNode);
             }
 
-            /* 2) On met à jour les structures internes */
-            _foldersSelected.Remove(folderPath);
-
-            foreach (TreeNode moved in children)
+            // Repli pour le cas où le menu a été ouvert sur un seul nœud sans sélection multiple.
+            if (foldersToFlatten.Count == 0 &&
+                _clickedLocalNode?.Tag is string clickedPath && Directory.Exists(clickedPath))
             {
-                UpdateRelativePathsRecursive(moved);
+                foldersToFlatten.Add(_clickedLocalNode);
             }
 
-            /* 3) On enlève le nœud dossier lui-même */
-            folderNode.Remove();
+            if (foldersToFlatten.Count == 0) return;
+
+            // Les descendants sont traités avant leurs parents. Ainsi, sélectionner toute
+            // l'arborescence produit bien un lot entièrement aplati à la racine.
+            foldersToFlatten.Sort((a, b) => GetNodeDepth(b).CompareTo(GetNodeDepth(a)));
+
+            foreach (TreeNode folderNode in foldersToFlatten)
+            {
+                if (folderNode.TreeView != treeViewSelected ||
+                    !(folderNode.Tag is string folderPath) || !Directory.Exists(folderPath))
+                {
+                    continue;
+                }
+
+                TreeNode parent = folderNode.Parent;
+                var children = new List<TreeNode>();
+                foreach (TreeNode child in folderNode.Nodes) children.Add(child);
+
+                foreach (TreeNode child in children)
+                {
+                    child.Remove();
+                    if (parent != null) parent.Nodes.Add(child);
+                    else treeViewSelected.Nodes.Add(child);
+                }
+
+                _foldersSelected.Remove(folderPath);
+                folderNode.Remove();
+            }
+
+            // L'arbre visible devient l'unique source de vérité pour le manifeste d'upload.
+            RebuildRelativePathsFromTree();
+            treeViewSelected.ClearAllSelections();
             _clickedLocalNode = null;
 
             UpdateStatus();
+        }
+
+        private int GetNodeDepth(TreeNode node)
+        {
+            int depth = 0;
+            while (node?.Parent != null)
+            {
+                depth++;
+                node = node.Parent;
+            }
+            return depth;
         }
 
 
@@ -1247,6 +1288,9 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 return;
             }
 
+            // L'arbre visible est la source de vérité des chemins virtuels à envoyer.
+            RebuildRelativePathsFromTree();
+
             // Check for duplicate files on server before starting upload
             try
             {
@@ -1342,6 +1386,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
             _cts = new CancellationTokenSource();
             var token = _cts.Token;
+            int uploadSessionId = Interlocked.Increment(ref _uploadSessionCounter);
+            Interlocked.Exchange(ref _activeUploadSessionId, uploadSessionId);
 
             _doneCount = _errorCount = 0;
             _accumulatedBytesSent = 0;
@@ -1413,7 +1459,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                     {
                         if (args.Data != null)
                         {
-                            ParseStdoutLine(args.Data);
+                            ParseStdoutLine(args.Data, uploadSessionId);
                         }
                     };
                     process.ErrorDataReceived += (senderProcess, args) =>
@@ -1437,6 +1483,10 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                         }
                         await Task.Delay(100);
                     }
+
+                    // Attend aussi la fin des callbacks OutputDataReceived. Sans cette étape,
+                    // une ancienne ligne "Dataset locked" peut recolorer l'UI après la fin.
+                    await Task.Run(() => process.WaitForExit());
                 }
 
                 // If cancelled
@@ -1444,8 +1494,16 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
                 /* Fin de batch */
                 _timerElapsed.Stop();
+                progressBar.Style = ProgressBarStyle.Continuous;
+                progressBar.Value = progressBar.Maximum;
                 if (_errorCount == 0)
                 {
+                    SafeSetLabel(
+                        labelStatus,
+                        IsFrench
+                            ? $"Téléversement terminé : {_doneCount}/{_filesToUpload.Count} fichier(s) traité(s)."
+                            : $"Upload complete: {_doneCount}/{_filesToUpload.Count} file(s) processed.",
+                        Color.DarkGreen);
                     MessageBox.Show(
                         Localize("All files were uploaded successfully.", "Tous les fichiers ont été uploadés !"),
                         Localize("Success", "Succès"),
@@ -1454,6 +1512,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 }
                 else
                 {
+                    SafeSetLabel(
+                        labelStatus,
+                        IsFrench
+                            ? $"Téléversement terminé avec {_errorCount} erreur(s)."
+                            : $"Upload completed with {_errorCount} error(s).",
+                        Color.DarkRed);
                     MessageBox.Show(
                         IsFrench
                             ? $"{_errorCount} fichier(s) en échec. Voir dvuploader_stderr.log."
@@ -1500,6 +1564,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             }
             finally
             {
+                Interlocked.CompareExchange(ref _activeUploadSessionId, 0, uploadSessionId);
                 try { if (File.Exists(tempManifestPath)) File.Delete(tempManifestPath); } catch { }
 
                 SendMessage(progressBar.Handle, PBM_SETSTATE, (IntPtr)PBST_NORMAL, IntPtr.Zero);
@@ -1515,13 +1580,18 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             }
         }
 
-        private void ParseStdoutLine(string line)
+        private void ParseStdoutLine(string line, int uploadSessionId)
         {
             if (string.IsNullOrWhiteSpace(line)) return;
 
             // Log stdout
             try { File.AppendAllText("dvuploader_stdout.log", $"{DateTime.Now:u} | {line}\n"); } catch { }
             AppendLog(line);
+
+            // Les événements de sortie sont asynchrones : une ligne d'une session terminée
+            // reste dans les logs, mais ne doit plus modifier l'interface courante.
+            if (uploadSessionId != Volatile.Read(ref _activeUploadSessionId))
+                return;
 
             // 1. PROCESSING(F): D:\path\to\file.txt
             if (line.Contains("PROCESSING(F): "))
@@ -1634,8 +1704,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             else if (line.Contains("Dataset locked"))
             {
                 string statusMsg = IsFrench
-                    ? "Jeu de données verrouillé - attente de la libération par le serveur..."
-                    : "Dataset locked - waiting for the server to release the lock...";
+                    ? "Serveur temporairement occupé : finalisation en cours, aucune action requise..."
+                    : "Server temporarily busy: finalizing, no action required...";
                 SafeSetLabel(labelStatus, statusMsg, Color.FromArgb(220, 100, 0)); // Orange foncé lisible
 
                 progressBar.Invoke((Action)(() =>
@@ -2384,6 +2454,15 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             foreach (TreeNode child in node.Nodes)
             {
                 UpdateRelativePathsRecursive(child);
+            }
+        }
+
+        private void RebuildRelativePathsFromTree()
+        {
+            _fileRelativePaths.Clear();
+            foreach (TreeNode root in treeViewSelected.Nodes)
+            {
+                UpdateRelativePathsRecursive(root);
             }
         }
 

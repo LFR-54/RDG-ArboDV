@@ -124,11 +124,30 @@ Si vous collez une URL complète (ex: `https://doi.org/...`), le logiciel la nor
    Récupérez le DOI (surligné en jaune dans l'interface de votre jeu de données) et copiez-le dans le champ **DOI** du logiciel.
    ![Capture d’écran de RDG ArboDV](assets/Step3.png)
 
-3. **Ciblage de destination** :
-   Sélectionnez un dossier dans l'onglet **Fichiers sur le serveur** pour y envoyer vos fichiers locaux. Si aucun dossier n'est sélectionné, l'envoi s'effectue à la racine du dataset.
+### Comprendre les onglets du logiciel
 
-4. **Lancement** :
-   Ajoutez vos fichiers ou dossiers locaux dans le premier onglet, vérifiez la détection des doublons en temps réel, puis cliquez sur **Téléverser**.
+- **Fichiers** constitue votre espace de travail local. Les fichiers et dossiers ajoutés dans cet onglet ne sont pas immédiatement envoyés : vous pouvez encore vérifier leur organisation, les déplacer, les retirer ou aplatir des dossiers. L'arborescence affichée est celle qui sera reproduite lors du téléversement.
+- **Fichiers sur le serveur** affiche le contenu déjà présent dans le dataset. Cet onglet permet de choisir un dossier de destination existant et, par clic droit, de gérer les éléments distants (téléchargement, déplacement, renommage, aplatissement ou suppression).
+- **Logs du moteur Java** présente le détail technique du transfert. Il est principalement utile pour suivre une opération ou comprendre une éventuelle erreur.
+
+Par défaut, le contenu préparé dans l'onglet **Fichiers** est téléversé à la **racine (/)** du dataset. Pour l'envoyer dans un dossier existant, sélectionnez ce dossier dans l'onglet **Fichiers sur le serveur**. Le chemin actuellement ciblé est toujours rappelé en haut de l'espace de travail, à côté de **Dossier de destination sur le serveur**.
+
+> [!NOTE]
+> Dans l'espace de travail, un fichier affiché en **vert** existe déjà sur le serveur au chemin de destination choisi. Un fichier affiché en **orange** porte le même nom qu'un fichier présent ailleurs dans le dataset ; son emplacement distant est alors indiqué dans le message.
+
+### Préparer et lancer le téléversement
+
+1. **Choisir la destination** :
+   Utilisez la racine proposée par défaut ou sélectionnez un dossier existant dans l'onglet **Fichiers sur le serveur**.
+
+2. **Préparer les fichiers** :
+   Ajoutez vos fichiers ou dossiers locaux dans l'onglet **Fichiers**, puis organisez l'arborescence qui devra être créée sur le serveur.
+
+3. **Vérifier le dépôt** :
+   Contrôlez le chemin de destination affiché et les éventuels fichiers signalés en vert ou en orange.
+
+4. **Lancer le transfert** :
+   Cliquez sur **Téléverser**. Les fichiers sont alors envoyés en respectant l'organisation visible dans l'espace de travail et le dossier de destination choisi.
 
 ---
 

@@ -166,9 +166,10 @@ namespace RDG_Uploader_GUI
                 SelectedNodes.Add(node);
         }
 
-        private void ClearAllSelections()
+        public void ClearAllSelections()
         {
             SelectedNodes.Clear();
+            Invalidate();
         }
 
         private void SelectNodesInRange(TreeNode a, TreeNode b)
