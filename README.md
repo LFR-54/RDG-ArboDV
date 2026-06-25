@@ -40,7 +40,7 @@
 
 RDG ArboDV a été initialement créé par **LFR54** dans le cadre de son stage de BTS. La première version a été imaginée, conçue et développée de A à Z par lui-même.
 
-Les contraintes techniques liées à cette première architecture, notamment au mécanisme utilisé pour envoyer les données, ne permettaient toutefois pas d'atteindre le niveau de fiabilité attendu pour des dépôts volumineux. Ces limites empêchaient une mise en production responsable et ne permettaient donc pas à RDG ArboDV de remplacer DVUploader, ce qui constituait, en quelque sorte, l'objectif initial du projet.
+Les contraintes techniques liées à cette première architecture, notamment au mécanisme utilisé pour envoyer les données, ne permettaient toutefois pas d'atteindre le niveau de fiabilité attendu. Ces limites empêchaient une mise en production responsable et ne permettaient donc pas à RDG ArboDV de remplacer DVUploader, ce qui constituait, en quelque sorte, l'objectif initial du projet.
 
 L'idée est alors venue de reprendre [DVUploader, l'outil de téléversement de la communauté Dataverse](https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader), puis de le relier à l'interface graphique de RDG ArboDV.
 
