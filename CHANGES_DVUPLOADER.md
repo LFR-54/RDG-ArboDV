@@ -88,7 +88,6 @@ Cette évolution évite de redéposer un fichier tabulaire source lorsque Datave
 
 Les ajustements suivants relèvent de l'interface C# et ne modifient pas le moteur Java :
 
-* serveur de démonstration sélectionné par défaut dans l'interface
 * commandes de préparation du dépôt grisées tant que la clé API, le DOI et le serveur ne permettent pas un dépôt
 * consultation et téléchargement publics possibles avec DOI et serveur seuls
 

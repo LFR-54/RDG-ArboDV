@@ -142,10 +142,10 @@ Une seule distribution Java est nécessaire. Une version 64 bits récente est re
 
 Les environnements proposés par défaut sont :
 
-- démonstration : `https://demo.recherche.data.gouv.fr`
+- démonstration : `https://demo.recherche.data.gouv.fr` (sélectionné par défaut au lancement)
 - production : `https://entrepot.recherche.data.gouv.fr`
 
-Le serveur de démonstration est sélectionné au lancement afin de limiter les dépôts accidentels sur l'entrepôt de production. Pour consulter un dataset public publié sur Recherche Data Gouv, sélectionnez explicitement `https://entrepot.recherche.data.gouv.fr`.
+Pour consulter un dataset public publié sur l'entrepôt Recherche Data Gouv, sélectionnez `https://entrepot.recherche.data.gouv.fr`.
 
 Le DOI attendu suit le format `doi:10.xxxx/xxxxx`. Une URL complète telle que `https://doi.org/10.xxxx/xxxxx` peut également être collée : l'application la convertit automatiquement.
 

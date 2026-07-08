@@ -18,7 +18,6 @@
 - **Actions distantes protégées** : les actions qui modifient le serveur restent désactivées dans le menu contextuel distant tant qu'aucune clé API n'est renseignée. Le téléchargement reste disponible pour les fichiers publics.
 - **Aide utilisateur mise à jour** : l'aide de la clé API précise désormais qu'elle est obligatoire pour les dépôts et modifications, mais facultative pour consulter ou télécharger un dataset public.
 - **Préparation du dépôt grisée sans droits de dépôt** : les commandes de sélection, réinitialisation, destination, option `-noIngest` et téléversement restent désactivées tant que la clé API, le DOI et le serveur ne sont pas renseignés. Avec DOI et serveur seuls, l'application reste utilisable en consultation/téléchargement public.
-- **Serveur par défaut conservé sur la démonstration** : le serveur de démonstration Recherche Data Gouv est de nouveau sélectionné au lancement afin de limiter les dépôts accidentels sur la production.
 - **Erreur 404 plus explicite** : lorsqu'un DOI n'est pas trouvé sur le serveur sélectionné, le message invite désormais à vérifier le couple DOI/serveur, notamment production contre démonstration.
 
 ### Documentation
