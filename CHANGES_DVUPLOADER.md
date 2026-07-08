@@ -63,3 +63,33 @@ Le projet d'origine est disponible dans le dépôt [GlobalDataverseCommunityCons
   * `source` : chemin absolu du fichier local
   * `directoryLabel` : chemin virtuel du dossier cible dans Dataverse, ou une chaîne vide pour la racine
 * Les séparateurs de chemin sont normalisés en `/` et les barres placées au début ou à la fin du `directoryLabel` sont supprimées avant la reconstruction de l'arbre virtuel.
+
+---
+
+## 8. Renforcement de la détection des fichiers tabulaires ingérés
+* **Fichier** : [`DVUploader.java`](dataverse_uploader_1.3.0_beta_sourcecode/src/main/java/org/sead/uploader/dataverse/DVUploader.java)
+* **Modification** :
+  * Ajout d'un index distinct des fichiers `.tab` créés par l'ingest Dataverse.
+  * Conservation de la détection existante via `originalFileName` lorsque l'API expose le nom du fichier source.
+  * Ajout d'un repli sur le chemin `.tab` dérivé pour les fichiers tabulaires déjà convertis lorsque le checksum du fichier original n'est pas disponible côté Dataverse.
+  * Comparaison du checksum lorsque le fichier local est déjà comparable au `.tab` serveur, notamment pour les sources `.tab` ou `.tsv`.
+
+Cette évolution évite de redéposer un fichier tabulaire source lorsque Dataverse en expose déjà la version convertie, tout en évitant de traiter tous les fichiers `.tab` du serveur comme des équivalents d'ingest.
+
+---
+
+## 9. Documentation des arguments en ligne de commande
+* **Fichier** : [`DVUploader.java`](dataverse_uploader_1.3.0_beta_sourcecode/src/main/java/org/sead/uploader/dataverse/DVUploader.java)
+* **Modification** : Correction du texte d'aide associé à `-failOnInvalidNames`, qui décrivait par erreur le comportement de `-noIngest`.
+
+---
+
+## 10. Note de portée pour RDG ArboDV 2.1.0
+
+Les ajustements suivants relèvent de l'interface C# et ne modifient pas le moteur Java :
+
+* serveur de démonstration sélectionné par défaut dans l'interface
+* commandes de préparation du dépôt grisées tant que la clé API, le DOI et le serveur ne permettent pas un dépôt
+* consultation et téléchargement publics possibles avec DOI et serveur seuls
+
+Le moteur Java reste concerné par `-noIngest` et par la détection des fichiers tabulaires déjà convertis décrites dans les sections précédentes.

@@ -57,3 +57,8 @@ C:\Users\Shadow\AppData\Local\Temp\RDG-ArboDV-destination-lock-validation\RDG_Up
 C:\Users\Shadow\AppData\Local\Temp\RDG-ArboDV-destination-lock-validation\RDG_Uploader_GUI.runtimeconfig.json
 C:\Users\Shadow\AppData\Local\Temp\RDG-ArboDV-destination-lock-validation\RDG_Uploader_GUI.dll
 C:\Users\Shadow\AppData\Local\Temp\RDG-ArboDV-destination-lock-validation\RDG_Uploader_GUI.pdb
+D:\projets_perso\RDG-ArboDV\build-check\RDG_Uploader_GUI.exe
+D:\projets_perso\RDG-ArboDV\build-check\RDG_Uploader_GUI.deps.json
+D:\projets_perso\RDG-ArboDV\build-check\RDG_Uploader_GUI.runtimeconfig.json
+D:\projets_perso\RDG-ArboDV\build-check\RDG_Uploader_GUI.dll
+D:\projets_perso\RDG-ArboDV\build-check\RDG_Uploader_GUI.pdb

@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Client bureautique Windows pour préparer, téléverser et administrer les fichiers d'un dataset Dataverse</strong><br>
-  <sub>Conçu pour Recherche Data Gouv — Version 2.0.0</sub>
+  <sub>Conçu pour Recherche Data Gouv — Version 2.1.0</sub>
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@
   <img alt="Plateforme" src="https://img.shields.io/badge/Plateforme-Windows-0078d4">
   <img alt="Interface" src="https://img.shields.io/badge/Interface-WinForms-0f6cbd">
   <img alt="Cible" src="https://img.shields.io/badge/Cible-Dataverse-2d7d46">
-  <img alt="Version" src="https://img.shields.io/badge/Version-2.0.0-success">
+  <img alt="Version" src="https://img.shields.io/badge/Version-2.1.0-success">
 </p>
 
 ## Sommaire
@@ -71,8 +71,10 @@ Elle est particulièrement adaptée aux équipes de recherche qui souhaitent :
 | **Conservation de l'arborescence** | Reproduit dans Dataverse l'organisation visible dans l'espace de préparation. |
 | **Réorganisation avant transfert** | Permet de déplacer, retirer ou aplatir les éléments de l'arbre local sans modifier les fichiers présents sur le disque. |
 | **Choix graphique de la destination** | Dépose à la racine du dataset ou dans un dossier distant existant. |
-| **Détection des doublons** | Distingue les fichiers déjà présents à la destination de ceux portant le même nom ailleurs dans le dataset. |
+| **Dépôt sans ingest tabulaire** | Option permettant de conserver les fichiers tabulaires dans leur format d'origine au lieu de laisser Dataverse créer une version `.tab`. |
+| **Détection des doublons** | Distingue les fichiers déjà présents à la destination, y compris les équivalents `.tab` issus d'un ingest Dataverse, de ceux portant le même nom ailleurs dans le dataset. |
 | **Téléversement de grands volumes** | Affiche la progression, la vitesse, le temps écoulé, le temps restant et les éventuelles erreurs. |
+| **Téléchargement public par DOI** | Permet de consulter et télécharger les fichiers publics d'un dataset avec le DOI seul, sans clé API. |
 | **Gestion des fichiers distants** | Actualise, télécharge, déplace, renomme, aplatit ou supprime des fichiers et dossiers sur le serveur. |
 | **Sélection multiple** | Autorise les opérations groupées sur plusieurs éléments locaux ou distants. |
 | **Journal technique intégré** | Centralise les messages détaillés du moteur de téléversement afin de faciliter le diagnostic. |
@@ -134,14 +136,16 @@ Une seule distribution Java est nécessaire. Une version 64 bits récente est re
 
 ### Informations nécessaires
 
-- **Clé API** : jeton personnel autorisant l'application à agir sur votre compte Dataverse
+- **Clé API** : jeton personnel autorisant l'application à agir sur votre compte Dataverse. Elle est nécessaire pour déposer, déplacer, renommer, aplatir ou supprimer des fichiers. Elle reste facultative pour consulter et télécharger les fichiers publics d'un dataset déjà publié.
 - **DOI** : identifiant pérenne du dataset qui recevra les fichiers
 - **Serveur** : instance Dataverse hébergeant le dataset
 
 Les environnements proposés par défaut sont :
 
-- production : `https://entrepot.recherche.data.gouv.fr`
 - démonstration : `https://demo.recherche.data.gouv.fr`
+- production : `https://entrepot.recherche.data.gouv.fr`
+
+Le serveur de démonstration est sélectionné au lancement afin de limiter les dépôts accidentels sur l'entrepôt de production. Pour consulter un dataset public publié sur Recherche Data Gouv, sélectionnez explicitement `https://entrepot.recherche.data.gouv.fr`.
 
 Le DOI attendu suit le format `doi:10.xxxx/xxxxx`. Une URL complète telle que `https://doi.org/10.xxxx/xxxxx` peut également être collée : l'application la convertit automatiquement.
 
@@ -176,9 +180,9 @@ Le moteur personnalisé `DVUploader-v1.3.0-RDGengine.jar` est intégré à l'ex�
 
 ## Utilisation
 
-### 1. Récupérer la clé API
+### 1. Récupérer la clé API pour déposer ou administrer
 
-Dans Recherche Data Gouv, ouvrez le menu de votre profil puis la page **Jeton API**.
+Pour téléverser ou administrer un dataset, ouvrez le menu de votre profil Recherche Data Gouv puis la page **Jeton API**.
 
 ![Accès au jeton API dans Recherche Data Gouv](assets/Step1.png)
 
@@ -198,6 +202,8 @@ Sélectionnez ensuite le serveur correspondant au dataset : production ou démon
 
 La destination par défaut est la **racine (/)** du dataset.
 
+La préparation du dépôt est désactivée tant que la clé API, le DOI et le serveur ne sont pas tous renseignés. Avec un DOI et un serveur, mais sans clé API, l'application reste en **mode consultation publique** : vous pouvez charger l'onglet **Fichiers sur le serveur** et télécharger les fichiers publics, mais les actions de dépôt et d'administration restent grisées.
+
 Pour téléverser dans un dossier existant :
 
 1. ouvrez l'onglet **Fichiers sur le serveur**
@@ -216,13 +222,16 @@ Dans l'onglet **Préparation du dépôt** :
 - **Sélectionner un dossier** ajoute son contenu et ses sous-dossiers
 - le glisser-déposer permet d'ajouter ou de réorganiser les éléments
 - le clic droit permet de retirer ou d'aplatir la sélection
+- **Sans conversion tabulaire** conserve les fichiers tabulaires dans leur format d'origine lors du dépôt, sans demander à Dataverse de créer une version `.tab`
 - **Réinitialiser** vide entièrement l'espace de préparation sans effacer les fichiers du disque
 
 Avant de continuer, vérifiez que l'arborescence affichée correspond à l'organisation attendue sur le serveur.
 
 ### 5. Vérifier les doublons
 
-La comparaison avec le serveur est effectuée à partir du nom du fichier, de son chemin préparé et de la destination choisie. Consultez la [légende des couleurs](#comprendre-les-couleurs-et-les-états) avant de lancer le dépôt.
+La comparaison avec le serveur est effectuée à partir du nom du fichier, de son chemin préparé et de la destination choisie. Pour les fichiers tabulaires, RDG ArboDV tient aussi compte des fichiers `.tab` que Dataverse peut avoir créés lors d'un ingest précédent. Lorsque Dataverse expose un checksum comparable, le moteur l'utilise ; lorsque le checksum du fichier original n'est pas disponible après ingest, l'application s'appuie sur le nom original et le chemin dérivé pour éviter un nouveau dépôt inutile.
+
+Consultez la [légende des couleurs](#comprendre-les-couleurs-et-les-états) avant de lancer le dépôt.
 
 ### 6. Lancer le téléversement
 
@@ -235,11 +244,40 @@ Cliquez sur **Téléverser**. Pendant l'opération :
 
 Une fois l'opération terminée, l'arborescence distante est actualisée automatiquement.
 
+### 7. Tester les nouveautés tabulaires
+
+Pour tester l'option **Sans conversion tabulaire**, créez un petit fichier local `test_no_ingest.csv` :
+
+```csv
+id,name,value
+1,Alice,10
+2,Bob,20
+```
+
+Utilisez ensuite un dataset de test sur le serveur de démonstration :
+
+1. renseignez une clé API de démonstration, le DOI du dataset de test et le serveur `https://demo.recherche.data.gouv.fr`
+2. ajoutez `test_no_ingest.csv` dans **Préparation du dépôt**
+3. lancez une première fois le dépôt sans cocher **Sans conversion tabulaire** : Dataverse doit ingérer le fichier comme fichier tabulaire
+4. supprimez le fichier distant ou utilisez un second dataset de test
+5. relancez le dépôt avec **Sans conversion tabulaire** cochée : dans les logs Java, la ligne `Telling Dataverse to skip ingest for tabular files` doit apparaître et Dataverse doit conserver le fichier dans son format source
+
+Pour tester la détection d'un `.tab` déjà présent :
+
+1. déposez le CSV sans cocher **Sans conversion tabulaire**, afin que Dataverse crée sa version tabulaire
+2. réinitialisez la préparation locale
+3. ajoutez à nouveau le même fichier local dans le même dossier de destination
+4. le fichier doit apparaître en vert comme déjà présent, même si Dataverse expose une version convertie `.tab`
+
+La comparaison par checksum est utilisée lorsque le fichier local est directement comparable à la version `.tab` du serveur, par exemple avec des sources `.tab` ou `.tsv`. Pour des formats comme `.xlsx`, `.rdata` ou `.sav`, Dataverse n'expose généralement pas le checksum du fichier original après ingest ; RDG ArboDV utilise alors le nom original et le chemin converti comme garde-fou.
+
 ---
 
 ## Gestion des fichiers sur le serveur
 
 L'onglet **Fichiers sur le serveur** permet d'agir directement sur le contenu du dataset. Sélectionnez un ou plusieurs éléments, puis utilisez le clic droit.
+
+Pour un dataset public déjà publié, le DOI et le serveur suffisent pour afficher l'arborescence et télécharger les fichiers accessibles publiquement. La clé API n'est requise que pour accéder à une version brouillon, à des fichiers restreints ou pour effectuer une action qui modifie le dataset.
 
 <p align="center">
   <img src="assets/AppPreview_RightClick_file.png" alt="Menu contextuel d'un fichier distant" width="48%">
@@ -329,7 +367,8 @@ Le JAR personnalisé est embarqué comme ressource dans l'application. Il est ex
 
 ### Les fichiers du serveur ne s'affichent pas
 
-- vérifiez la clé API
+- si le dataset est public, vérifiez d'abord le DOI et le serveur ; la clé API n'est pas nécessaire pour consulter la version publiée
+- si vous devez voir un brouillon ou des fichiers restreints, vérifiez la clé API
 - vérifiez que le DOI correspond au serveur sélectionné
 - ouvrez **Fichiers sur le serveur** puis cliquez sur **Actualiser**
 - contrôlez votre connexion réseau

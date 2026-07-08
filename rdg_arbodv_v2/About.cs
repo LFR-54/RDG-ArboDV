@@ -63,7 +63,7 @@ namespace RDG_Uploader_GUI
         {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
             labelVersion.Text = version == null
-                ? "Version 2.0.0"
+                ? "Version 2.1.0"
                 : $"Version {version.Major}.{version.Minor}.{version.Build}";
         }
 

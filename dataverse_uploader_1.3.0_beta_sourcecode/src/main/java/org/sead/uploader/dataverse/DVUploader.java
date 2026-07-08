@@ -154,7 +154,7 @@ public class DVUploader extends AbstractUploader {
 
     private static void usage() {
         println("\nUsage:");
-        println("  java -jar DVUploader-1.2.0.jar -server=<serverURL> -key=<apikey> -did=<dataset DOI> <files or directories>");
+        println("  java -jar DVUploader-v1.3.0-RDGengine.jar -server=<serverURL> -key=<apikey> -did=<dataset DOI> <files or directories>");
 
         println("\n  where:");
         println("      <serverUrl> = the URL of the server to upload to, e.g. https://datverse.tdl.org");
@@ -172,7 +172,7 @@ public class DVUploader extends AbstractUploader {
         println("      -trustall           - trust all server certificates (i.e. for use when testing with self-signed server certificates)");
         println("      -singlefile         - send each file to the server separately (only affects directupload/ when -uploadviaserver is not set)");
         println("      -noIngest           - Tells Dataverse to not ingest tabular files upon upload");
-        println("      -failOnInvalidNames - Tells Dataverse to not ingest tabular files upon upload");
+        println("      -failOnInvalidNames - Skip files with names or paths rejected by Dataverse instead of replacing invalid characters");
         println("      -bag=<URL>          - 'alpha' capbility to create a dataset from a Bag exported by Dataverse. <URL> is the location of the Bag to process.");
         println("      -createIn=<alias>   - required for Bag import: the alias of the Dataverse you want to create a dataset in");
         println("");
@@ -319,6 +319,7 @@ public class DVUploader extends AbstractUploader {
     }
 
     HashMap<String, JSONObject> existingItems = null;
+    HashMap<String, JSONObject> existingConvertedTabularItems = null;
     boolean datasetMDRetrieved = false;
 
     CloseableHttpClient httpclient = null;
@@ -375,6 +376,7 @@ public class DVUploader extends AbstractUploader {
                                 String res = EntityUtils.toString(resEntity);
                                 datafileList = (new JSONObject(res)).getJSONArray("data");
                                 existingItems = new HashMap<>();
+                                existingConvertedTabularItems = new HashMap<>();
                             }
                             break;
                         case 404:
@@ -394,24 +396,20 @@ public class DVUploader extends AbstractUploader {
                     for (int i = 0; i < datafileList.length(); i++) {
                         JSONObject entry = datafileList.getJSONObject(i);
                         JSONObject df = entry.getJSONObject("dataFile");
-                        if (df.has("originalFileFormat")
-                                && (!df.getString("contentType").equals(df.getString("originalFileFormat")))) {
+                        boolean convertedTabularFile = isConvertedTabularFile(df);
+                        if (convertedTabularFile) {
                             println("The file named " + df.getString("filename")
                                     + " on the server was created by Dataverse's ingest process from an original uploaded file");
                             convertedFiles = true;
+                            String convertedFilepath = getRemoteFilepath(entry, df.getString("filename"));
+                            existingConvertedTabularItems.put(convertedFilepath, df.getJSONObject("checksum"));
                             if(df.has("originalFileName")) {
-                                String filepath=df.getString("originalFileName");
-                                if(entry.has("directoryLabel")) {
-                                    filepath=entry.get("directoryLabel") + "/" + filepath;
-                                }
+                                String filepath=getRemoteFilepath(entry, df.getString("originalFileName"));
                                 println("Recording original file, checksum unknown: " + filepath);
                                 existingItems.put(filepath, unknownChecksum);
                             }
                         }
-                        String filepath = df.getString("filename");
-                        if(entry.has("directoryLabel")) {
-                            filepath=entry.get("directoryLabel") + "/" + filepath;
-                        }
+                        String filepath = getRemoteFilepath(entry, df.getString("filename"));
                         println("Recording: " + filepath);
                         existingItems.put(filepath, df.getJSONObject("checksum"));
                     }
@@ -440,8 +438,8 @@ public class DVUploader extends AbstractUploader {
                     tagId = datasetPID;
                 } else {
                     // A single file on the command line
-                    if (existingItems.containsKey(sourcepath)) {
-                        JSONObject checksum = existingItems.get(sourcepath);
+                    JSONObject checksum = getExistingChecksumForSourcePath(sourcepath, item);
+                    if (checksum != null) {
                         tagId = checksum.getString("type") + ":" + checksum.getString("value");
                     }
 
@@ -454,8 +452,8 @@ public class DVUploader extends AbstractUploader {
                 return null;
             } else {
                 // A file within the local directory
-                if ((existingItems != null) && existingItems.containsKey(sourcepath)) {
-                    JSONObject checksum = existingItems.get(sourcepath);
+                JSONObject checksum = getExistingChecksumForSourcePath(sourcepath, item);
+                if (checksum != null) {
                     tagId = checksum.getString("type") + ":" + checksum.getString("value");
                 }
             }
@@ -464,6 +462,91 @@ public class DVUploader extends AbstractUploader {
             tagId = verifyDataByHash(tagId, path, item);
         }
         return (tagId);
+    }
+
+    private JSONObject getExistingChecksumForSourcePath(String sourcepath, Resource item) {
+        if (existingItems == null) {
+            return null;
+        }
+
+        if (existingItems.containsKey(sourcepath)) {
+            return existingItems.get(sourcepath);
+        }
+
+        if (item == null || !isTabularUploadSource(item.getName()) || existingConvertedTabularItems == null) {
+            return null;
+        }
+
+        String convertedPath = getConvertedTabularPath(sourcepath);
+        JSONObject convertedChecksum = existingConvertedTabularItems.get(convertedPath);
+        if (convertedChecksum == null) {
+            return null;
+        }
+
+        // Dataverse does not expose the checksum of the original spreadsheet/SPSS/R
+        // file once it has been ingested. When the local source is already tabular
+        // text, compare the generated .tab checksum before accepting the match.
+        if (canCompareWithConvertedTabularHash(item.getName())) {
+            String localHash = item.getHash(convertedChecksum.getString("type"));
+            if (convertedChecksum.getString("value").equalsIgnoreCase(localHash)) {
+                println("Found matching converted tabular file on server: " + convertedPath);
+                return convertedChecksum;
+            }
+
+            println("Converted tabular file exists on server but checksum differs: " + convertedPath);
+            return null;
+        }
+
+        println("Found converted tabular file on server: " + convertedPath + " (original checksum unavailable)");
+        return convertedChecksum;
+    }
+
+    private String getRemoteFilepath(JSONObject entry, String filename) {
+        if (entry.has("directoryLabel")) {
+            return entry.get("directoryLabel") + "/" + filename;
+        }
+        return filename;
+    }
+
+    private boolean isConvertedTabularFile(JSONObject df) {
+        if (df.has("originalFileName")) {
+            return true;
+        }
+        return df.has("originalFileFormat")
+                && df.has("contentType")
+                && (!df.getString("contentType").equals(df.getString("originalFileFormat")));
+    }
+
+    private boolean isTabularUploadSource(String filename) {
+        String lower = filename == null ? "" : filename.toLowerCase();
+        return lower.endsWith(".csv")
+                || lower.endsWith(".tsv")
+                || lower.endsWith(".tab")
+                || lower.endsWith(".txt")
+                || lower.endsWith(".xls")
+                || lower.endsWith(".xlsx")
+                || lower.endsWith(".ods")
+                || lower.endsWith(".rdata")
+                || lower.endsWith(".rda")
+                || lower.endsWith(".sav")
+                || lower.endsWith(".por")
+                || lower.endsWith(".dta")
+                || lower.endsWith(".sas7bdat")
+                || lower.endsWith(".xpt");
+    }
+
+    private boolean canCompareWithConvertedTabularHash(String filename) {
+        String lower = filename == null ? "" : filename.toLowerCase();
+        return lower.endsWith(".tab") || lower.endsWith(".tsv");
+    }
+
+    private String getConvertedTabularPath(String sourcepath) {
+        int slashIndex = sourcepath.lastIndexOf("/");
+        String directory = slashIndex >= 0 ? sourcepath.substring(0, slashIndex + 1) : "";
+        String filename = slashIndex >= 0 ? sourcepath.substring(slashIndex + 1) : sourcepath;
+        int dotIndex = filename.lastIndexOf(".");
+        String basename = dotIndex > 0 ? filename.substring(0, dotIndex) : filename;
+        return directory + basename + ".tab";
     }
 
     static HashMap<String, String> hashIssues = new HashMap<String, String>();

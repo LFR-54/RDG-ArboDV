@@ -1,5 +1,31 @@
 # Changelog
 
+## Version 2.1.0 · 08/07/2026
+
+### Nouvelles fonctionnalités
+
+- **Option sans conversion tabulaire** : ajout d'une coche dans l'onglet « Préparation du dépôt » pour transmettre le flag DVUploader `-noIngest`. Lorsque l'option est active, Dataverse reçoit `tabIngest:false` et conserve les fichiers tabulaires dans leur format d'origine au lieu de générer une version `.tab`.
+- **Téléchargement public avec DOI seul** : l'arborescence distante peut maintenant être chargée sans clé API pour les datasets publics déjà publiés. Les utilisateurs sans droits d'administration peuvent ainsi télécharger les fichiers publics à partir du DOI et du serveur uniquement.
+
+### Améliorations
+
+- **Détection des fichiers tabulaires déjà ingérés** : la préparation du dépôt détecte aussi les équivalents `.tab` produits par Dataverse après ingest, en plus du nom original exposé par l'API.
+- **Moteur Java renforcé** : DVUploader-ArboDV garde un index séparé des fichiers `.tab` générés par ingest. Lorsqu'un checksum est comparable, il est utilisé avant de considérer le fichier comme déjà présent ; lorsque Dataverse n'expose pas le checksum du fichier original, le moteur utilise le chemin `.tab` dérivé comme garde-fou.
+- **Lecture distante sans en-tête API inutile** : les appels de consultation et de téléchargement n'envoient l'en-tête `X-Dataverse-key` que lorsqu'une clé est renseignée.
+
+### Interface
+
+- **Actions distantes protégées** : les actions qui modifient le serveur restent désactivées dans le menu contextuel distant tant qu'aucune clé API n'est renseignée. Le téléchargement reste disponible pour les fichiers publics.
+- **Aide utilisateur mise à jour** : l'aide de la clé API précise désormais qu'elle est obligatoire pour les dépôts et modifications, mais facultative pour consulter ou télécharger un dataset public.
+- **Préparation du dépôt grisée sans droits de dépôt** : les commandes de sélection, réinitialisation, destination, option `-noIngest` et téléversement restent désactivées tant que la clé API, le DOI et le serveur ne sont pas renseignés. Avec DOI et serveur seuls, l'application reste utilisable en consultation/téléchargement public.
+- **Serveur par défaut conservé sur la démonstration** : le serveur de démonstration Recherche Data Gouv est de nouveau sélectionné au lancement afin de limiter les dépôts accidentels sur la production.
+- **Erreur 404 plus explicite** : lorsqu'un DOI n'est pas trouvé sur le serveur sélectionné, le message invite désormais à vérifier le couple DOI/serveur, notamment production contre démonstration.
+
+### Documentation
+
+- **README mis à jour** : ajout de l'option sans ingest, du téléchargement public par DOI seul, du mode préparation grisée sans clé API et d'une procédure de test avec petits fichiers tabulaires.
+- **Journal DVUploader mis à jour** : documentation des ajustements du moteur Java liés aux fichiers tabulaires convertis.
+
 ## Version 2.0.0 · 24/06/2026
 
 ### Refonte Majeure du Moteur de Dépôt

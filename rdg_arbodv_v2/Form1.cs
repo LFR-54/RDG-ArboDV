@@ -40,6 +40,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private readonly List<string> _filesToUpload = new List<string>();          // Liste des chemins complets des fichiers à uploader
         private readonly Dictionary<string, string> _fileRelativePaths = new Dictionary<string, string>();  // Dictionnaire mapping fichier => chemin relatif Dataverse
         private readonly HashSet<string> _remotePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase); // Liste des chemins de fichiers distants sur le serveur
+        private readonly HashSet<string> _remoteUploadEquivalentPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase); // Chemins distants considérés équivalents pour éviter un dépôt en double
+        private readonly HashSet<string> _remoteConvertedTabularPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase); // Chemins .tab générés par l'ingest Dataverse
         // OLD : private readonly List<string> _foldersSelected = new List<string>();          // Liste des dossiers racine sélectionnés
         // HashSet = plus rapide et évite les doublons
         private readonly HashSet<string> _foldersSelected = new HashSet<string>();
@@ -73,6 +75,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         // Custom UI fields
         private Label labelTargetDir;
+        private CheckBox checkBoxNoIngest;
         private Button btnResetTargetDir;
         private Button btnRefreshRemote;
         private ToolStripMenuItem menuRefresh;
@@ -108,6 +111,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             InitializeServerComboBox();                      // Initialise la liste des serveurs disponibles
             textBoxDoi.Leave += textBoxDoi_Leave;
             textBoxApiKey.Leave += textBoxApiKey_Leave;
+            textBoxDoi.TextChanged += (s, e) => RefreshCredentialDependentUi();
+            textBoxApiKey.TextChanged += (s, e) => RefreshCredentialDependentUi();
             comboBoxServer.SelectedIndexChanged += comboBoxServer_SelectedIndexChanged;
 
             btnCancel.Visible = false;                       // Cache le bouton Cancel tant qu'aucun upload n'est lancé
@@ -161,12 +166,13 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             {
                 Dock = DockStyle.Top,
                 Height = 32,
-                ColumnCount = 2,
+                ColumnCount = 3,
                 RowCount = 1,
                 Padding = new Padding(5, 3, 5, 3),
                 Margin = Padding.Empty
             };
             panelFilesHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            panelFilesHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 230F));
             panelFilesHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 176F));
             panelFilesHeader.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
@@ -182,6 +188,17 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 UseMnemonic = false
             };
 
+            checkBoxNoIngest = new CheckBox
+            {
+                Dock = DockStyle.Fill,
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Text = Localize("Skip tabular ingest", "Sans conversion tabulaire"),
+                Cursor = Cursors.Hand,
+                Margin = new Padding(0, 0, 8, 0),
+                UseMnemonic = false
+            };
+
             btnResetTargetDir = new Button
             {
                 Dock = DockStyle.Fill,
@@ -193,11 +210,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             {
                 treeViewRemote.SelectedNode = null;
                 UpdateTargetDirLabel();
-                CompareLocalWithRemote(_remotePaths);
+                CompareLocalWithRemote(_remoteUploadEquivalentPaths);
             };
 
             panelFilesHeader.Controls.Add(labelTargetDir, 0, 0);
-            panelFilesHeader.Controls.Add(btnResetTargetDir, 1, 0);
+            panelFilesHeader.Controls.Add(checkBoxNoIngest, 1, 0);
+            panelFilesHeader.Controls.Add(btnResetTargetDir, 2, 0);
 
             tabPageFiles.Controls.Clear();
             tabPageFiles.Controls.Add(treeViewSelected);
@@ -260,6 +278,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 bool hasFile = false;
                 bool hasFolder = false;
                 bool hasRoot = false;
+                bool hasApiKey = HasApiKey();
 
                 foreach (var n in selectedNodes)
                 {
@@ -269,19 +288,19 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 }
 
                 // Rename only for single selection (file or folder, excluding root)
-                menuRename.Enabled = selectedNodes.Count == 1 && !hasRoot;
+                menuRename.Enabled = hasApiKey && selectedNodes.Count == 1 && !hasRoot;
 
                 // Move for any selection (excluding root)
-                menuMove.Enabled = !hasRoot;
+                menuMove.Enabled = hasApiKey && !hasRoot;
 
                 // Download for any selection
                 menuDownload.Enabled = true;
 
                 // Delete for any selection (excluding root)
-                menuDelete.Enabled = !hasRoot;
+                menuDelete.Enabled = hasApiKey && !hasRoot;
 
                 // Flatten only if folders (excluding root) are selected
-                menuFlattenRemote.Enabled = hasFolder && !hasFile && !hasRoot;
+                menuFlattenRemote.Enabled = hasApiKey && hasFolder && !hasFile && !hasRoot;
 
                 // Upload destination only for single folder or root selection
                 menuSetDest.Enabled = selectedNodes.Count == 1 && (hasFolder || hasRoot);
@@ -313,11 +332,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             treeViewRemote.AfterSelect += (s, ev) =>
             {
                 UpdateTargetDirLabel();
-                CompareLocalWithRemote(_remotePaths);
+                CompareLocalWithRemote(_remoteUploadEquivalentPaths);
             };
 
             // Extract the JAR engine from resources on startup
             ExtractJarFromResources();
+            RefreshCredentialDependentUi();
         }
 
         private bool IsFrench => _currentLanguage == AppLanguage.French;
@@ -325,6 +345,107 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private string Localize(string english, string french)
         {
             return IsFrench ? french : english;
+        }
+
+        private bool HasApiKey()
+        {
+            return !string.IsNullOrWhiteSpace(textBoxApiKey.Text);
+        }
+
+        private bool HasValidDoiAndServer()
+        {
+            string doi = NormalizeDoiInput(textBoxDoi.Text);
+            string srv = comboBoxServer.SelectedItem?.ToString().Trim();
+
+            return IsNormalizedDoi(doi) && !string.IsNullOrWhiteSpace(srv);
+        }
+
+        private bool CanPrepareDeposit()
+        {
+            return HasApiKey() && HasValidDoiAndServer();
+        }
+
+        private void RefreshCredentialDependentUi()
+        {
+            bool canBrowseRemote = HasValidDoiAndServer();
+            bool canPrepareDeposit = CanPrepareDeposit();
+
+            buttonSelectFiles.Enabled = canPrepareDeposit;
+            buttonSelectFolder.Enabled = canPrepareDeposit;
+            buttonReset.Enabled = canPrepareDeposit;
+            buttonUpload.Enabled = canPrepareDeposit;
+            treeViewSelected.Enabled = canPrepareDeposit;
+            contextMenuTree.Enabled = canPrepareDeposit;
+
+            if (checkBoxNoIngest != null)
+                checkBoxNoIngest.Enabled = canPrepareDeposit;
+            if (btnResetTargetDir != null)
+                btnResetTargetDir.Enabled = canPrepareDeposit;
+            if (labelTargetDir != null)
+                labelTargetDir.ForeColor = canPrepareDeposit ? Color.DarkSlateGray : SystemColors.GrayText;
+
+            treeViewRemote.Enabled = canBrowseRemote;
+            if (btnRefreshRemote != null)
+                btnRefreshRemote.Enabled = canBrowseRemote;
+
+            if (_cts == null && _filesToUpload.Count == 0)
+            {
+                string status = canPrepareDeposit
+                    ? GetSelectionStatusText()
+                    : GetDepositUnavailableStatusText(canBrowseRemote);
+                SafeSetLabel(labelStatus, status, canPrepareDeposit ? SystemColors.ControlText : SystemColors.GrayText);
+            }
+        }
+
+        private string GetDepositUnavailableStatusText(bool canBrowseRemote)
+        {
+            if (canBrowseRemote && !HasApiKey())
+            {
+                return Localize(
+                    "Public browsing mode: enter an API key to prepare a deposit.",
+                    "Mode consultation publique : renseignez une clé API pour préparer un dépôt.");
+            }
+
+            return Localize(
+                "Enter a DOI, select a server, and provide an API key to prepare a deposit.",
+                "Renseignez un DOI, sélectionnez un serveur et ajoutez une clé API pour préparer un dépôt.");
+        }
+
+        private static void AddApiKeyHeaderIfPresent(HttpRequestMessage request, string apiKey)
+        {
+            if (!string.IsNullOrWhiteSpace(apiKey))
+            {
+                request.Headers.Add("X-Dataverse-key", apiKey);
+            }
+        }
+
+        private string BuildRemoteLoadErrorMessage(HttpStatusCode statusCode, string server, string apiKey)
+        {
+            if (statusCode == HttpStatusCode.NotFound)
+            {
+                string serverHint = server?.Contains("demo.recherche.data.gouv.fr", StringComparison.OrdinalIgnoreCase) == true
+                    ? Localize("You are currently using the demo server.", "Vous utilisez actuellement le serveur de démonstration.")
+                    : Localize("You are currently using the production server.", "Vous utilisez actuellement le serveur de production.");
+
+                return IsFrench
+                    ? $"Dataset introuvable sur ce serveur (404). {serverHint} Vérifiez que le DOI appartient bien au serveur sélectionné."
+                    : $"Dataset not found on this server (404). {serverHint} Check that the DOI belongs to the selected server.";
+            }
+
+            if (statusCode == HttpStatusCode.Unauthorized || statusCode == HttpStatusCode.Forbidden)
+            {
+                return string.IsNullOrWhiteSpace(apiKey)
+                    ? Localize(
+                        $"Load error ({statusCode}) : {(int)statusCode}. This dataset may require an API key.",
+                        $"Erreur de chargement ({statusCode}) : {(int)statusCode}. Ce dataset nécessite peut-être une clé API.")
+                    : Localize(
+                        $"Load error ({statusCode}) : {(int)statusCode}. Check the API key and dataset permissions.",
+                        $"Erreur de chargement ({statusCode}) : {(int)statusCode}. Vérifiez la clé API et les droits sur le dataset.");
+            }
+
+            return IsFrench
+                ? $"Erreur de chargement ({statusCode}) : {(int)statusCode}"
+                : $"Load error ({statusCode}) : {(int)statusCode}";
         }
 
         private void InitializeLanguageSelector()
@@ -404,6 +525,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
             if (btnResetTargetDir != null)
                 btnResetTargetDir.Text = Localize("Reset to Root", "Déposer à la racine");
+            if (checkBoxNoIngest != null)
+                checkBoxNoIngest.Text = Localize("Skip tabular ingest", "Sans conversion tabulaire");
             if (btnRefreshRemote != null)
                 btnRefreshRemote.Text = Localize("Refresh", "Actualiser");
             if (menuRefresh != null)
@@ -446,6 +569,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 string selectedPath = GetSelectedNodePath(treeViewRemote);
                 BuildRemoteTreeView(_remoteFiles, expanded, selectedPath);
             }
+
+            RefreshCredentialDependentUi();
         }
 
         private string GetSpeedUnit()
@@ -637,6 +762,14 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                          "Comprendre le DOI, son format attendu et où le trouver."));
             toolTipFieldHelp.SetToolTip(textBoxApiKey, GetApiKeyHelpText());
             toolTipFieldHelp.SetToolTip(textBoxDoi, GetDoiHelpText());
+            if (checkBoxNoIngest != null)
+            {
+                toolTipFieldHelp.SetToolTip(
+                    checkBoxNoIngest,
+                    Localize(
+                        "Adds the DVUploader -noIngest flag: Dataverse keeps tabular files in their original format instead of creating a .tab derivative.",
+                        "Ajoute le flag DVUploader -noIngest : Dataverse conserve les fichiers tabulaires dans leur format d'origine au lieu de créer une version .tab."));
+            }
         }
 
         private void buttonApiKeyInfo_Click(object sender, EventArgs e)
@@ -661,11 +794,15 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         {
             return Localize(
                 "Your API key is your personal access token. It allows the application " +
-                "to deposit files in Dataverse without using your password.\n\n" +
+                "to deposit files in Dataverse without using your password. It is required " +
+                "for uploads and remote modifications, but public datasets can be browsed " +
+                "and downloaded with only their DOI.\n\n" +
                 "Where to find it: open your profile on the RDG / Dataverse platform, " +
                 "then go to the API Token section to generate or copy your token.",
                 "La clé API est votre jeton personnel d'accès. Elle permet à l'application " +
-                "de déposer les fichiers dans Dataverse sans utiliser votre mot de passe.\n\n" +
+                "de déposer les fichiers dans Dataverse sans utiliser votre mot de passe. " +
+                "Elle est nécessaire pour les dépôts et les modifications distantes, mais les " +
+                "datasets publics peuvent être parcourus et téléchargés avec leur DOI seul.\n\n" +
                 "Où la trouver : ouvrez votre profil sur la plateforme RDG / Dataverse, puis " +
                 "la section API Token ou Clé API pour générer ou copier votre jeton.");
         }
@@ -688,16 +825,19 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private async void textBoxDoi_Leave(object sender, EventArgs e)
         {
             textBoxDoi.Text = NormalizeDoiInput(textBoxDoi.Text);
+            RefreshCredentialDependentUi();
             await AutoCheckRemoteFilesAsync();
         }
 
         private async void textBoxApiKey_Leave(object sender, EventArgs e)
         {
+            RefreshCredentialDependentUi();
             await AutoCheckRemoteFilesAsync();
         }
 
         private async void comboBoxServer_SelectedIndexChanged(object sender, EventArgs e)
         {
+            RefreshCredentialDependentUi();
             await AutoCheckRemoteFilesAsync();
         }
 
@@ -1329,11 +1469,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                         : $"{targetPrefixForDup}/{finalRelPath.Trim('/')}";
                 }
 
-                string destPath = string.IsNullOrEmpty(finalRelPath) 
-                    ? filename 
-                    : $"{finalRelPath.Replace('\\', '/').Trim('/')}/{filename}";
-
-                if (_remotePaths.Contains(destPath))
+                if (TryFindRemoteUploadDuplicate(file, finalRelPath, out _, out _))
                 {
                     duplicateCount++;
                 }
@@ -1455,11 +1591,14 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 }
                 File.WriteAllText(tempManifestPath, JsonConvert.SerializeObject(manifestList, Formatting.Indented));
 
+                bool skipTabularIngest = checkBoxNoIngest?.Checked == true;
+                string noIngestArgument = skipTabularIngest ? " -noIngest" : "";
+
                 // Start process
                 var startInfo = new ProcessStartInfo
                 {
                     FileName = "java",
-                    Arguments = $"-jar \"{jarPath}\" -server=\"{srv}\" -key=\"{api}\" -did=\"{doi}\" -manifest=\"{tempManifestPath}\" -recurse",
+                    Arguments = $"-jar \"{jarPath}\" -server=\"{srv}\" -key=\"{api}\" -did=\"{doi}\" -manifest=\"{tempManifestPath}\" -recurse{noIngestArgument}",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -1884,6 +2023,9 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             buttonUpload.Enabled = enabled;
             buttonApiKeyInfo.Enabled = enabled;
             buttonDoiInfo.Enabled = enabled;
+            if (checkBoxNoIngest != null) checkBoxNoIngest.Enabled = enabled;
+            treeViewSelected.Enabled = enabled;
+            contextMenuTree.Enabled = enabled;
 
             // La destination fait partie intégrante du manifeste créé au lancement.
             // Elle reste donc figée jusqu'à la fin de l'opération pour que le chemin
@@ -1891,6 +2033,11 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             treeViewRemote.Enabled = enabled;
             if (btnResetTargetDir != null) btnResetTargetDir.Enabled = enabled;
             if (btnRefreshRemote != null) btnRefreshRemote.Enabled = enabled;
+
+            if (enabled)
+            {
+                RefreshCredentialDependentUi();
+            }
         }
 
         private void UpdateStatus()
@@ -1905,7 +2052,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             _errorCount = 0;
             RefreshStatLabels();
 
-            CompareLocalWithRemote(_remotePaths);
+            CompareLocalWithRemote(_remoteUploadEquivalentPaths);
         }
 
 
@@ -2092,12 +2239,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             string doi = NormalizeDoiInput(textBoxDoi.Text);
             string srv = comboBoxServer.SelectedItem?.ToString().Trim().TrimEnd('/');
 
-            if (string.IsNullOrWhiteSpace(api) || !IsNormalizedDoi(doi) || string.IsNullOrWhiteSpace(srv))
+            if (!IsNormalizedDoi(doi) || string.IsNullOrWhiteSpace(srv))
             {
                 treeViewRemote.Nodes.Clear();
                 string msg = IsFrench 
-                    ? "Veuillez renseigner la clé API, le DOI et sélectionner un serveur valide pour charger les fichiers du serveur."
-                    : "Please fill in the API Key, DOI, and select a valid server to load server files.";
+                    ? "Veuillez renseigner le DOI et sélectionner un serveur valide pour charger les fichiers du serveur. La clé API est facultative pour les datasets publics."
+                    : "Please fill in the DOI and select a valid server to load server files. The API key is optional for public datasets.";
                 treeViewRemote.Nodes.Add(new TreeNode(msg) { ForeColor = Color.Red });
                 return;
             }
@@ -2116,16 +2263,16 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 
                 using (var request = new HttpRequestMessage(HttpMethod.Get, url))
                 {
-                    request.Headers.Add("X-Dataverse-key", api);
+                    AddApiKeyHeaderIfPresent(request, api);
                     
                     var response = await _httpClient.SendAsync(request);
                     if (!response.IsSuccessStatusCode)
                     {
-                        string errMsg = IsFrench 
-                            ? $"Erreur de chargement ({response.StatusCode}) : {(int)response.StatusCode}"
-                            : $"Load error ({response.StatusCode}) : {(int)response.StatusCode}";
+                        string errMsg = BuildRemoteLoadErrorMessage(response.StatusCode, srv, api);
                         treeViewRemote.Nodes.Clear();
-                        treeViewRemote.Nodes.Add(new TreeNode(errMsg) { ForeColor = Color.Red });
+                        var errorNode = new TreeNode(errMsg) { ForeColor = Color.Red };
+                        treeViewRemote.Nodes.Add(errorNode);
+                        toolTipFieldHelp?.SetToolTip(treeViewRemote, url);
                         return;
                     }
 
@@ -2141,8 +2288,8 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                     }
 
                     _remoteFiles.Clear();
-                    _remotePaths.Clear();
-                    CompareLocalWithRemote(_remotePaths);
+                    ClearRemoteFileIndexes();
+                    CompareLocalWithRemote(_remoteUploadEquivalentPaths);
 
                     if (apiResponse.Data.Count == 0)
                     {
@@ -2154,20 +2301,9 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
                     _remoteFiles = apiResponse.Data;
                     BuildRemoteTreeView(apiResponse.Data, expandedPaths, selectedPath);
+                    RefreshRemoteFileIndexes(apiResponse.Data);
 
-                    // Build path set to identify duplicates locally
-                    _remotePaths.Clear();
-                    foreach (var item in apiResponse.Data)
-                    {
-                        string filename = item.Label ?? "";
-                        string dirLabel = item.DirectoryLabel ?? "";
-                        string destPath = string.IsNullOrEmpty(dirLabel) 
-                            ? filename 
-                            : $"{dirLabel.Replace('\\', '/').Trim('/')}/{filename}";
-                        _remotePaths.Add(destPath);
-                    }
-
-                    CompareLocalWithRemote(_remotePaths);
+                    CompareLocalWithRemote(_remoteUploadEquivalentPaths);
                 }
             }
             catch (Exception ex)
@@ -2186,7 +2322,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             string doi = NormalizeDoiInput(textBoxDoi.Text);
             string srv = comboBoxServer.SelectedItem?.ToString().Trim().TrimEnd('/');
 
-            if (string.IsNullOrWhiteSpace(api) || !IsNormalizedDoi(doi) || string.IsNullOrWhiteSpace(srv))
+            if (!IsNormalizedDoi(doi) || string.IsNullOrWhiteSpace(srv))
             {
                 return;
             }
@@ -2197,7 +2333,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                 
                 using (var request = new HttpRequestMessage(HttpMethod.Get, url))
                 {
-                    request.Headers.Add("X-Dataverse-key", api);
+                    AddApiKeyHeaderIfPresent(request, api);
                     
                     var response = await _httpClient.SendAsync(request);
                     if (response.IsSuccessStatusCode)
@@ -2208,21 +2344,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                         if (apiResponse != null && "OK".Equals(apiResponse.Status, StringComparison.OrdinalIgnoreCase) && apiResponse.Data != null)
                         {
                             _remoteFiles = apiResponse.Data;
-                            _remotePaths.Clear();
-                            foreach (var item in apiResponse.Data)
-                            {
-                                string filename = item.Label ?? "";
-                                string dirLabel = item.DirectoryLabel ?? "";
-                                string destPath = string.IsNullOrEmpty(dirLabel) 
-                                    ? filename 
-                                    : $"{dirLabel.Replace('\\', '/').Trim('/')}/{filename}";
-                                _remotePaths.Add(destPath);
-                            }
+                            RefreshRemoteFileIndexes(apiResponse.Data);
 
                             var expandedPaths = GetExpandedPaths(treeViewRemote);
                             string selectedPath = GetSelectedNodePath(treeViewRemote);
                             BuildRemoteTreeView(apiResponse.Data, expandedPaths, selectedPath);
-                            CompareLocalWithRemote(_remotePaths);
+                            CompareLocalWithRemote(_remoteUploadEquivalentPaths);
                         }
                     }
                 }
@@ -2231,6 +2358,112 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             {
                 // Silent catch for background auto-check
             }
+        }
+
+        private void ClearRemoteFileIndexes()
+        {
+            _remotePaths.Clear();
+            _remoteUploadEquivalentPaths.Clear();
+            _remoteConvertedTabularPaths.Clear();
+        }
+
+        private void RefreshRemoteFileIndexes(IEnumerable<DataverseFileItem> files)
+        {
+            ClearRemoteFileIndexes();
+
+            foreach (var item in files)
+            {
+                string dirLabel = item.DirectoryLabel ?? "";
+                AddRemotePath(_remotePaths, dirLabel, item.Label);
+                AddRemotePath(_remoteUploadEquivalentPaths, dirLabel, item.Label);
+
+                var dataFile = item.DataFile;
+                if (dataFile == null)
+                    continue;
+
+                // Dataverse renomme souvent le fichier stocké en .tab après ingest, tout en
+                // conservant le nom original dans les métadonnées. On indexe ces deux formes
+                // pour éviter un deuxième dépôt du fichier source.
+                AddRemotePath(_remoteUploadEquivalentPaths, dirLabel, dataFile.OriginalFileName);
+
+                if (IsConvertedTabularRemoteFile(item))
+                {
+                    AddRemotePath(_remoteConvertedTabularPaths, dirLabel, dataFile.Filename ?? item.Label);
+                }
+            }
+        }
+
+        private static void AddRemotePath(HashSet<string> target, string directoryLabel, string filename)
+        {
+            if (target == null || string.IsNullOrWhiteSpace(filename))
+                return;
+
+            string dir = (directoryLabel ?? "").Replace('\\', '/').Trim('/');
+            string path = string.IsNullOrEmpty(dir)
+                ? filename.Trim('/')
+                : $"{dir}/{filename.Trim('/')}";
+
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                target.Add(path);
+            }
+        }
+
+        private static bool IsConvertedTabularRemoteFile(DataverseFileItem item)
+        {
+            var dataFile = item?.DataFile;
+            if (dataFile == null)
+                return false;
+
+            if (!string.IsNullOrWhiteSpace(dataFile.OriginalFileName))
+                return true;
+
+            return !string.IsNullOrWhiteSpace(dataFile.OriginalFileFormat)
+                && !string.IsNullOrWhiteSpace(dataFile.ContentType)
+                && !string.Equals(dataFile.OriginalFileFormat, dataFile.ContentType, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsTabularUploadSource(string filename)
+        {
+            string extension = Path.GetExtension(filename ?? "").ToLowerInvariant();
+            return extension == ".csv"
+                || extension == ".tsv"
+                || extension == ".tab"
+                || extension == ".txt"
+                || extension == ".xls"
+                || extension == ".xlsx"
+                || extension == ".ods"
+                || extension == ".rdata"
+                || extension == ".rda"
+                || extension == ".sav"
+                || extension == ".por"
+                || extension == ".dta"
+                || extension == ".sas7bdat"
+                || extension == ".xpt";
+        }
+
+        private static string BuildRemoteFilePath(string directoryLabel, string filename)
+        {
+            string dir = (directoryLabel ?? "").Replace('\\', '/').Trim('/');
+            string cleanFilename = (filename ?? "").Trim('/');
+
+            return string.IsNullOrEmpty(dir)
+                ? cleanFilename
+                : $"{dir}/{cleanFilename}";
+        }
+
+        private static string BuildConvertedTabularPath(string remotePath)
+        {
+            if (string.IsNullOrWhiteSpace(remotePath))
+                return remotePath;
+
+            string normalized = remotePath.Replace('\\', '/').Trim('/');
+            int slashIndex = normalized.LastIndexOf('/');
+            string directory = slashIndex >= 0 ? normalized.Substring(0, slashIndex + 1) : "";
+            string filename = slashIndex >= 0 ? normalized.Substring(slashIndex + 1) : normalized;
+            string basename = Path.GetFileNameWithoutExtension(filename);
+
+            return $"{directory}{basename}.tab";
         }
 
         private string FormatFileSize(long bytes)
@@ -2402,10 +2635,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                         : $"{targetPrefix}/{finalRelPath.Trim('/')}";
                 }
 
-                string destPath = string.IsNullOrEmpty(finalRelPath) 
-                    ? filename 
-                    : $"{finalRelPath.Replace('\\', '/').Trim('/')}/{filename}";
-                if (remotePaths != null && remotePaths.Contains(destPath))
+                if (TryFindRemoteUploadDuplicate(file, finalRelPath, out _, out _))
                 {
                     node.ForeColor = Color.Green;
                     node.Text = IsFrench 
@@ -2451,6 +2681,37 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             {
                 MarkRemoteDuplicatesRecursive(child, remotePaths);
             }
+        }
+
+        private bool TryFindRemoteUploadDuplicate(string localFile, string finalRelativePath, out string matchedRemotePath, out bool matchedConvertedTabularFile)
+        {
+            matchedRemotePath = null;
+            matchedConvertedTabularFile = false;
+
+            if (string.IsNullOrWhiteSpace(localFile))
+                return false;
+
+            string filename = Path.GetFileName(localFile);
+            string destinationPath = BuildRemoteFilePath(finalRelativePath, filename);
+
+            if (_remoteUploadEquivalentPaths.Contains(destinationPath))
+            {
+                matchedRemotePath = destinationPath;
+                return true;
+            }
+
+            if (IsTabularUploadSource(filename))
+            {
+                string convertedPath = BuildConvertedTabularPath(destinationPath);
+                if (_remoteConvertedTabularPaths.Contains(convertedPath))
+                {
+                    matchedRemotePath = convertedPath;
+                    matchedConvertedTabularFile = true;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private string GetTreeRelativePath(TreeNode node)
@@ -3471,7 +3732,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private void SetTargetFolderFromRemote()
         {
             UpdateTargetDirLabel();
-            CompareLocalWithRemote(_remotePaths);
+            CompareLocalWithRemote(_remoteUploadEquivalentPaths);
             tabControlMain.SelectedIndex = 0;
         }
 
@@ -3527,18 +3788,46 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private List<string> FindAllRemotePathsWithFilename(string filename)
         {
-            var paths = new List<string>();
-            if (_remotePaths == null) return paths;
+            var paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (string.IsNullOrWhiteSpace(filename)) return new List<string>();
 
-            foreach (string path in _remotePaths)
+            string convertedFilename = IsTabularUploadSource(filename)
+                ? Path.GetFileName(BuildConvertedTabularPath(filename))
+                : null;
+
+            foreach (string path in EnumerateRemoteDuplicatePaths())
             {
-                if (string.Equals(path, filename, StringComparison.OrdinalIgnoreCase) ||
-                    path.EndsWith("/" + filename, StringComparison.OrdinalIgnoreCase))
+                if (PathMatchesFilename(path, filename)
+                    || (!string.IsNullOrWhiteSpace(convertedFilename) && PathMatchesFilename(path, convertedFilename)))
                 {
                     paths.Add(path);
                 }
             }
-            return paths;
+            return new List<string>(paths);
+        }
+
+        private IEnumerable<string> EnumerateRemoteDuplicatePaths()
+        {
+            foreach (string path in _remotePaths)
+            {
+                yield return path;
+            }
+
+            foreach (string path in _remoteUploadEquivalentPaths)
+            {
+                yield return path;
+            }
+
+            foreach (string path in _remoteConvertedTabularPaths)
+            {
+                yield return path;
+            }
+        }
+
+        private static bool PathMatchesFilename(string path, string filename)
+        {
+            return string.Equals(path, filename, StringComparison.OrdinalIgnoreCase)
+                || path.EndsWith("/" + filename, StringComparison.OrdinalIgnoreCase);
         }
 
         private void UpdateTargetDirLabel()
@@ -4041,6 +4330,10 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
     public class DataverseFileInfo
     {
         public long Id { get; set; }
+        public string Filename { get; set; }
+        public string ContentType { get; set; }
+        public string OriginalFileName { get; set; }
+        public string OriginalFileFormat { get; set; }
         public long Filesize { get; set; }
         public DataverseChecksumInfo Checksum { get; set; }
         public string CreationDate { get; set; }

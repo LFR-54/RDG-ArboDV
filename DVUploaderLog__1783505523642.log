@@ -1,0 +1,53 @@
+
+----------------------------------------------------------------------------------
+
+TTTTT  DDD   L    Texas
+  T    D  D  L    Digital
+  T    DDD   LLL  Library
+
+DVUploader - a command-line application to upload files to any Dataverse Dataset
+Developed with support from TDL and GDCC for the Dataverse Community
+See the wiki at https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader for information on using DVUploader.
+
+----------------------------------------------------------------------------------
+
+-noIngest
+
+***Parsing arguments:***
+
+Telling Dataverse to skip ingest for tabular files
+
+***Required arguments not found.***
+
+Usage:
+  java -jar DVUploader-v1.3.0-RDGengine.jar -server=<serverURL> -key=<apikey> -did=<dataset DOI> <files or directories>
+
+  where:
+      <serverUrl> = the URL of the server to upload to, e.g. https://datverse.tdl.org
+      <apiKey> = your personal apikey, created in the dataverse server at <serverUrl>
+      <did> = the Dataset DOI you are uploading to, e.g. doi:10.5072/A1B2C3
+      <files or directories> = a space separated list of files to upload or directory name(s) where the files to upload are
+
+  Optional Arguments:
+      -uploadviaserver    - Use Dataverse's indirect upload capability. This makes temporary copies of files on the Dataverse server, puts a greater workload on the server and is not suitable for large files, but it can be used when direct uploads are not enabled for a given dataset.
+      -listonly           - Scan the Dataset and local files and list what would be uploaded (does not upload with this flag)
+      -limit=<n>          - Specify a maximum number of files to upload per invocation.
+      -verify             - Check both the file name and checksum in comparing with current Dataset entries.
+      -skip=<n>           - a number of files to skip before starting processing (saves time when you know the first n files have been uploaded before)
+      -recurse            - recurse into subdirectories
+      -maxlockwait        - the maximum time to wait (in seconds) for a Dataset lock (i.e. while the last file is ingested) to expire (default 60 seconds)
+      -trustall           - trust all server certificates (i.e. for use when testing with self-signed server certificates)
+      -singlefile         - send each file to the server separately (only affects directupload/ when -uploadviaserver is not set)
+      -noIngest           - Tells Dataverse to not ingest tabular files upon upload
+      -failOnInvalidNames - Skip files with names or paths rejected by Dataverse instead of replacing invalid characters
+      -bag=<URL>          - 'alpha' capbility to create a dataset from a Bag exported by Dataverse. <URL> is the location of the Bag to process.
+      -createIn=<alias>   - required for Bag import: the alias of the Dataverse you want to create a dataset in
+
+See https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader/wiki/DVUploader,-a-Command-line-Bulk-Uploader-for-Dataverse for more usage information.
+
+
+***Execution Complete.***
+
+***If any errors were shown, you may want to rerun DVUploader to assure that all files uploaded. For persistent issues, contact your Dataverse admin.***
+
+***Execution Complete.***
