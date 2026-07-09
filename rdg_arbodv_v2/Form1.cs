@@ -72,6 +72,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private int _activeUploadSessionId = 0;
         private AppLanguage _currentLanguage = AppLanguage.English;
         private bool _isApplyingLanguageSelection = false;
+        private bool _isProcessingUpdate = false;
 
         // Custom UI fields
         private Label labelTargetDir;
@@ -338,6 +339,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             // Extract the JAR engine from resources on startup
             ExtractJarFromResources();
             RefreshCredentialDependentUi();
+            Shown += Form1_Shown;
         }
 
         private bool IsFrench => _currentLanguage == AppLanguage.French;
@@ -2058,7 +2060,128 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private void btnAbout_Click(object sender, EventArgs e) // Ouvre la fenêtre About
         {
-            new About(_currentLanguage).Show();                                  // Affiche ma fenêtre About
+            new About(_currentLanguage).Show(this);                              // Affiche ma fenêtre About
+        }
+
+        private async void Form1_Shown(object sender, EventArgs e)
+        {
+            await CheckForUpdatesAsync(showWhenUpToDate: false);
+        }
+
+        internal async Task CheckForUpdatesAsync(bool showWhenUpToDate)
+        {
+            if (_isProcessingUpdate)
+                return;
+
+            _isProcessingUpdate = true;
+            try
+            {
+                using var updateService = new UpdateService();
+                UpdateCheckResult result = await updateService.CheckForUpdatesAsync(
+                    Properties.Settings.Default.IncludePrereleaseUpdates);
+
+                if (!result.IsSuccess)
+                {
+                    if (showWhenUpToDate)
+                    {
+                        MessageBox.Show(
+                            Localize("Unable to check for updates.\n\n", "Impossible de vérifier les mises à jour.\n\n") + result.ErrorMessage,
+                            Localize("Update", "Mise à jour"),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                    }
+                    return;
+                }
+
+                if (!result.IsUpdateAvailable)
+                {
+                    if (showWhenUpToDate)
+                    {
+                        MessageBox.Show(
+                            Localize(
+                                $"RDG ArboDV is up to date (version {result.CurrentVersion}).",
+                                $"RDG ArboDV est à jour (version {result.CurrentVersion})."),
+                            Localize("Update", "Mise à jour"),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                    return;
+                }
+
+                string releaseKind = result.Release.Prerelease
+                    ? Localize(" beta", " bêta")
+                    : string.Empty;
+                string notes = GetReleaseNotesPreview(result.Release.Notes);
+                string prompt = Localize(
+                    $"RDG ArboDV {result.Release.Version}{releaseKind} is available.\n\n{notes}\n\nDownload and install it now?",
+                    $"RDG ArboDV {result.Release.Version}{releaseKind} est disponible.\n\n{notes}\n\nTélécharger et installer maintenant ?");
+
+                if (MessageBox.Show(
+                    prompt,
+                    Localize("Update available", "Mise à jour disponible"),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    await DownloadAndApplyUpdateAsync(updateService, result.Release);
+                }
+            }
+            finally
+            {
+                _isProcessingUpdate = false;
+            }
+        }
+
+        private async Task DownloadAndApplyUpdateAsync(UpdateService updateService, UpdateRelease release)
+        {
+            string previousStatus = labelStatus.Text;
+            int previousProgress = progressBar.Value;
+            ProgressBarStyle previousStyle = progressBar.Style;
+
+            try
+            {
+                UseWaitCursor = true;
+                labelStatus.Text = Localize("Downloading update...", "Téléchargement de la mise à jour...");
+                progressBar.Style = ProgressBarStyle.Marquee;
+
+                var progress = new Progress<int>(percentage =>
+                {
+                    progressBar.Style = ProgressBarStyle.Continuous;
+                    progressBar.Value = Math.Clamp(percentage, progressBar.Minimum, progressBar.Maximum);
+                    labelStatus.Text = Localize(
+                        $"Downloading update... {percentage}%",
+                        $"Téléchargement de la mise à jour... {percentage}%");
+                });
+
+                string archivePath = await updateService.DownloadUpdateAsync(release, progress);
+                labelStatus.Text = Localize("Installing update and restarting...", "Installation de la mise à jour et redémarrage...");
+                UpdateService.ApplyUpdateAndRestart(archivePath, Application.ExecutablePath);
+                Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    Localize("The update could not be installed.\n\n", "La mise à jour n’a pas pu être installée.\n\n") + ex.Message,
+                    Localize("Update", "Mise à jour"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                labelStatus.Text = previousStatus;
+                progressBar.Style = previousStyle;
+                progressBar.Value = Math.Clamp(previousProgress, progressBar.Minimum, progressBar.Maximum);
+            }
+            finally
+            {
+                UseWaitCursor = false;
+            }
+        }
+
+        private static string GetReleaseNotesPreview(string notes)
+        {
+            const int maximumLength = 1400;
+            string normalizedNotes = (notes ?? string.Empty).Trim();
+            if (normalizedNotes.Length <= maximumLength)
+                return normalizedNotes;
+
+            return normalizedNotes.Substring(0, maximumLength).TrimEnd() + "...";
         }
 
         /// Démarre un drag interne quand on commence à glisser un TreeNode.

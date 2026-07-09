@@ -6,6 +6,7 @@
 
 - **Option sans conversion tabulaire** : ajout d'une coche dans l'onglet « Préparation du dépôt » pour transmettre le flag DVUploader `-noIngest`. Lorsque l'option est active, Dataverse reçoit `tabIngest:false` et conserve les fichiers tabulaires dans leur format d'origine au lieu de générer une version `.tab`.
 - **Téléchargement public avec DOI seul** : l'arborescence distante peut maintenant être chargée sans clé API pour les datasets publics déjà publiés. Les utilisateurs sans droits d'administration peuvent ainsi télécharger les fichiers publics à partir du DOI et du serveur uniquement.
+- **Mise à jour intégrée** : l'application vérifie les releases GitHub au démarrage et peut télécharger puis appliquer la dernière version stable sans installation manuelle. L'archive téléchargée est contrôlée par checksum SHA-256 avant le redémarrage.
 
 ### Améliorations
 
@@ -19,6 +20,7 @@
 - **Aide utilisateur mise à jour** : l'aide de la clé API précise désormais qu'elle est obligatoire pour les dépôts et modifications, mais facultative pour consulter ou télécharger un dataset public.
 - **Préparation du dépôt grisée sans droits de dépôt** : les commandes de sélection, réinitialisation, destination, option `-noIngest` et téléversement restent désactivées tant que la clé API, le DOI et le serveur ne sont pas renseignés. Avec DOI et serveur seuls, l'application reste utilisable en consultation/téléchargement public.
 - **Erreur 404 plus explicite** : lorsqu'un DOI n'est pas trouvé sur le serveur sélectionné, le message invite désormais à vérifier le couple DOI/serveur, notamment production contre démonstration.
+- **Canal bêta optionnel** : depuis la fenêtre « À propos », une option permet d'inclure explicitement les préversions dans la vérification des mises à jour. Elle reste désactivée par défaut.
 
 ### Documentation
 

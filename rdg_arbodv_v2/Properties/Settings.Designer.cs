@@ -56,5 +56,20 @@ namespace RDG_Uploader_GUI.Properties
                 this["ShowWarning"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IncludePrereleaseUpdates
+        {
+            get
+            {
+                return ((bool)(this["IncludePrereleaseUpdates"]));
+            }
+            set
+            {
+                this["IncludePrereleaseUpdates"] = value;
+            }
+        }
     }
 }

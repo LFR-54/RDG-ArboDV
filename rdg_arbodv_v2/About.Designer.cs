@@ -36,6 +36,8 @@ namespace RDG_Uploader_GUI
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.labelBuildDateTime = new System.Windows.Forms.Label();
+            this.btnCheckForUpdates = new System.Windows.Forms.Button();
+            this.checkBoxIncludePrereleaseUpdates = new System.Windows.Forms.CheckBox();
             this.labelSiteWeb = new System.Windows.Forms.LinkLabel();
             this.labelLicence = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
@@ -61,6 +63,8 @@ namespace RDG_Uploader_GUI
             this.groupBox1.Controls.Add(this.pictureBox4);
             this.groupBox1.Controls.Add(this.pictureBox3);
             this.groupBox1.Controls.Add(this.pictureBox2);
+            this.groupBox1.Controls.Add(this.btnCheckForUpdates);
+            this.groupBox1.Controls.Add(this.checkBoxIncludePrereleaseUpdates);
             this.groupBox1.Controls.Add(this.labelBuildDateTime);
             this.groupBox1.Controls.Add(this.labelSiteWeb);
             this.groupBox1.Controls.Add(this.labelLicence);
@@ -70,7 +74,7 @@ namespace RDG_Uploader_GUI
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(440, 226);
+            this.groupBox1.Size = new System.Drawing.Size(440, 271);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Product";
@@ -78,7 +82,7 @@ namespace RDG_Uploader_GUI
             // pictureBox4
             // 
             this.pictureBox4.Image = global::RDG_Uploader_GUI.Properties.Resources.Logo_Centre_national_de_la_recherche_scientifique__2023__;
-            this.pictureBox4.Location = new System.Drawing.Point(14, 139);
+            this.pictureBox4.Location = new System.Drawing.Point(14, 187);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(78, 77);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -88,7 +92,7 @@ namespace RDG_Uploader_GUI
             // pictureBox3
             // 
             this.pictureBox3.Image = global::RDG_Uploader_GUI.Properties.Resources.Logo_Université_de_Lorraine_Evo;
-            this.pictureBox3.Location = new System.Drawing.Point(286, 167);
+            this.pictureBox3.Location = new System.Drawing.Point(286, 210);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(144, 49);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -98,7 +102,7 @@ namespace RDG_Uploader_GUI
             // pictureBox2
             // 
             this.pictureBox2.Image = global::RDG_Uploader_GUI.Properties.Resources.logo_201533630_removebg_preview;
-            this.pictureBox2.Location = new System.Drawing.Point(139, 167);
+            this.pictureBox2.Location = new System.Drawing.Point(139, 210);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(106, 46);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -114,6 +118,28 @@ namespace RDG_Uploader_GUI
             this.labelBuildDateTime.TabIndex = 7;
             this.labelBuildDateTime.Text = "Build date --";
             this.labelBuildDateTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnCheckForUpdates
+            // 
+            this.btnCheckForUpdates.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCheckForUpdates.Location = new System.Drawing.Point(137, 148);
+            this.btnCheckForUpdates.Name = "btnCheckForUpdates";
+            this.btnCheckForUpdates.Size = new System.Drawing.Size(166, 26);
+            this.btnCheckForUpdates.TabIndex = 12;
+            this.btnCheckForUpdates.Text = "Check for updates";
+            this.btnCheckForUpdates.UseVisualStyleBackColor = true;
+            this.btnCheckForUpdates.Click += new System.EventHandler(this.btnCheckForUpdates_Click);
+            // 
+            // checkBoxIncludePrereleaseUpdates
+            // 
+            this.checkBoxIncludePrereleaseUpdates.AutoSize = true;
+            this.checkBoxIncludePrereleaseUpdates.Location = new System.Drawing.Point(137, 127);
+            this.checkBoxIncludePrereleaseUpdates.Name = "checkBoxIncludePrereleaseUpdates";
+            this.checkBoxIncludePrereleaseUpdates.Size = new System.Drawing.Size(133, 17);
+            this.checkBoxIncludePrereleaseUpdates.TabIndex = 11;
+            this.checkBoxIncludePrereleaseUpdates.Text = "Include beta releases";
+            this.checkBoxIncludePrereleaseUpdates.UseVisualStyleBackColor = true;
+            this.checkBoxIncludePrereleaseUpdates.CheckedChanged += new System.EventHandler(this.checkBoxIncludePrereleaseUpdates_CheckedChanged);
             // 
             // labelSiteWeb
             // 
@@ -174,7 +200,7 @@ namespace RDG_Uploader_GUI
             // 
             this.groupBox2.Controls.Add(this.TextBoxAuthors);
             this.groupBox2.Controls.Add(this.pictureBoxDragon);
-            this.groupBox2.Location = new System.Drawing.Point(12, 388);
+            this.groupBox2.Location = new System.Drawing.Point(12, 433);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
@@ -228,7 +254,7 @@ namespace RDG_Uploader_GUI
             // About
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(465, 563);
+            this.ClientSize = new System.Drawing.Size(465, 608);
             this.Controls.Add(this.labelTitre);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBoxBanner);
@@ -276,5 +302,7 @@ namespace RDG_Uploader_GUI
         private System.Windows.Forms.Label labelTitre;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Button btnCheckForUpdates;
+        private System.Windows.Forms.CheckBox checkBoxIncludePrereleaseUpdates;
     }
 }

@@ -30,6 +30,7 @@ namespace RDG_Uploader_GUI
             ApplyLanguage();
             UpdateVersionLabel();
             UpdateBuildDateLabel();
+            checkBoxIncludePrereleaseUpdates.Checked = Properties.Settings.Default.IncludePrereleaseUpdates;
         }
 
         private bool IsFrench => _language == AppLanguage.French;
@@ -57,6 +58,8 @@ namespace RDG_Uploader_GUI
                 "(Cybersécurité, Informatique et réseaux, Électronique),\n" +
                 "Option A :\n" +
                 "Informatique et Réseaux.");
+            checkBoxIncludePrereleaseUpdates.Text = Localize("Include beta releases", "Inclure les versions bêta");
+            btnCheckForUpdates.Text = Localize("Check for updates", "Vérifier les mises à jour");
         }
 
         private void UpdateVersionLabel()
@@ -107,6 +110,18 @@ namespace RDG_Uploader_GUI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+        }
+
+        private void checkBoxIncludePrereleaseUpdates_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.IncludePrereleaseUpdates = checkBoxIncludePrereleaseUpdates.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private async void btnCheckForUpdates_Click(object sender, EventArgs e)
+        {
+            if (Owner is Form1 mainForm)
+                await mainForm.CheckForUpdatesAsync(showWhenUpToDate: true);
         }
     }
 }

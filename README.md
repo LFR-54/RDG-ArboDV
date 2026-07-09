@@ -81,6 +81,7 @@ Elle est particulièrement adaptée aux équipes de recherche qui souhaitent :
 | **Interface bilingue** | Détecte la langue du système au premier lancement et permet de basculer entre le français et l'anglais. |
 | **Interface redimensionnable** | La fenêtre peut être agrandie ou maximisée et les arbres ainsi que les journaux utilisent automatiquement l'espace disponible. |
 | **Gestion des interruptions** | Permet d'annuler une opération et interrompt proprement le transfert en cas de perte du réseau. |
+| **Mise à jour intégrée** | Vérifie les releases GitHub au démarrage, télécharge l'archive portable et vérifie son checksum SHA-256 avant de redémarrer l'application. Les préversions sont désactivées par défaut et peuvent être activées depuis « À propos ». |
 
 ---
 
@@ -158,11 +159,13 @@ Le DOI attendu suit le format `doi:10.xxxx/xxxxx`. Une URL complète telle que `
 
 ### Utiliser le binaire publié
 
-1. Télécharger ou récupérer `RDG_Uploader_GUI.exe`
+1. Télécharger l'archive `RDG-ArboDV-win-x64.zip` depuis la [page des releases GitHub](https://github.com/LFR-54/RDG-ArboDV/releases)
 2. Vérifier que .NET 8 Desktop et Java sont installés
-3. Lancer l'exécutable
+3. Extraire l'archive puis lancer l'exécutable qu'elle contient
 
 Le moteur personnalisé `DVUploader-v1.3.0-RDGengine.jar` est intégré à l'exécutable et extrait automatiquement au démarrage. Il n'est donc pas nécessaire de copier manuellement le fichier JAR à côté de l'application.
+
+Au démarrage, RDG ArboDV vérifie les versions stables publiées sur GitHub. Lorsqu'une mise à jour est disponible, vous pouvez la télécharger puis redémarrer directement depuis l'application. Dans **À propos**, le bouton **Vérifier les mises à jour** permet une vérification manuelle et l'option **Inclure les versions bêta** active volontairement les préversions.
 
 ### Utiliser le code source
 
@@ -347,6 +350,10 @@ bin/Release/net8.0-windows/win-x64/publish/
 ```
 
 La publication utilise `--self-contained false` : le runtime .NET 8 Desktop doit donc être installé sur le poste cible.
+
+### Release GitHub automatisée
+
+Poussez un tag stable au format `vMAJEUR.MINEUR.CORRECTIF` (par exemple `v2.1.0`). Le workflow `.github/workflows/release.yml` publie automatiquement l'exécutable portable dans `RDG-ArboDV-win-x64.zip`, son checksum SHA-256 et les notes extraites de la section correspondante de `CHANGELOG-FR.md`.
 
 ---
 

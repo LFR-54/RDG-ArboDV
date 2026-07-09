@@ -1,0 +1,101 @@
+name: Publish RDG ArboDV release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      TAG: ${{ github.ref_name }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Validate tag and extract release notes
+        id: notes
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($env:TAG -notmatch '^v(?<version>\d+\.\d+\.\d+)$') {
+            throw 'The tag must follow vMAJOR.MINOR.PATCH (for example v2.1.0).'
+          }
+
+          $version = $Matches.version
+          $heading = "## Version $version "
+          $started = $false
+          $notes = [System.Collections.Generic.List[string]]::new()
+
+          foreach ($line in Get-Content CHANGELOG-FR.md -Encoding utf8) {
+            if (-not $started) {
+              if ($line.StartsWith($heading)) {
+                $started = $true
+              }
+              continue
+            }
+
+            if ($line -match '^## ') {
+              break
+            }
+
+            $notes.Add($line)
+          }
+
+          if (-not $started -or $notes.Count -eq 0) {
+            throw "No changelog entry was found for version $version."
+          }
+
+          $notes | Set-Content RELEASE_NOTES.md -Encoding utf8
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Publish portable executable
+        shell: pwsh
+        run: |
+          dotnet publish rdg_arbodv_v2/RDG_Uploader_GUI.csproj `
+            --configuration Release `
+            --runtime win-x64 `
+            --self-contained false `
+            --output artifacts/publish `
+            -p:PublishSingleFile=true `
+            -p:PublishReadyToRun=true `
+            -p:DebugType=None `
+            -p:DebugSymbols=false
+
+      - name: Create release archive and checksum
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $archive = 'artifacts/RDG-ArboDV-win-x64.zip'
+          $checksum = 'artifacts/RDG-ArboDV-win-x64.zip.sha256'
+          $executable = Get-ChildItem artifacts/publish -Filter '*.exe' | Select-Object -First 1
+
+          if ($null -eq $executable) {
+            throw 'The publish output does not contain an executable.'
+          }
+
+          Compress-Archive -Path $executable.FullName -DestinationPath $archive -CompressionLevel Optimal
+          $hash = (Get-FileHash -Path $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  RDG-ArboDV-win-x64.zip" | Set-Content $checksum -Encoding ascii
+
+      - name: Create stable GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create $env:TAG `
+            --verify-tag `
+            --title "RDG ArboDV ${{ steps.notes.outputs.version }}" `
+            --notes-file RELEASE_NOTES.md `
+            artifacts/RDG-ArboDV-win-x64.zip `
+            artifacts/RDG-ArboDV-win-x64.zip.sha256
