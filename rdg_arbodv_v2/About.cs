@@ -9,6 +9,7 @@ namespace RDG_Uploader_GUI
 {
     public partial class About : Form
     {
+        private const string GitHubRepositoryUrl = "https://github.com/LFR-54/RDG-ArboDV";
         private readonly AppLanguage _language;
 
         public About() : this(AppLanguage.English)
@@ -47,26 +48,25 @@ namespace RDG_Uploader_GUI
             groupBox2.Text = Localize("Author", "Auteur");
             TextBoxAuthors.Text = Localize(
                 "Created and maintained by Lucas FRENOT\n" +
-                "------------------------------------------------------\n" +
                 "Intern at CRAN, currently studying for a BTS CIEL\n" +
                 "(Cybersecurity, IT and Networks, Electronics),\n" +
                 "Option A:\n" +
                 "Computer Science and Networks.",
                 "Créé et maintenu par Lucas FRENOT\n" +
-                "------------------------------------------------------\n" +
                 "Stagiaire au CRAN, actuellement en BTS CIEL\n" +
                 "(Cybersécurité, Informatique et réseaux, Électronique),\n" +
                 "Option A :\n" +
                 "Informatique et Réseaux.");
             checkBoxIncludePrereleaseUpdates.Text = Localize("Include beta releases", "Inclure les versions bêta");
             btnCheckForUpdates.Text = Localize("Check for updates", "Vérifier les mises à jour");
+            labelGitHubRepository.Text = "LFR-54/RDG-ArboDV";
         }
 
         private void UpdateVersionLabel()
         {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
             labelVersion.Text = version == null
-                ? "Version 2.1.0"
+                ? "Version 2.1.1"
                 : $"Version {version.Major}.{version.Minor}.{version.Build}";
         }
 
@@ -94,11 +94,26 @@ namespace RDG_Uploader_GUI
 
         private void labelSiteWeb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            OpenUrl("https://recherche.data.gouv.fr/");
+        }
+
+        private void labelGitHubRepository_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenUrl(GitHubRepositoryUrl);
+        }
+
+        private void pictureBoxGitHub_Click(object sender, EventArgs e)
+        {
+            OpenUrl(GitHubRepositoryUrl);
+        }
+
+        private void OpenUrl(string url)
+        {
             try
             {
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = "https://recherche.data.gouv.fr/",
+                    FileName = url,
                     UseShellExecute = true
                 });
             }

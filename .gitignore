@@ -1,2 +1,7 @@
 /old/v1.2.0_sourcecode
 TECHNICAL_HANDOVER.md
+
+# Visual Studio and .NET build outputs
+**/.vs/
+**/bin/
+**/obj/

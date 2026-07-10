@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 2.1.1 · 10/07/2026
+
+### Interface
+
+- **Fenêtre « À propos » réorganisée** : alignement et hiérarchie visuelle retravaillés dans l'en-tête, le bloc produit, les logos partenaires et la présentation de l'auteur.
+- **Dépôt GitHub accessible** : ajout du logo GitHub et d'un lien direct vers [`LFR-54/RDG-ArboDV`](https://github.com/LFR-54/RDG-ArboDV) dans la fenêtre « À propos ».
+
 ## Version 2.1.0 · 08/07/2026
 
 ### Nouvelles fonctionnalités
