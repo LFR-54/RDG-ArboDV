@@ -10,6 +10,11 @@
 
 - **Notes de version plus lisibles** : le contenu Markdown des releases GitHub est conservé comme source, puis présenté en texte propre dans la boîte de dialogue sans afficher les marqueurs techniques (`###`, `**`, liens Markdown).
 
+### Améliorations
+
+- **Canal bêta finalisé** : les préversions conservent désormais leur suffixe SemVer complet dans le binaire et dans la fenêtre « À propos ». Une bêta peut détecter la bêta suivante puis la version stable correspondante.
+- **Publication stable ou bêta automatisée** : le workflow accepte les tags comme `v2.2.0-beta.1`, injecte la version exacte dans l'exécutable et marque automatiquement la release GitHub comme préversion.
+
 ## Version 2.1.1 · 10/07/2026
 
 ### Interface

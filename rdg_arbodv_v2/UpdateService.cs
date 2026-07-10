@@ -31,7 +31,15 @@ namespace RDG_Uploader_GUI
 
         public static ReleaseVersion GetCurrentVersion()
         {
-            Version assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0, 0, 0);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string informationalVersion = assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion;
+
+            if (ReleaseVersion.TryParse(informationalVersion, out ReleaseVersion semanticVersion))
+                return semanticVersion;
+
+            Version assemblyVersion = assembly.GetName().Version ?? new Version(0, 0, 0);
             return new ReleaseVersion(
                 Math.Max(0, assemblyVersion.Major),
                 Math.Max(0, assemblyVersion.Minor),

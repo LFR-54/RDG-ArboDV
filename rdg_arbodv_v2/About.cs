@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace RDG_Uploader_GUI
@@ -64,10 +63,7 @@ namespace RDG_Uploader_GUI
 
         private void UpdateVersionLabel()
         {
-            Version version = Assembly.GetExecutingAssembly().GetName().Version;
-            labelVersion.Text = version == null
-                ? "Version 2.1.2"
-                : $"Version {version.Major}.{version.Minor}.{version.Build}";
+            labelVersion.Text = $"Version {UpdateService.GetCurrentVersion()}";
         }
 
         private void UpdateBuildDateLabel()

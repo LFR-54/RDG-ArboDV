@@ -30,6 +30,9 @@ using System.Runtime.InteropServices;
 //      Numéro de build
 //      Révision
 //
+#if !RELEASE_VERSION_INJECTED
 [assembly: AssemblyVersion("2.1.2.0")]
 [assembly: AssemblyFileVersion("2.1.2.0")]
+[assembly: AssemblyInformationalVersion("2.1.2")]
+#endif
 [assembly: NeutralResourcesLanguage("en")]

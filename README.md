@@ -165,7 +165,7 @@ Le DOI attendu suit le format `doi:10.xxxx/xxxxx`. Une URL complète telle que `
 
 Le moteur personnalisé `DVUploader-v1.3.0-RDGengine.jar` est intégré à l'exécutable et extrait automatiquement au démarrage. Il n'est donc pas nécessaire de copier manuellement le fichier JAR à côté de l'application.
 
-Au démarrage, RDG ArboDV vérifie les versions stables publiées sur GitHub. Lorsqu'une mise à jour est disponible, vous pouvez la télécharger puis redémarrer directement depuis l'application. Dans **À propos**, le bouton **Vérifier les mises à jour** permet une vérification manuelle et l'option **Inclure les versions bêta** active volontairement les préversions.
+Au démarrage, RDG ArboDV vérifie les versions stables publiées sur GitHub. Lorsqu'une mise à jour est disponible, vous pouvez la télécharger puis redémarrer directement depuis l'application. Dans **À propos**, le bouton **Vérifier les mises à jour** permet une vérification manuelle et l'option **Inclure les versions bêta** active volontairement les préversions. Le suffixe SemVer (`beta.1`, `beta.2`, etc.) est conservé : une bêta peut donc évoluer vers la suivante, puis vers la version stable correspondante.
 
 ### Utiliser le code source
 

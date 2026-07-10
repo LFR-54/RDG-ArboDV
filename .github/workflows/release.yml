@@ -28,11 +28,13 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          if ($env:TAG -notmatch '^v(?<version>\d+\.\d+\.\d+)$') {
-            throw 'The tag must follow vMAJOR.MINOR.PATCH (for example v2.1.0).'
+          if ($env:TAG -notmatch '^v(?<version>\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)$') {
+            throw 'The tag must follow vMAJOR.MINOR.PATCH or vMAJOR.MINOR.PATCH-LABEL (for example v2.2.0-beta.1).'
           }
 
           $version = $Matches.version
+          $baseVersion = ($version -split '-', 2)[0]
+          $isPrerelease = $version.Contains('-')
           $heading = "## Version $version "
           $started = $false
           $notes = [System.Collections.Generic.List[string]]::new()
@@ -57,7 +59,16 @@ jobs:
           }
 
           $notes | Set-Content RELEASE_NOTES.md -Encoding utf8
+          $generatedAssemblyInfo = @(
+            'using System.Reflection;'
+            "[assembly: AssemblyVersion(`"$baseVersion.0`")]"
+            "[assembly: AssemblyFileVersion(`"$baseVersion.0`")]"
+            "[assembly: AssemblyInformationalVersion(`"$version`")]"
+          )
+          $generatedAssemblyInfo | Set-Content rdg_arbodv_v2/GeneratedReleaseVersion.cs -Encoding utf8
+
           "version=$version" >> $env:GITHUB_OUTPUT
+          "prerelease=$($isPrerelease.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
 
       - name: Publish portable executable
         shell: pwsh
@@ -70,7 +81,8 @@ jobs:
             -p:PublishSingleFile=true `
             -p:PublishReadyToRun=true `
             -p:DebugType=None `
-            -p:DebugSymbols=false
+            -p:DebugSymbols=false `
+            -p:DefineConstants=RELEASE_VERSION_INJECTED
 
       - name: Create release archive and checksum
         shell: pwsh
@@ -88,14 +100,22 @@ jobs:
           $hash = (Get-FileHash -Path $archive -Algorithm SHA256).Hash.ToLowerInvariant()
           "$hash  RDG-ArboDV-win-x64.zip" | Set-Content $checksum -Encoding ascii
 
-      - name: Create stable GitHub release
+      - name: Create GitHub release
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create $env:TAG `
-            --verify-tag `
-            --title "RDG ArboDV ${{ steps.notes.outputs.version }}" `
-            --notes-file RELEASE_NOTES.md `
-            artifacts/RDG-ArboDV-win-x64.zip `
-            artifacts/RDG-ArboDV-win-x64.zip.sha256
+          $arguments = @(
+            'release', 'create', $env:TAG,
+            '--verify-tag',
+            '--title', 'RDG ArboDV ${{ steps.notes.outputs.version }}',
+            '--notes-file', 'RELEASE_NOTES.md',
+            'artifacts/RDG-ArboDV-win-x64.zip',
+            'artifacts/RDG-ArboDV-win-x64.zip.sha256'
+          )
+
+          if ('${{ steps.notes.outputs.prerelease }}' -eq 'true') {
+            $arguments += '--prerelease'
+          }
+
+          & gh @arguments
