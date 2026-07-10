@@ -163,7 +163,7 @@ Le DOI attendu suit le format `doi:10.xxxx/xxxxx`. Une URL complète telle que `
 2. Vérifier que .NET 8 Desktop et Java sont installés
 3. Extraire l'archive puis lancer l'exécutable qu'elle contient
 
-Le moteur personnalisé `DVUploader-v1.3.0-RDGengine.jar` est intégré à l'exécutable et extrait automatiquement au démarrage. Il n'est donc pas nécessaire de copier manuellement le fichier JAR à côté de l'application.
+Le moteur personnalisé `DVUploader-v1.3.0-RDGengine.jar` est intégré à l'exécutable et extrait automatiquement au démarrage. Son empreinte SHA-256 est comparée à celle du JAR déjà présent afin de le remplacer dès que le moteur embarqué change, même si sa taille reste identique. Il n'est donc pas nécessaire de copier manuellement le fichier JAR à côté de l'application.
 
 Au démarrage, RDG ArboDV vérifie les versions stables publiées sur GitHub. Lorsqu'une mise à jour est disponible, vous pouvez la télécharger puis redémarrer directement depuis l'application. Dans **À propos**, le bouton **Vérifier les mises à jour** permet une vérification manuelle et l'option **Inclure les versions bêta** active volontairement les préversions. Le suffixe SemVer (`beta.1`, `beta.2`, etc.) est conservé : une bêta peut donc évoluer vers la suivante, puis vers la version stable correspondante.
 
@@ -366,7 +366,7 @@ RDG ArboDV repose sur deux composants :
 
 Lors du téléversement, l'interface construit un manifeste JSON temporaire. Chaque entrée associe le chemin réel du fichier local à son dossier virtuel de destination. Cette approche permet de réorganiser ou d'aplatir visuellement un dépôt sans déplacer ni dupliquer les fichiers sur le disque.
 
-Le JAR personnalisé est embarqué comme ressource dans l'application. Il est extrait dans le dossier de l'exécutable ou, si celui-ci n'est pas accessible en écriture, dans le profil local de l'utilisateur.
+Le JAR personnalisé est embarqué comme ressource dans l'application. Il est extrait dans le dossier de l'exécutable ou, si celui-ci n'est pas accessible en écriture, dans le profil local de l'utilisateur. À chaque démarrage, une comparaison SHA-256 garantit que le fichier extrait correspond exactement au moteur embarqué dans l'exécutable.
 
 ---
 

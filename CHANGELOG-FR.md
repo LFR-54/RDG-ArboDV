@@ -5,6 +5,7 @@
 ### Correctifs
 
 - **Installation des mises à jour débloquée** : le fichier temporaire téléchargé est maintenant fermé avant son renommage et sa vérification SHA-256, ce qui évite l'erreur Windows indiquant que le fichier est utilisé par un autre processus.
+- **Moteur DVUploader toujours synchronisé** : le JAR extrait est désormais comparé à la ressource embarquée par SHA-256. Il est remplacé dès que son contenu diffère, même si l'ancienne et la nouvelle version ont exactement la même taille.
 
 ### Interface
 

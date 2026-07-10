@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;                                    // HttpClient, HttpRequestMessage, HttpContent
 using System.Net.Http.Headers;                            // MediaTypeHeaderValue
 using System.Runtime.InteropServices;                     // DllImport pour SendMessage
+using System.Security.Cryptography;                      // Comparaison SHA-256 du moteur Java embarqué
 using System.Text.RegularExpressions;                     // Nettoyage des notes Markdown GitHub
 using System.Threading;                                   // CancellationTokenSource, CancellationToken
 using System.Threading.Tasks;                             // Task, async/await
@@ -1258,15 +1259,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                         return null;
                     }
 
-                    if (File.Exists(jarPath))
+                    if (FileMatchesEmbeddedResource(jarPath, stream))
                     {
-                        FileInfo fi = new FileInfo(jarPath);
-                        if (fi.Length == stream.Length)
-                        {
-                            return jarPath;
-                        }
+                        return jarPath;
                     }
 
+                    stream.Position = 0;
                     using (FileStream fs = new FileStream(jarPath, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
                         stream.CopyTo(fs);
@@ -1298,15 +1296,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                     {
                         if (stream == null) return null;
 
-                        if (File.Exists(jarPath))
+                        if (FileMatchesEmbeddedResource(jarPath, stream))
                         {
-                            FileInfo fi = new FileInfo(jarPath);
-                            if (fi.Length == stream.Length)
-                            {
-                                return jarPath;
-                            }
+                            return jarPath;
                         }
 
+                        stream.Position = 0;
                         using (FileStream fs = new FileStream(jarPath, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
                             stream.CopyTo(fs);
@@ -1324,6 +1319,34 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                     catch {}
                     return null;
                 }
+            }
+        }
+
+        private static bool FileMatchesEmbeddedResource(string filePath, Stream resourceStream)
+        {
+            if (!File.Exists(filePath) || !resourceStream.CanSeek)
+            {
+                return false;
+            }
+
+            long originalPosition = resourceStream.Position;
+            try
+            {
+                byte[] embeddedHash = SHA256.HashData(resourceStream);
+                resourceStream.Position = originalPosition;
+
+                using FileStream existingFile = new FileStream(
+                    filePath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.Read);
+                byte[] existingHash = SHA256.HashData(existingFile);
+
+                return CryptographicOperations.FixedTimeEquals(embeddedHash, existingHash);
+            }
+            finally
+            {
+                resourceStream.Position = originalPosition;
             }
         }
 
