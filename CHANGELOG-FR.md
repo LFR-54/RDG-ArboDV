@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 2.1.2 · 10/07/2026
+
+### Correctifs
+
+- **Installation des mises à jour débloquée** : le fichier temporaire téléchargé est maintenant fermé avant son renommage et sa vérification SHA-256, ce qui évite l'erreur Windows indiquant que le fichier est utilisé par un autre processus.
+
+### Interface
+
+- **Notes de version plus lisibles** : le contenu Markdown des releases GitHub est conservé comme source, puis présenté en texte propre dans la boîte de dialogue sans afficher les marqueurs techniques (`###`, `**`, liens Markdown).
+
 ## Version 2.1.1 · 10/07/2026
 
 ### Interface

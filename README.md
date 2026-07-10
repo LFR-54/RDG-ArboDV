@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Client bureautique Windows pour préparer, téléverser et administrer les fichiers d'un dataset Dataverse</strong><br>
-  <sub>Conçu pour Recherche Data Gouv — Version 2.1.1</sub>
+  <sub>Conçu pour Recherche Data Gouv — Version 2.1.2</sub>
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@
   <img alt="Plateforme" src="https://img.shields.io/badge/Plateforme-Windows-0078d4">
   <img alt="Interface" src="https://img.shields.io/badge/Interface-WinForms-0f6cbd">
   <img alt="Cible" src="https://img.shields.io/badge/Cible-Dataverse-2d7d46">
-  <img alt="Version" src="https://img.shields.io/badge/Version-2.1.1-success">
+  <img alt="Version" src="https://img.shields.io/badge/Version-2.1.2-success">
 </p>
 
 ## Sommaire

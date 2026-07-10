@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;                                    // HttpClient, HttpRequestMessage, HttpContent
 using System.Net.Http.Headers;                            // MediaTypeHeaderValue
 using System.Runtime.InteropServices;                     // DllImport pour SendMessage
+using System.Text.RegularExpressions;                     // Nettoyage des notes Markdown GitHub
 using System.Threading;                                   // CancellationTokenSource, CancellationToken
 using System.Threading.Tasks;                             // Task, async/await
 using System.Windows.Forms;                               // WinForms (Form, Button, TreeView, etc.)
@@ -2177,7 +2178,19 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private static string GetReleaseNotesPreview(string notes)
         {
             const int maximumLength = 1400;
-            string normalizedNotes = (notes ?? string.Empty).Trim();
+            string normalizedNotes = (notes ?? string.Empty)
+                .Replace("\r\n", "\n")
+                .Replace('\r', '\n')
+                .Trim();
+
+            normalizedNotes = Regex.Replace(normalizedNotes, @"(?m)^#{1,6}\s*", string.Empty);
+            normalizedNotes = Regex.Replace(normalizedNotes, @"\[([^\]]+)\]\([^\)]+\)", "$1");
+            normalizedNotes = Regex.Replace(normalizedNotes, @"\*\*(.+?)\*\*", "$1");
+            normalizedNotes = Regex.Replace(normalizedNotes, @"__(.+?)__", "$1");
+            normalizedNotes = Regex.Replace(normalizedNotes, @"`([^`]+)`", "$1");
+            normalizedNotes = Regex.Replace(normalizedNotes, @"(?m)^\s*[-*]\s+", "• ");
+            normalizedNotes = Regex.Replace(normalizedNotes, @"\n{3,}", "\n\n").Trim();
+
             if (normalizedNotes.Length <= maximumLength)
                 return normalizedNotes;
 

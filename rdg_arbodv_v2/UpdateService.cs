@@ -139,30 +139,33 @@ namespace RDG_Uploader_GUI
 
                 long? contentLength = response.Content.Headers.ContentLength;
                 await using Stream source = await response.Content.ReadAsStreamAsync(cancellationToken);
-                await using FileStream destination = new FileStream(
+                await using (FileStream destination = new FileStream(
                     partialArchivePath,
                     FileMode.Create,
                     FileAccess.Write,
                     FileShare.None,
                     81920,
-                    useAsync: true);
-
-                byte[] buffer = new byte[81920];
-                long received = 0;
-                int read;
-                while ((read = await source.ReadAsync(buffer.AsMemory(0, buffer.Length), cancellationToken)) > 0)
+                    useAsync: true))
                 {
-                    await destination.WriteAsync(buffer.AsMemory(0, read), cancellationToken);
-                    received += read;
-
-                    if (contentLength.HasValue && contentLength.Value > 0)
+                    byte[] buffer = new byte[81920];
+                    long received = 0;
+                    int read;
+                    while ((read = await source.ReadAsync(buffer.AsMemory(0, buffer.Length), cancellationToken)) > 0)
                     {
-                        int percentage = (int)Math.Clamp(received * 100L / contentLength.Value, 0, 100);
-                        progress?.Report(percentage);
+                        await destination.WriteAsync(buffer.AsMemory(0, read), cancellationToken);
+                        received += read;
+
+                        if (contentLength.HasValue && contentLength.Value > 0)
+                        {
+                            int percentage = (int)Math.Clamp(received * 100L / contentLength.Value, 0, 100);
+                            progress?.Report(percentage);
+                        }
                     }
+
+                    await destination.FlushAsync(cancellationToken);
                 }
 
-                await destination.FlushAsync(cancellationToken);
+                // The stream must be closed before Windows can rename the .part file.
                 File.Move(partialArchivePath, archivePath, true);
 
                 string actualSha256 = await CalculateSha256Async(archivePath, cancellationToken);
