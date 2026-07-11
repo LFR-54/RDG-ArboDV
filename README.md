@@ -1,7 +1,7 @@
 # RDG ArboDV
 
 <p align="center">
-  <img src="assets/AppPreviewV2.0.0.png" alt="Interface principale de RDG ArboDV" width="100%">
+  <img src="assets/AppPreviewV2.1.2.png" alt="Interface principale de RDG ArboDV" width="100%">
 </p>
 
 <p align="center">
