@@ -75,6 +75,14 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         private AppLanguage _currentLanguage = AppLanguage.English;
         private bool _isApplyingLanguageSelection = false;
         private bool _isProcessingUpdate = false;
+        private string _targetDirectoryLabel = string.Empty;
+        private string _targetDatasetDoi = string.Empty;
+        private string _targetServerBaseUrl = string.Empty;
+
+        private static readonly string StartupWarningMarkerPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "RDG_ArboDV",
+            "startup-warning-v1.ack");
 
         // Custom UI fields
         private Label labelTargetDir;
@@ -105,12 +113,6 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
             progressBar.Style = ProgressBarStyle.Continuous; // Mise en style continu de la ProgressBar pour prise en compte de PBM_SETSTATE
 
-            if (Properties.Settings.Default.ShowWarning)
-            {
-                ShowStartupWarning();                            // Affiche un avertissement au démarrage
-                Properties.Settings.Default.ShowWarning = false;
-                SaveLanguagePreference();
-            }
             InitializeServerComboBox();                      // Initialise la liste des serveurs disponibles
             textBoxDoi.Leave += textBoxDoi_Leave;
             textBoxApiKey.Leave += textBoxApiKey_Leave;
@@ -212,8 +214,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
             btnResetTargetDir.Click += (s, ev) =>
             {
                 treeViewRemote.SelectedNode = null;
-                UpdateTargetDirLabel();
-                CompareLocalWithRemote(_remoteUploadEquivalentPaths);
+                SetTargetFolder(string.Empty);
             };
 
             panelFilesHeader.Controls.Add(labelTargetDir, 0, 0);
@@ -266,17 +267,19 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
             contextMenuRemote.Opening += (s, ev) =>
             {
-                TreeNode node = treeViewRemote.SelectedNode;
-                bool isFile = node != null && node.ImageKey == "file";
-                bool isFolder = node != null && node.ImageKey == "folder" && node.Parent != null;
-                bool isRoot = node != null && node.ImageKey == "folder" && node.Parent == null;
-                
                 var selectedNodes = treeViewRemote.SelectedNodes;
                 if (selectedNodes == null || selectedNodes.Count == 0)
                 {
                     ev.Cancel = true;
                     return;
                 }
+
+                TreeNode node = selectedNodes.Count == 1
+                    ? selectedNodes[0]
+                    : treeViewRemote.SelectedNode;
+                bool isFile = node != null && node.ImageKey == "file";
+                bool isFolder = node != null && node.ImageKey == "folder" && node.Parent != null;
+                bool isRoot = node != null && node.ImageKey == "folder" && node.Parent == null;
 
                 bool hasFile = false;
                 bool hasFolder = false;
@@ -326,16 +329,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                     {
                         treeViewRemote.SelectedNodes.Clear();
                         treeViewRemote.SelectedNodes.Add(ev.Node);
-                        treeViewRemote.SelectedNode = ev.Node;
                     }
+                    // MultiSelectTreeView conserve sa propre liste de sélection. On synchronise
+                    // aussi le SelectedNode WinForms utilisé par certaines commandes historiques.
+                    treeViewRemote.SelectedNode = ev.Node;
                     contextMenuRemote.Show(treeViewRemote, ev.Location);
                 }
-            };
-
-            treeViewRemote.AfterSelect += (s, ev) =>
-            {
-                UpdateTargetDirLabel();
-                CompareLocalWithRemote(_remoteUploadEquivalentPaths);
             };
 
             // Extract the JAR engine from resources on startup
@@ -730,8 +729,11 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
         }
 
 
-        private void ShowStartupWarning()                    // Affiche un message d'avertissement au lancement
+        private void ShowStartupWarningOnce()
         {
+            if (File.Exists(StartupWarningMarkerPath))
+                return;
+
             string message = Localize(
                 "This software is designed for large datasets with many subfolders.\n" +
                 "For small datasets, please use the web interface to save server resources.",
@@ -742,6 +744,16 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
                             Localize("Recommended use", "Usage recommandé"),
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
+
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(StartupWarningMarkerPath));
+                File.WriteAllText(StartupWarningMarkerPath, DateTime.UtcNow.ToString("O"));
+            }
+            catch
+            {
+                // L'avertissement reste non acquitté si le profil utilisateur n'est pas inscriptible.
+            }
         }
 
         private void InitializeServerComboBox()               // Remplit et configure le ComboBox des serveurs
@@ -828,7 +840,12 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private async void textBoxDoi_Leave(object sender, EventArgs e)
         {
-            textBoxDoi.Text = NormalizeDoiInput(textBoxDoi.Text);
+            string normalizedDoi = NormalizeDoiInput(textBoxDoi.Text);
+            textBoxDoi.Text = normalizedDoi;
+            if (!string.Equals(_targetDatasetDoi, normalizedDoi, StringComparison.OrdinalIgnoreCase))
+            {
+                SetTargetFolder(string.Empty);
+            }
             RefreshCredentialDependentUi();
             await AutoCheckRemoteFilesAsync();
         }
@@ -841,6 +858,11 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private async void comboBoxServer_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string selectedServer = comboBoxServer.SelectedItem?.ToString().Trim().TrimEnd('/') ?? string.Empty;
+            if (!string.Equals(_targetServerBaseUrl, selectedServer, StringComparison.OrdinalIgnoreCase))
+            {
+                SetTargetFolder(string.Empty);
+            }
             RefreshCredentialDependentUi();
             await AutoCheckRemoteFilesAsync();
         }
@@ -2089,6 +2111,7 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private async void Form1_Shown(object sender, EventArgs e)
         {
+            ShowStartupWarningOnce();
             await CheckForUpdatesAsync(showWhenUpToDate: false);
         }
 
@@ -3890,59 +3913,35 @@ namespace RDG_Uploader_GUI                                  // Espace de noms du
 
         private void SetTargetFolderFromRemote()
         {
-            UpdateTargetDirLabel();
-            CompareLocalWithRemote(_remoteUploadEquivalentPaths);
+            TreeNode selectedNode = treeViewRemote.SelectedNodes.Count == 1
+                ? treeViewRemote.SelectedNodes[0]
+                : treeViewRemote.SelectedNode;
+            if (selectedNode == null || selectedNode.ImageKey != "folder")
+                return;
+
+            string directoryLabel = selectedNode.Parent == null
+                ? string.Empty
+                : GetRemoteFolderNodePath(selectedNode);
+
+            SetTargetFolder(directoryLabel);
             tabControlMain.SelectedIndex = 0;
         }
 
         private string GetActiveTargetFolder()
         {
-            TreeNode node = treeViewRemote.SelectedNode;
-            if (node == null) return "";
+            return _targetDirectoryLabel;
+        }
 
-            if (node.Parent == null)
-            {
-                return "";
-            }
+        private void SetTargetFolder(string directoryLabel)
+        {
+            _targetDirectoryLabel = (directoryLabel ?? string.Empty)
+                .Replace('\\', '/')
+                .Trim('/');
+            _targetDatasetDoi = NormalizeDoiInput(textBoxDoi.Text);
+            _targetServerBaseUrl = comboBoxServer.SelectedItem?.ToString().Trim().TrimEnd('/') ?? string.Empty;
 
-            if (node.ImageKey == "folder")
-            {
-                var parts = new List<string>();
-                TreeNode curr = node;
-                while (curr != null)
-                {
-                    parts.Insert(0, curr.Text);
-                    curr = curr.Parent;
-                }
-                if (parts.Count > 0)
-                {
-                    parts.RemoveAt(0); // Remove "Racine (/)" / "Root (/)"
-                }
-                return string.Join("/", parts);
-            }
-            else if (node.ImageKey == "file")
-            {
-                if (node.Parent != null && node.Parent.ImageKey == "folder")
-                {
-                    if (node.Parent.Parent == null)
-                    {
-                        return "";
-                    }
-                    var parts = new List<string>();
-                    TreeNode curr = node.Parent;
-                    while (curr != null)
-                    {
-                        parts.Insert(0, curr.Text);
-                        curr = curr.Parent;
-                    }
-                    if (parts.Count > 0)
-                    {
-                        parts.RemoveAt(0); // Remove "Racine (/)" / "Root (/)"
-                    }
-                    return string.Join("/", parts);
-                }
-            }
-            return "";
+            UpdateTargetDirLabel();
+            CompareLocalWithRemote(_remoteUploadEquivalentPaths);
         }
 
         private List<string> FindAllRemotePathsWithFilename(string filename)

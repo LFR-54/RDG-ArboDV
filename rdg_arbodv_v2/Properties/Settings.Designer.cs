@@ -44,21 +44,6 @@ namespace RDG_Uploader_GUI.Properties
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowWarning
-        {
-            get
-            {
-                return ((bool)(this["ShowWarning"]));
-            }
-            set
-            {
-                this["ShowWarning"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool IncludePrereleaseUpdates
         {

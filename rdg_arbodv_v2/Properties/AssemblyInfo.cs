@@ -31,8 +31,8 @@ using System.Runtime.InteropServices;
 //      Révision
 //
 #if !RELEASE_VERSION_INJECTED
-[assembly: AssemblyVersion("2.1.2.0")]
-[assembly: AssemblyFileVersion("2.1.2.0")]
-[assembly: AssemblyInformationalVersion("2.1.2")]
+[assembly: AssemblyVersion("2.1.3.0")]
+[assembly: AssemblyFileVersion("2.1.3.0")]
+[assembly: AssemblyInformationalVersion("2.1.3")]
 #endif
 [assembly: NeutralResourcesLanguage("en")]

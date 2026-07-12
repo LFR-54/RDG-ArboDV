@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Client bureautique Windows pour préparer, téléverser et administrer les fichiers d'un dataset Dataverse</strong><br>
-  <sub>Conçu pour Recherche Data Gouv — Version 2.1.2</sub>
+  <sub>Conçu pour Recherche Data Gouv — Version 2.1.3</sub>
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@
   <img alt="Plateforme" src="https://img.shields.io/badge/Plateforme-Windows-0078d4">
   <img alt="Interface" src="https://img.shields.io/badge/Interface-WinForms-0f6cbd">
   <img alt="Cible" src="https://img.shields.io/badge/Cible-Dataverse-2d7d46">
-  <img alt="Version" src="https://img.shields.io/badge/Version-2.1.2-success">
+  <img alt="Version" src="https://img.shields.io/badge/Version-2.1.3-success">
 </p>
 
 ## Sommaire
@@ -38,7 +38,7 @@
 
 ### Origine et évolution du projet
 
-RDG ArboDV a été initialement créé par **LFR54** dans le cadre de son stage de BTS. La première version a été imaginée, conçue et développée de A à Z par lui-même.
+RDG ArboDV a été initialement créé par **LFR54** dans le cadre de son stage de BTS CIEL option A IR au CRAN. Ancien stagiaire du CRAN et désormais titulaire de ce BTS, il poursuit actuellement une licence biomédicale en alternance. La première version a été imaginée, conçue et développée de A à Z par lui-même.
 
 Les contraintes techniques liées à cette première architecture, notamment au mécanisme utilisé pour envoyer les données, ne permettaient toutefois pas d'atteindre le niveau de fiabilité attendu. Ces limites empêchaient une mise en production responsable et ne permettaient donc pas à RDG ArboDV de remplacer DVUploader, ce qui constituait, en quelque sorte, l'objectif initial du projet.
 
@@ -107,7 +107,7 @@ L'organisation affichée dans cet onglet est la **source de vérité du dépôt*
 
 Cet onglet affiche le contenu réellement présent dans le dataset indiqué par le DOI. Il sert à la fois à consulter l'arborescence distante, à choisir le dossier de destination du prochain dépôt et à administrer les fichiers existants.
 
-La sélection d'un dossier distant met immédiatement à jour la destination affichée dans l'onglet **Préparation du dépôt**. Si aucun dossier n'est sélectionné, la destination utilisée est la **racine (/)** du dataset.
+La commande **Téléverser dans ce dossier** mémorise la destination indépendamment de la sélection courante dans l'arbre distant. Une actualisation de l'arbre ou la consultation d'un autre fichier ne modifie donc plus accidentellement la destination. Par défaut, la destination utilisée est la **racine (/)** du dataset.
 
 ### Logs du moteur Java
 
@@ -165,6 +165,8 @@ Le DOI attendu suit le format `doi:10.xxxx/xxxxx`. Une URL complète telle que `
 
 Le moteur personnalisé `DVUploader-v1.3.0-RDGengine.jar` est intégré à l'exécutable et extrait automatiquement au démarrage. Son empreinte SHA-256 est comparée à celle du JAR déjà présent afin de le remplacer dès que le moteur embarqué change, même si sa taille reste identique. Il n'est donc pas nécessaire de copier manuellement le fichier JAR à côté de l'application.
 
+Au tout premier démarrage, un avertissement rappelle que RDG ArboDV est destiné en priorité aux dépôts volumineux. Après validation, l'application crée le marqueur `%LocalAppData%\RDG_ArboDV\startup-warning-v1.ack`. Ce fichier est propre à l'utilisateur Windows et empêche le message de réapparaître à chaque lancement ou après une mise à jour. Sa suppression permet de réafficher l'avertissement au lancement suivant.
+
 Au démarrage, RDG ArboDV vérifie les versions stables publiées sur GitHub. Lorsqu'une mise à jour est disponible, vous pouvez la télécharger puis redémarrer directement depuis l'application. Dans **À propos**, le bouton **Vérifier les mises à jour** permet une vérification manuelle et l'option **Inclure les versions bêta** active volontairement les préversions. Le suffixe SemVer (`beta.1`, `beta.2`, etc.) est conservé : une bêta peut donc évoluer vers la suivante, puis vers la version stable correspondante.
 
 ### Utiliser le code source
@@ -210,10 +212,10 @@ La préparation du dépôt est désactivée tant que la clé API, le DOI et le s
 Pour téléverser dans un dossier existant :
 
 1. ouvrez l'onglet **Fichiers sur le serveur**
-2. sélectionnez le dossier souhaité
-3. revenez dans **Préparation du dépôt**
+2. faites un clic droit sur le dossier souhaité
+3. cliquez sur **Téléverser dans ce dossier** ; l'application revient automatiquement dans **Préparation du dépôt**
 
-Le chemin actif est rappelé dans l'en-tête **Dossier de destination sur le serveur**. Lorsqu'il est trop long pour être affiché entièrement, il est abrégé par des points de suspension ; placez le pointeur dessus pour consulter le chemin complet.
+Le chemin mémorisé est rappelé dans l'en-tête **Dossier de destination sur le serveur** et reste inchangé jusqu'au choix d'une autre destination, d'un autre dataset ou d'un autre serveur. Lorsqu'il est trop long pour être affiché entièrement, il est abrégé par des points de suspension ; placez le pointeur dessus pour consulter le chemin complet.
 
 Utilisez **Déposer à la racine** pour annuler la destination sélectionnée et revenir à `/`.
 

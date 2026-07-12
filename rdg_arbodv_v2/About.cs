@@ -47,15 +47,17 @@ namespace RDG_Uploader_GUI
             groupBox2.Text = Localize("Author", "Auteur");
             TextBoxAuthors.Text = Localize(
                 "Created and maintained by Lucas FRENOT\n" +
-                "Intern at CRAN, currently studying for a BTS CIEL\n" +
-                "(Cybersecurity, IT and Networks, Electronics),\n" +
-                "Option A:\n" +
-                "Computer Science and Networks.",
+                "Former intern at CRAN,\n" +
+                "BTS CIEL graduate, Option A IR\n" +
+                "(Computer Science and Networks),\n" +
+                "currently completing a biomedical degree\n" +
+                "through a work-study programme.",
                 "Créé et maintenu par Lucas FRENOT\n" +
-                "Stagiaire au CRAN, actuellement en BTS CIEL\n" +
-                "(Cybersécurité, Informatique et réseaux, Électronique),\n" +
-                "Option A :\n" +
-                "Informatique et Réseaux.");
+                "Ancien stagiaire au CRAN,\n" +
+                "titulaire d’un BTS CIEL option A IR\n" +
+                "(Informatique et Réseaux),\n" +
+                "actuellement en licence biomédicale\n" +
+                "en alternance.");
             checkBoxIncludePrereleaseUpdates.Text = Localize("Include beta releases", "Inclure les versions bêta");
             btnCheckForUpdates.Text = Localize("Check for updates", "Vérifier les mises à jour");
             labelGitHubRepository.Text = "LFR-54/RDG-ArboDV";

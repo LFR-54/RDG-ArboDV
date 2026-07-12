@@ -346,7 +346,11 @@ public class DVUploader extends AbstractUploader {
 
         //Create a path/name string w/o an initial /
         //Use a good path if bad chars exist - only a item with those replaced by "_" could exist on the server.
-        String sourcepath = getGoodSourcePath((path.length()==1 ? "" : path.substring(1)), item.getName());
+        String normalizedPath = path.replace("\\", "/");
+        while (normalizedPath.startsWith("/")) {
+            normalizedPath = normalizedPath.substring(1);
+        }
+        String sourcepath = getGoodSourcePath(normalizedPath, item.getName());
 
         // One-time: get metadata for dataset to see if it exists and what files it
         // contains
@@ -1116,15 +1120,8 @@ public class DVUploader extends AbstractUploader {
                                             if(noIngest) {
                                                 jsonData.put("tabIngest", "false");
                                             }
-                                            if (recurse) {
-                                                // Dataverse takes paths without an initial / and ending without a /
-                                                // with the path not including the file name
-                                                if (path.substring(1).contains("/")) {
-                                                    String parentPath = path.substring(1, path.lastIndexOf("/"));
-                                                    if (!parentPath.isEmpty()) {
-                                                        jsonData = jsonData.put("directoryLabel", parentPath);
-                                                    }
-                                                }
+                                            if (recurse && !goodParentPath.isEmpty()) {
+                                                jsonData = jsonData.put("directoryLabel", goodParentPath);
                                             }
                                             file.setMetadata(jsonData);
                                             dataId = fixityAlgorithm + ":" + localchecksum;
@@ -1326,13 +1323,9 @@ public class DVUploader extends AbstractUploader {
             }
 
             if (recurse) {
-                // Dataverse takes paths without an initial / and ending without a /
-                // with the path not including the file name
-                if (path.substring(1).contains("/")) {
-                    String parentPath = path.substring(1, path.lastIndexOf("/"));
-                    if (!parentPath.isEmpty()) {
-                        jsonData = jsonData.put("directoryLabel", parentPath);
-                    }
+                String parentPath = getParentPath(path);
+                if (!parentPath.isEmpty()) {
+                    jsonData = jsonData.put("directoryLabel", parentPath);
                 }
             }
             meb.addTextBody("jsonData", jsonData.toString());
@@ -1435,7 +1428,34 @@ public class DVUploader extends AbstractUploader {
         // with the path not including the file name
         String parentPath;
         if (!importRO) {
-            parentPath = path.substring(1, path.lastIndexOf("/"));
+            if (path == null || path.isEmpty() || path.equals("/")) {
+                return "";
+            }
+
+            String normalizedPath = path.replace("\\", "/");
+            if (normalizedPath.startsWith("//")) {
+                // Manifest uploads use an empty synthetic root and uploadDatafile
+                // appends the filename to the collection path. Remove both the
+                // synthetic root and the final filename to recover directoryLabel.
+                String manifestPath = normalizedPath.substring(2);
+                while (manifestPath.startsWith("/")) {
+                    manifestPath = manifestPath.substring(1);
+                }
+                while (manifestPath.endsWith("/")) {
+                    manifestPath = manifestPath.substring(0, manifestPath.length() - 1);
+                }
+
+                int filenameSeparator = manifestPath.lastIndexOf("/");
+                return filenameSeparator < 0
+                        ? ""
+                        : manifestPath.substring(0, filenameSeparator);
+            }
+
+            int lastSlash = normalizedPath.lastIndexOf("/");
+            if (lastSlash <= 0) {
+                return "";
+            }
+            parentPath = normalizedPath.substring(1, lastSlash);
         } else {
             parentPath = path.substring(path.indexOf("/data/") + 6);
             parentPath = parentPath.substring(parentPath.indexOf("/"));

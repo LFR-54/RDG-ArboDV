@@ -1,5 +1,17 @@
 # Changelog
 
+## Version 2.1.3 · 12/07/2026
+
+### Correctifs
+
+- **Destination de téléversement fiabilisée** : le dossier choisi avec « Téléverser dans ce dossier » est maintenant mémorisé indépendamment du nœud sélectionné dans l'arbre distant. Les actualisations et les consultations ultérieures ne peuvent plus ramener silencieusement le dépôt à la racine ou dans un autre dossier.
+- **Chemins du manifeste corrigés dans DVUploader** : le moteur Java transmet désormais exactement le `directoryLabel` demandé, y compris pour un dossier de premier niveau, un sous-dossier ou la racine du dataset. Le nom du fichier n'est plus ajouté au chemin de destination et ne peut donc plus créer un dossier homonyme comme `README.md` ou `image.avif`.
+- **Avertissement de premier démarrage rétabli** : le message est présenté après l'affichage de la fenêtre principale, puis acquitté au moyen d'un marqueur persistant dans `%LocalAppData%\RDG_ArboDV` afin de ne pas réapparaître à chaque lancement.
+
+### Interface
+
+- **Présentation de l'auteur actualisée** : la fenêtre « À propos » indique désormais que Lucas FRENOT est un ancien stagiaire du CRAN, titulaire d'un BTS CIEL option A IR et actuellement en licence biomédicale en alternance.
+
 ## Version 2.1.2 · 10/07/2026
 
 ### Correctifs
